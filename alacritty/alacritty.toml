@@ -1,0 +1,21 @@
+#import = [
+#"~/.config/alacritty.toml",
+#]
+
+[shell]
+program = "C:\\Program Files\\PowerShell\\7\\pwsh.exe"
+args = [" "]
+
+[window]
+decorations = "Full"
+title = "Alacritty - Terminal"
+opacity = 0.9
+startup_mode = "Windowed"
+dynamic_title = true
+
+[font]
+normal = { family = "JetBrainsMono Nerd Font", style = "Bold" }
+size = 11
+
+[scrolling]
+history = 10000
