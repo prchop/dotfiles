@@ -89,18 +89,20 @@ export PATH="$HOME/.cargo/bin:$PATH"
 source $ZSH/oh-my-zsh.sh
 
 ## TMUX-attach
-# Function to create tmux session in kitty terminal
+# Function to create nvim and zsh tmux session in kitty terminal
 start_tmux_kitty() {
     # Check if kitty terminal and tmux are exist
     for cmd in kitty tmux; do
-        command -v $cmd &> /dev/null || { echo "$cmd not found. Please install $cmd in your system."; return 1; }
+        command -v $cmd &>/dev/null || { echo "$cmd not found. Please install $cmd in your system."; return 1; }
     done
 
-    # Create and attach a tmux session if it doesn't already exist
+    # Create a tmux session if it doesn't already exist
     for session in nvim zsh; do
         tmux has-session -t $session 2>/dev/null || tmux new-session -d -s $session -n $session
-        kitty tmux attach-session -t $session &
     done
+
+    # Attach to tmux session
+    kitty tmux attach-session -t nvim
 }
 
 # Check if we are in a Kitty terminal and not in a tmux session
