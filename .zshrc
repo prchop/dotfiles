@@ -137,6 +137,22 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 export CARGO_HOME="$HOME/.cargo"
 export PATH="$CARGO_HOME/bin:$PATH"
 
+autoload -U pathprepend
+pathprepend() {
+	for arg in "$@"; do
+		test -d "$arg" || continue
+		PATH=${PATH//:"$arg:"/:}
+		PATH=${PATH/#"$arg:"/}
+		PATH=${PATH/%":$arg"/}
+		export PATH="$arg${PATH:+":${PATH}"}"
+	done
+}
+
+pathprepend \
+	"$HOME/.local/bin" \
+	/usr/local/bin \
+	"$SCRIPTS"
+
 # vi mode
 bindkey -v
 
