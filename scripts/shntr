@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+file=$1
+entr bash -c "clear;shellcheck $file" <<< "$file"

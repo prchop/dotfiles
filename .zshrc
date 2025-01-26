@@ -77,21 +77,14 @@ plugins=(
   nvm
 )
 
-#cargo
-export PATH="$HOME/.cargo/bin:$PATH"
-
 # starship init
 # eval "$(starship init zsh)"
+
 # starship path
 # export STARSHIP_CONFIG=$HOME/.config/starship.toml
 
 # Oh My Zsh
 source $ZSH/oh-my-zsh.sh
-
-## TMUX-attach
-if [ -z "$TMUX" ] && [ "$TERM" = "xterm-kitty" ]; then
-  tmux attach || tmux new-session -s zsh && exit;
-fi
 
 # User configuration
 
@@ -121,3 +114,33 @@ fi
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias path='echo -e "${PATH//:/\\n}"'
+
+# bun completions
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
+# ===============================
+# ==== ENVIRONMENT VARIABLES ====
+# ===============================
+
+export USER="${USER:-$(whoami)}"
+export GITUSER="$USER"
+export REPOS="$HOME/Repos"
+export GHREPOS="$REPOS/github.com/$GITUSER"
+export DOTFILES="$GHREPOS/dotfiles"
+export SCRIPTS="$HOME/scripts"
+export GOPRIVATE="github.com/$GITUSER/*,gitlab.com/$GITUSER/*"
+export GOBIN="$HOME/.local/bin"
+export GCO_ENABLED=0
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+export CARGO_HOME="$HOME/.cargo"
+export PATH="$CARGO_HOME/bin:$PATH"
+
+# vi mode
+bindkey -v
+
+# TMUX-attach
+if [ -z "$TMUX" ] && [ "$TERM" = "xterm-kitty" ]; then
+  tmux attach || tmux new-session -s zsh && exit;
+fi
