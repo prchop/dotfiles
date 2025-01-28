@@ -1,5 +1,4 @@
-# Sample .bashrc for SUSE Linux
-# Copyright (c) SUSE Software Solutions Germany GmbH
+#!/bin/bash
 
 # There are 3 different types of shells in bash: the login shell, normal shell
 # and interactive shell. Login shells read ~/.profile and interactive shells
@@ -11,6 +10,8 @@
 # ridden in every subshell.
 
 test -s ~/.alias && . ~/.alias || true
+
+# eval "$(starship init bash)"
 
 # --------------------------- smart prompt ---------------------------
 # Copyright 2024 Robert S. Muhlestein (linktr.ee/rwxrob)
@@ -74,6 +75,7 @@ export GHREPOS="$REPOS/github.com/$GITUSER"
 export DOTFILES="$GHREPOS/dotfiles"
 export SCRIPTS="$HOME/scripts"
 export GOPRIVATE="github.com/$GITUSER/*,gitlab.com/$GITUSER/*"
+# export GOPATH="$HOME/.local/go"
 export GOBIN="$HOME/.local/bin"
 export GCO_ENABLED=0
 export BUN_INSTALL="$HOME/.bun"
@@ -81,24 +83,43 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 export CARGO_HOME="$HOME/.cargo"
 export PATH="$CARGO_HOME/bin:$PATH"
 
+pathprepend() {
+	for arg in "$@"; do
+		test -d "$arg" || continue
+		PATH=${PATH//:"$arg:"/:}
+		PATH=${PATH/#"$arg:"/}
+		PATH=${PATH/%":$arg"/}
+		export PATH="$arg${PATH:+":${PATH}"}"
+	done
+} && export -f pathprepend
+
+pathprepend \
+	"$HOME/.local/bin" \
+	/usr/local/bin \
+	"$SCRIPTS"
+# "$GHREPOS/cmd-"* \
+# /opt/homebrew/bin \
+# "$HOME/.local/go/bin" \
+# /usr/local/go/bin \
+# /usr/local/opt/openjdk/bin \
+
 # bun completion
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
-# nvm and bash completion
+# nvm
 export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
-
-# TMUX-attach
-# if [ -z "$TMUX" ] && [ "$TERM" = "xterm-kitty" ]; then
-#  tmux attach || tmux new-session -s bash && exit;
-# fi
-
-# cargo envpath
-#. "$HOME/.cargo/env"
 
 # vi mode
 set -o vi
 
 # alias
 alias path='echo -e "${PATH//:/\\n}"'
+
+# cargo envpath
+#. "$HOME/.cargo/env"
+# TMUX-attach
+# if [ -z "$TMUX" ] && [ "$TERM" = "xterm-kitty" ]; then
+#  tmux attach || tmux new-session -s bash && exit;
+# fi

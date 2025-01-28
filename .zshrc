@@ -1,6 +1,5 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
-
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -130,6 +129,7 @@ export GHREPOS="$REPOS/github.com/$GITUSER"
 export DOTFILES="$GHREPOS/dotfiles"
 export SCRIPTS="$HOME/scripts"
 export GOPRIVATE="github.com/$GITUSER/*,gitlab.com/$GITUSER/*"
+# export GOPATH="$HOME/.local/go"
 export GOBIN="$HOME/.local/bin"
 export GCO_ENABLED=0
 export BUN_INSTALL="$HOME/.bun"
@@ -152,6 +152,11 @@ pathprepend \
 	"$HOME/.local/bin" \
 	/usr/local/bin \
 	"$SCRIPTS"
+# "$GHREPOS/cmd-"* \
+# /opt/homebrew/bin \
+# "$HOME/.local/go/bin" \
+# /usr/local/go/bin \
+# /usr/local/opt/openjdk/bin \
 
 # vi mode
 bindkey -v
