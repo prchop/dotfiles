@@ -16,6 +16,8 @@ test -s ~/.alias && . ~/.alias || true
 # --------------------------- smart prompt ---------------------------
 # Copyright 2024 Robert S. Muhlestein (linktr.ee/rwxrob)
 
+_have() { type "$1" &>/dev/null; }
+
 PROMPT_LONG=20
 PROMPT_MAX=95
 PROMPT_AT=@
