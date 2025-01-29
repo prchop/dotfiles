@@ -106,14 +106,6 @@ pathprepend \
 # /usr/local/go/bin \
 # /usr/local/opt/openjdk/bin \
 
-<<<<<<< HEAD
-=======
-# nvm
-export NVM_DIR="$HOME/.config/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
->>>>>>> origin/main
-
 # vi mode
 set -o vi
 
@@ -128,6 +120,11 @@ alias c='printf "\e[H\e[2J"'
 if [ -z "$TMUX" ] && [ "$TERM" = "xterm-kitty" ]; then
 	tmux attach || tmux new-session -s home && exit
 fi
+
+# nvm
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
 # prevent duplicate path (dont now how to remove the duplicate path)
 export PATH=$(echo $PATH | sed -e "s|$HOME/.config/nvm/versions/node/v22.13.1/bin:||g" -e "s|:$HOME/.config/nvm/versions/node/v22.13.1/bin||g")
