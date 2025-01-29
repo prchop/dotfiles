@@ -8,7 +8,7 @@
 # NOTE: It is recommended to make language settings in ~/.profile rather than
 # here, since multilingual X sessions would not work properly if LANG is over-
 # ridden in every subshell.
-
+#set -x
 test -s ~/.alias && . ~/.alias || true
 
 # eval "$(starship init bash)"
@@ -79,9 +79,10 @@ export GOPRIVATE="github.com/$GITUSER/*,gitlab.com/$GITUSER/*"
 export GOBIN="$HOME/.local/bin"
 export GCO_ENABLED=0
 export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
 export CARGO_HOME="$HOME/.cargo"
+export PATH="$BUN_INSTALL/bin:$PATH"
 export PATH="$CARGO_HOME/bin:$PATH"
+#export PATH="$BUN_INSTALL/bin:$CARGO_HOME/bin:$PATH"
 
 pathprepend() {
 	for arg in "$@"; do
@@ -103,23 +104,30 @@ pathprepend \
 # /usr/local/go/bin \
 # /usr/local/opt/openjdk/bin \
 
-# bun completion
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-
-# nvm
-export NVM_DIR="$HOME/.config/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
 # vi mode
 set -o vi
 
 # alias
 alias path='echo -e "${PATH//:/\\n}"'
+alias c='printf "\e[H\e[2J"'
 
 # cargo envpath
 #. "$HOME/.cargo/env"
+
 # TMUX-attach
-# if [ -z "$TMUX" ] && [ "$TERM" = "xterm-kitty" ]; then
-#  tmux attach || tmux new-session -s bash && exit;
-# fi
+if [ -z "$TMUX" ] && [ "$TERM" = "xterm-kitty" ]; then
+	tmux attach || tmux new-session -s home && exit
+fi
+
+# nvm
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# prevent duplicate path (dont now how to remove the duplicate path)
+export PATH=$(echo $PATH | sed -e "s|$HOME/.config/nvm/versions/node/v22.13.1/bin:||g" -e "s|:$HOME/.config/nvm/versions/node/v22.13.1/bin||g")
+
+if [[ ":$PATH:" != *":$HOME/.config/nvm/versions/node/v22.13.1/bin:"* ]]; then
+  export PATH="$HOME/.config/nvm/versions/node/v22.13.1/bin:$PATH"
+fi
