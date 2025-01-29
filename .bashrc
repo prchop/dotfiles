@@ -108,6 +108,7 @@ pathprepend \
 	"$HOME/.local/bin" \
 	"$HOME/.bun/bin" \
 	"$HOME/.cargo/bin" \
+	"$HOME/.config/nvm/versions/node/$(node -v)/bin" \
 	/usr/local/bin \
 	"$SCRIPTS"
 # "$HOME/.local/go/bin" \
