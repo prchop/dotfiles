@@ -16,8 +16,6 @@ test -s ~/.alias && . ~/.alias || true
 # --------------------------- smart prompt ---------------------------
 # Copyright 2024 Robert S. Muhlestein (linktr.ee/rwxrob)
 
-_have() { type "$1" &>/dev/null; }
-
 PROMPT_LONG=20
 PROMPT_MAX=95
 PROMPT_AT=@
@@ -82,9 +80,19 @@ export GOBIN="$HOME/.local/bin"
 export GCO_ENABLED=0
 export BUN_INSTALL="$HOME/.bun"
 export CARGO_HOME="$HOME/.cargo"
-export PATH="$BUN_INSTALL/bin:$PATH"
-export PATH="$CARGO_HOME/bin:$PATH"
-#export PATH="$BUN_INSTALL/bin:$CARGO_HOME/bin:$PATH"
+export BUNBIN="$BUN_INSTALL/bin"
+export CARGOBIN="$CARGO_HOME/bin"
+
+pathappend() {
+	declare arg
+	for arg in "$@"; do
+		test -d "$arg" || continue
+		PATH=${PATH//":$arg:"/:}
+		PATH=${PATH/#"$arg:"/}
+		PATH=${PATH/%":$arg"/}
+		export PATH="${PATH:+"$PATH:"}$arg"
+	done
+} && export -f pathappend
 
 pathprepend() {
 	for arg in "$@"; do
@@ -98,13 +106,19 @@ pathprepend() {
 
 pathprepend \
 	"$HOME/.local/bin" \
+	"$HOME/.bun/bin" \
+	"$HOME/.cargo/bin" \
 	/usr/local/bin \
 	"$SCRIPTS"
-# "$GHREPOS/cmd-"* \
-# /opt/homebrew/bin \
 # "$HOME/.local/go/bin" \
-# /usr/local/go/bin \
-# /usr/local/opt/openjdk/bin \
+
+pathappend \
+	/usr/local/bin \
+	/usr/local/sbin \
+	/usr/sbin \
+	/usr/bin \
+	/sbin \
+	/bin
 
 # vi mode
 set -o vi
@@ -127,8 +141,8 @@ export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
 # prevent duplicate path (dont now how to remove the duplicate path)
-export PATH=$(echo $PATH | sed -e "s|$HOME/.config/nvm/versions/node/v22.13.1/bin:||g" -e "s|:$HOME/.config/nvm/versions/node/v22.13.1/bin||g")
+#export PATH=$(echo "$PATH" | sed -e "s|$HOME/.config/nvm/versions/node/v22.13.1/bin:||g" -e "s|:$HOME/.config/nvm/versions/node/v22.13.1/bin||g")
 
-if [[ ":$PATH:" != *":$HOME/.config/nvm/versions/node/v22.13.1/bin:"* ]]; then
-  export PATH="$HOME/.config/nvm/versions/node/v22.13.1/bin:$PATH"
-fi
+# if [[ ":$PATH:" != *":$HOME/.config/nvm/versions/node/v22.13.1/bin:"* ]]; then
+#   export PATH="$HOME/.config/nvm/versions/node/v22.13.1/bin:$PATH"
+# fi
