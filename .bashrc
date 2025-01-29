@@ -139,10 +139,3 @@ fi
 export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
-
-# prevent duplicate path (dont now how to remove the duplicate path)
-#export PATH=$(echo "$PATH" | sed -e "s|$HOME/.config/nvm/versions/node/v22.13.1/bin:||g" -e "s|:$HOME/.config/nvm/versions/node/v22.13.1/bin||g")
-
-# if [[ ":$PATH:" != *":$HOME/.config/nvm/versions/node/v22.13.1/bin:"* ]]; then
-#   export PATH="$HOME/.config/nvm/versions/node/v22.13.1/bin:$PATH"
-# fi
