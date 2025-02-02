@@ -13,7 +13,7 @@ filetype indent on
 " Add numbers to each line on the left-hand side.
 set nonumber
 
-" Highlight cursorline horizontally.
+" Highlight cursorline orizontally
 " set cursorline
 
 " Indentation
@@ -127,7 +127,7 @@ map <F12> :set fdm=indent<CR>
 " make Y consistent with D and C (yank til end)
 map Y y$
 
- " force some files to be specific file type
+" force some files to be specific file type
 au bufnewfile,bufRead .goreleaser set ft=yaml
 au bufnewfile,bufRead *.props set ft=jproperties
 au bufnewfile,bufRead *.ddl set ft=sql
@@ -238,8 +238,7 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 " enable omni-completion
 set omnifunc=syntaxcomplete#Complete
 imap <tab><tab> <c-x><c-o>
-set completeopt=menu,menuone,noinsert,noselect
-"autocmd FileType go setlocal omnifunc=syntaxcomplete#Complete
+set completeopt=longest,menuone,noinsert,noselect
 
 " Remap j/k for navigating the omni-completion menu
 inoremap <expr> j pumvisible() ? "\<C-n>" : "j"
@@ -268,18 +267,20 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
     "Plug 'kana/vim-textobj-user'
     "Plug 'mjakl/vim-asciidoc'
     Plug 'dense-analysis/ale'
-    if has('nvim') && v:version > 800
+
+    if has('nvim') || v:version >= 800
       Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
       Plug 'neoclide/coc.nvim', {'branch': 'release'}
       if exists('$NVIM_SCREENKEY')
         Plug 'NStefan002/screenkey.nvim'
       endif
     endif
-    if has('nvim')
+
+    if has('nvim') || v:version >= 800
       Plug 'xolox/vim-misc'
       Plug 'xolox/vim-lua-ftplugin'
     else
-      "Plug 'dahu/vim-asciidoc'
+      Plug 'dahu/vim-asciidoc'
     endif
   call plug#end()
 
