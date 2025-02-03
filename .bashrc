@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck disable=SC1090,SC1091
 
 # There are 3 different types of shells in bash: the login shell, normal shell
 # and interactive shell. Login shells read ~/.profile and interactive shells
@@ -12,6 +13,9 @@
 test -s ~/.alias && . ~/.alias || true
 
 # eval "$(starship init bash)"
+
+_have() { type "$1" &>/dev/null; }
+_source_if() { [[ -r "$1" ]] && source "$1"; }
 
 # --------------------------- smart prompt ---------------------------
 # Copyright 2024 Robert S. Muhlestein (linktr.ee/rwxrob)
@@ -77,11 +81,22 @@ export SCRIPTS="$HOME/scripts"
 export GOPRIVATE="github.com/$GITUSER/*,gitlab.com/$GITUSER/*"
 # export GOPATH="$HOME/.local/go"
 export GOBIN="$HOME/.local/bin"
-export GCO_ENABLED=0
 export BUN_INSTALL="$HOME/.bun"
 export CARGO_HOME="$HOME/.cargo"
 export BUNBIN="$BUN_INSTALL/bin"
 export CARGOBIN="$CARGO_HOME/bin"
+export GCO_ENABLED=0
+#export NVIM_SCREENKEY=1
+
+pathprepend() {
+	for arg in "$@"; do
+		test -d "$arg" || continue
+		PATH=${PATH//:"$arg:"/:}
+		PATH=${PATH/#"$arg:"/}
+		PATH=${PATH/%":$arg"/}
+		export PATH="$arg${PATH:+":${PATH}"}"
+	done
+} && export -f pathprepend
 
 pathappend() {
 	declare arg
@@ -93,16 +108,6 @@ pathappend() {
 		export PATH="${PATH:+"$PATH:"}$arg"
 	done
 } && export -f pathappend
-
-pathprepend() {
-	for arg in "$@"; do
-		test -d "$arg" || continue
-		PATH=${PATH//:"$arg:"/:}
-		PATH=${PATH/#"$arg:"/}
-		PATH=${PATH/%":$arg"/}
-		export PATH="$arg${PATH:+":${PATH}"}"
-	done
-} && export -f pathprepend
 
 pathprepend \
 	"$HOME/.local/bin" \
@@ -126,10 +131,19 @@ set -o vi
 
 # alias
 alias path='echo -e "${PATH//:/\\n}"'
+alias scripts='cd $SCRIPTS'
+alias ghrepos='cd $GHREPOS'
 alias c='printf "\e[H\e[2J"'
 
 # cargo envpath
 #. "$HOME/.cargo/env"
+
+# nvim manager
+_have nvim && _source_if "$SCRIPTS/nvimswitcher"
+
+# if [[ -f "$SCRIPTS/nvimswitcher" ]]; then
+# 	source "$SCRIPTS/nvimswitcher"
+# fi
 
 # TMUX-attach
 if [ -z "$TMUX" ] && [ "$TERM" = "xterm-kitty" ]; then
