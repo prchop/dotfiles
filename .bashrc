@@ -86,7 +86,7 @@ export CARGO_HOME="$HOME/.cargo"
 export BUNBIN="$BUN_INSTALL/bin"
 export CARGOBIN="$CARGO_HOME/bin"
 export GCO_ENABLED=0
-#export NVIM_SCREENKEY=1
+export NVIM_SCREENKEY=1
 
 pathprepend() {
 	for arg in "$@"; do
@@ -140,10 +140,6 @@ alias c='printf "\e[H\e[2J"'
 
 # nvim manager
 _have nvim && _source_if "$SCRIPTS/nvimswitcher"
-
-# if [[ -f "$SCRIPTS/nvimswitcher" ]]; then
-# 	source "$SCRIPTS/nvimswitcher"
-# fi
 
 # TMUX-attach
 if [ -z "$TMUX" ] && [ "$TERM" = "xterm-kitty" ]; then
