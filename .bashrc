@@ -78,15 +78,21 @@ export REPOS="$HOME/Repos"
 export GHREPOS="$REPOS/github.com/$GITUSER"
 export DOTFILES="$GHREPOS/dotfiles"
 export SCRIPTS="$HOME/scripts"
-export GOPRIVATE="github.com/$GITUSER/*,gitlab.com/$GITUSER/*"
-# export GOPATH="$HOME/.local/go"
-export GOBIN="$HOME/.local/bin"
+export DOCUMENTS="$HOME/Documents"
+export DOWNLOADS="$HOME/Downloads"
+export GOPATH="$HOME/go"
+export GOBIN="$HOME/go/bin"
 export BUN_INSTALL="$HOME/.bun"
 export CARGO_HOME="$HOME/.cargo"
 export BUNBIN="$BUN_INSTALL/bin"
 export CARGOBIN="$CARGO_HOME/bin"
+export GOPROXY=direct
 export GCO_ENABLED=0
 export NVIM_SCREENKEY=1
+
+# for manual go install
+# export GOPATH="$HOME/.local/go"
+# export GOBIN="$HOME/.local/bin"
 
 pathprepend() {
 	for arg in "$@"; do
@@ -111,6 +117,7 @@ pathappend() {
 
 pathprepend \
 	"$HOME/.local/bin" \
+	"$HOME/go/bin" \
 	"$HOME/.bun/bin" \
 	"$HOME/.cargo/bin" \
 	"$HOME/.config/nvm/versions/node/$(node -v)/bin" \
@@ -138,8 +145,8 @@ alias c='printf "\e[H\e[2J"'
 # cargo envpath
 #. "$HOME/.cargo/env"
 
-# nvim manager
-_have nvim && _source_if "$SCRIPTS/nvimswitcher"
+# personal and private bashrc config
+_source_if "$HOME/.bash_personal"
 
 # TMUX-attach
 if [ -z "$TMUX" ] && [ "$TERM" = "xterm-kitty" ]; then
