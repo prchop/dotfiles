@@ -1,0 +1,6 @@
+#!/bin/sh
+
+tmux rename-window "$*"
+url="https://google.com/search?q=$(urlencode "$*")"
+exec w3m "$url"
+#exec lynx "$url"
