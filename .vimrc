@@ -108,6 +108,9 @@ endif
 " fast scrolling
 set ttyfast
 
+" limit scroll line
+set scrolloff=3
+
 " term gui colors
 set termguicolors
 
