@@ -1,14 +1,6 @@
 #!/bin/bash
 # shellcheck disable=SC1090,SC1091
 
-# There are 3 different types of shells in bash: the login shell, normal shell
-# and interactive shell. Login shells read ~/.profile and interactive shells
-# read ~/.bashrc; in our setup, /etc/profile sources ~/.bashrc - thus all
-# settings made here will also take effect in a login shell.
-#
-# NOTE: It is recommended to make language settings in ~/.profile rather than
-# here, since multilingual X sessions would not work properly if LANG is over-
-# ridden in every subshell.
 #set -x
 test -s ~/.alias && . ~/.alias || true
 
@@ -55,7 +47,7 @@ __ps1() {
 	fi
 
 	if _have tmux && [[ -n "$TMUX" ]]; then
-		tmux rename-window "$(wd)"
+		tmux rename-window "$(wd '')"
 	fi
 }
 
@@ -63,7 +55,15 @@ wd() {
 	dir="${PWD##*/}"
 	parent="${PWD%"/${dir}"}"
 	parent="${parent##*/}"
-	echo "$parent/$dir"
+
+	case "$1" in
+	session)
+		[[ -z "$dir" ]] && echo "$parent" && echo "$dir"
+		;;
+	*)
+		echo "$parent/$dir"
+		;;
+	esac
 } && export wd
 
 PROMPT_COMMAND="__ps1"
@@ -151,6 +151,13 @@ _source_if "$HOME/.bash_personal"
 # TMUX-attach
 if [ -z "$TMUX" ] && [ "$TERM" = "xterm-kitty" ]; then
 	tmux attach || tmux new-session -s home && exit
+fi
+
+if _have tmux && [[ -n "$TMUX" ]]; then
+	current_session=$(tmux display-message -p "#S")
+	if [[ "$current_session" =~ ^[0-9]+$ ]] && ! tmux has-session -t Home 2>/dev/null; then
+		tmux rename-session "$(wd session)"
+	fi
 fi
 
 # nvm
