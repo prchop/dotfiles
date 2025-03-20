@@ -47,7 +47,7 @@ __ps1() {
 	fi
 
 	if _have tmux && [[ -n "$TMUX" ]]; then
-		tmux rename-window "$(wd '')"
+		tmux rename-window "$(wd window)"
 	fi
 }
 
@@ -58,7 +58,7 @@ wd() {
 
 	case "$1" in
 	session)
-		[[ -z "$dir" ]] && echo "$parent" && echo "$dir"
+		[[ -z "$dir" ]] && echo "$parent" || echo "$dir"
 		;;
 	*)
 		echo "$parent/$dir"
@@ -149,9 +149,9 @@ alias c='printf "\e[H\e[2J"'
 _source_if "$HOME/.bash_personal"
 
 # TMUX-attach
-if [ -z "$TMUX" ] && [ "$TERM" = "xterm-kitty" ]; then
-	tmux attach || tmux new-session -s home && exit
-fi
+# if [ -z "$TMUX" ] && [ "$TERM" = "xterm-kitty" ]; then
+# 	tmux attach || tmux new-session -s home && exit
+# fi
 
 if _have tmux && [[ -n "$TMUX" ]]; then
 	current_session=$(tmux display-message -p "#S")
