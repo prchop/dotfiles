@@ -7,9 +7,9 @@ test -s ~/.alias && . ~/.alias || true
 _have() { type "$1" &>/dev/null; }
 _source_if() { [[ -r "$1" ]] && source "$1"; }
 
-# =====================
-# ==== SMART PROMT ====
-# =====================
+# ======================
+# ==== SMART PROMPT ====
+# ======================
 # Copyright 2024 Robert S. Muhlestein (github/rwxrob/dot)
 
 PROMPT_LONG=20
@@ -150,10 +150,14 @@ _source_if "$HOME/.bash_personal"
 # fi
 
 if _have tmux && [[ -n "$TMUX" ]]; then
-	current_session=$(tmux display-message -p "#S")
-	if [[ "$current_session" =~ ^[0-9]+$ ]] && ! tmux has-session -t Home 2>/dev/null; then
-		tmux rename-session "$(wd session)"
-	fi
+	session_name="$(wd session)"
+	count=1
+	base_session_name="$session_name"
+	while tmux has-session -t "$session_name" 2>/dev/null; do
+		session_name="${base_session_name}_${count}"
+		((count++))
+	done
+	tmux rename-session "$session_name"
 fi
 
 # nvm
