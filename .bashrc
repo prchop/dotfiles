@@ -4,13 +4,13 @@
 #set -x
 test -s ~/.alias && . ~/.alias || true
 
-# eval "$(starship init bash)"
-
 _have() { type "$1" &>/dev/null; }
 _source_if() { [[ -r "$1" ]] && source "$1"; }
 
-# --------------------------- smart prompt ---------------------------
-# Copyright 2024 Robert S. Muhlestein (linktr.ee/rwxrob)
+# =====================
+# ==== SMART PROMT ====
+# =====================
+# Copyright 2024 Robert S. Muhlestein (github/rwxrob/dot)
 
 PROMPT_LONG=20
 PROMPT_MAX=95
@@ -47,7 +47,7 @@ __ps1() {
 	fi
 
 	if _have tmux && [[ -n "$TMUX" ]]; then
-		tmux rename-window "$(wd window)"
+		tmux rename-window "$(wd)"
 	fi
 }
 
@@ -55,15 +55,11 @@ wd() {
 	dir="${PWD##*/}"
 	parent="${PWD%"/${dir}"}"
 	parent="${parent##*/}"
-
-	case "$1" in
-	session)
-		[[ -z "$dir" ]] && echo "$parent" || echo "$dir"
-		;;
-	*)
+	if [[ "$1" == "session" ]]; then
+		test -z "$dir" && echo "$parent" || echo "$dir"
+	else
 		echo "$parent/$dir"
-		;;
-	esac
+	fi
 } && export wd
 
 PROMPT_COMMAND="__ps1"
