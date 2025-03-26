@@ -11,10 +11,14 @@ filetype plugin on
 filetype indent on
 
 " Add numbers to each line on the left-hand side.
-set nonumber
+set number
+set numberwidth=1
 
-" Highlight cursorline orizontally
-" set cursorline
+" Auto write files when changing
+set autowrite
+
+" Highlight cursorline horizontally
+set cursorline
 
 " Indentation
 set autoindent
@@ -24,8 +28,6 @@ set smarttab
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
-set wildignorecase
-"set ignorecase
 
 if v:version >= 800
   " stop vim from silently messing with files that it shouldn't
@@ -47,6 +49,7 @@ match Visual '\s\+$'
 set hlsearch
 set incsearch
 set linebreak
+set noignorecase
 
 " disable spellcapcheck
 set spc=
@@ -57,12 +60,24 @@ set shortmess=aoOtTI
 " prevents truncated yanks, deletes, etc.
 set viminfo='20,<1000,s1000
 
+" wrap when search
+set wrapscan
+
+" Set wrap line
+set nowrap
+
 " more risky, but cleaner
 set nobackup
 set noswapfile
 set nowritebackup
 
 set icon
+
+" not a fan of bracket matching or folding
+if has("eval") " vim-tiny detection
+  let g:loaded_matchparen=1
+endif
+set noshowmatch
 
 " enable wild menu
 set wildmenu
@@ -78,14 +93,13 @@ set foldcolumn=0
 
 " Disable bell.
 set noerrorbells
+set visualbell
+set vb t_vb=
 
 " Set leader key.
 let g:mapleader=","
 
-" Set wrap line
-set nowrap
-
-" copy paste with system clipboard 
+" copy paste with system clipboard
 set clipboard=unnamedplus
 
 " backgroud color
@@ -93,9 +107,12 @@ set background=dark
 
 set ruler
 set ruf=%30(%=%#LineNr#%.50F\ [%{strlen(&ft)?&ft:'none'}]\ %l:%c\ %p%%%)
- 
+
 " stop complaints about switching buffer with changes
 set hidden
+
+" set status line to one line
+set laststatus=0
 
 " command history
 set history=100
@@ -119,7 +136,7 @@ nnoremap <leader>e :Explore<CR>
 nnoremap <C-L> :nohl<CR><C-L>
 nmap <leader>w :set nowrap!<CR>
 nmap <leader>p :set paste<CR>i
-map <F1> :set number!<CR> :set relativenumber!<CR>
+map <leader>1 :set nonumber!<CR>
 nmap <F2> :call <SID>SynStack()<CR>
 set pastetoggle=<F3>
 map <F4> :set list!<CR>
@@ -209,12 +226,10 @@ augroup CloseLoclistWindowGroup
   autocmd QuitPre * if empty(&buftype) | lclose | endif
 augroup END
 
-"autocmd BufWritePost *.{md,adoc} silent !toemoji %
-
 "fix bork bash detection
 if has("eval")  " vim-tiny detection
 fun! s:DetectBash()
-    if getline(1) == '#!/usr/bin/bash' 
+    if getline(1) == '#!/usr/bin/bash'
           \ || getline(1) == '#!/bin/bash'
           \ || getline(1) == '#!/usr/bin/env bash'
         set ft=bash
@@ -241,7 +256,7 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 " enable omni-completion
 set omnifunc=syntaxcomplete#Complete
 imap <tab><tab> <c-x><c-o>
-set completeopt=longest,menuone,noinsert,noselect
+set completeopt=menu,popup
 
 " Remap j/k for navigating the omni-completion menu
 inoremap <expr> j pumvisible() ? "\<C-n>" : "j"
@@ -300,9 +315,11 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   "   Perl::Tidy
   "   Perl::Critic
 
+  " gopls, gometalinter
   let g:ale_linters = {
-        \'go': ['gometalinter','gofmt','gobuild'],
+        \'go': ['golangci-lint','gofmt','gobuild'],
         \'perl': ['perl','perlcritic'],
+        \'python': ['pylint', 'pyright', 'isort', 'ruff'],
         \}
   let g:ale_linter_aliases = {'bash': 'sh'}
   let g:ale_perl_perlcritic_options = '--severity 3'
@@ -311,6 +328,8 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
         \'sh': ['shfmt'],
         \'bash': ['shfmt'],
         \'perl': ['perltidy'],
+        \'javascript':['prettier'],
+        \'typescript':['prettier'],
         \}
   let g:ale_fix_on_save = 1
   let g:ale_perl_perltidy_options = '-b'
@@ -339,6 +358,23 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   let g:go_code_completion_enabled = 1
   let g:go_auto_sameids = 0
   set updatetime=100
+
+  " python
+  let g:python_fmt_fail_silently = 0
+  let g:python_fmt_command = 'ruff'
+  let g:python_fmt_autosave = 1
+  let g:python_highlight_types = 1
+  let g:python_highlight_fields = 1
+  let g:python_highlight_functions = 1
+  let g:python_highlight_function_calls = 1
+  let g:python_highlight_operators = 1
+  let g:python_highlight_extra_types = 1
+  let g:python_highlight_variable_declarations = 1
+  let g:python_highlight_variable_assignments = 1
+  let g:python_highlight_build_constraints = 1
+  let g:python_highlight_diagnostic_errors = 1
+  let g:python_highlight_diagnostic_warnings = 1
+  let g:python_code_completion_enabled = 1
 
   " common go macros
   au FileType go nmap <leader>m ilog.Print("made")<CR><ESC>
