@@ -126,14 +126,13 @@ set statusline=   " clear default statusline
 
 " first line: mode and basic info
 set statusline+=[%{ModeName()}]
-set statusline+=\ %t
 set statusline+=\ buf:%n
 set statusline+=\ %l:%c
 set statusline+=\ %m%w%r
 
 " second line: file details
 set statusline+=\ %=
-set statusline+=%F
+set statusline+=\ %.50F
 set statusline+=\ 
 set statusline+=%{strlen(&fenc)?&fenc:&enc}
 set statusline+=\ 
