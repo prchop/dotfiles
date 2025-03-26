@@ -125,20 +125,19 @@ set laststatus=2  " 0 to not show
 set statusline=   " clear default statusline
 
 " first line: mode and basic info
-set statusline+=[%{ModeName()}]
+set statusline+=\ [%{ModeName()}]
+set statusline+=\ %.50t
+set statusline+=\ %P
+set statusline+=\ (%l:%c)
 set statusline+=\ buf:%n
-set statusline+=\ %l:%c
 set statusline+=\ %m%w%r
 
 " second line: file details
 set statusline+=\ %=
-set statusline+=\ %.50F
-set statusline+=\ 
 set statusline+=%{strlen(&fenc)?&fenc:&enc}
 set statusline+=\ 
 set statusline+=[%{strlen(&ft)?&ft:'none'}]
 set statusline+=\ 
-set statusline+=%p%%
 
 "set ruf=%30(%=%#LineNr#%.50F\ [%{strlen(&ft)?&ft:'none'}]\ %l:%c\ %p%%%)
 "set statusline=[%{ModeName()}]\ %t\ [%n]\ %l:%c\ %m%w\ %r%=%100(%F\ [%{strlen(&ft)?&ft:'none'}]\ %{strlen(&fenc)?&fenc:&enc}\ %p%%%)
