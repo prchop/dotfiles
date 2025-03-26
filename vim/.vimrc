@@ -108,11 +108,12 @@ set background=dark
 set ruler
 set ruf=%30(%=%#LineNr#%.50F\ [%{strlen(&ft)?&ft:'none'}]\ %l:%c\ %p%%%)
 
+" set status line to one line if '0'
+set laststatus=2
+"set cmdheight
+
 " stop complaints about switching buffer with changes
 set hidden
-
-" set status line to one line
-set laststatus=0
 
 " command history
 set history=100
@@ -131,7 +132,7 @@ set scrolloff=3
 " term gui colors
 set termguicolors
 
-" Keymap goes here.
+" Keymap goes here
 nnoremap <leader>e :Explore<CR>
 nnoremap <C-L> :nohl<CR><C-L>
 nmap <leader>w :set nowrap!<CR>
@@ -161,7 +162,7 @@ au bufnewfile,bufRead .dockerignore set filetype=gitignore
 au bufnewfile,bufRead .bashrc,.bash_profile set filetype=bash
 au bufnewfile,bufRead *gitconfig set filetype=gitconfig
 au bufnewfile,bufRead /tmp/psql.edit.* set syntax=sql
-au bufnewfile,bufRead *.go set spell spellcapcheck=0
+au bufnewfile,bufRead *.go set nospell spellcapcheck=0
 au bufnewfile,bufRead commands.yaml set spell
 au bufnewfile,bufRead *.{txt,md,adoc} set spell
 
@@ -225,6 +226,8 @@ augroup CloseLoclistWindowGroup
   autocmd!
   autocmd QuitPre * if empty(&buftype) | lclose | endif
 augroup END
+
+autocmd BufWritePost *.{md,adoc} silent !toemoji %
 
 "fix bork bash detection
 if has("eval")  " vim-tiny detection
@@ -393,6 +396,7 @@ else
 endif
 
 " set TMUX window name to name of file
+" longer version `. expand('%:p:h:t') . '/' . expand('%:t')`
 if exists('$TMUX')
-    autocmd BufEnter * call system('tmux rename-window ' . expand('%:p:h:t') . '/' . expand('%:t'))
+    autocmd BufEnter * call system('tmux rename-window ' . expand('%:t'))
 endif
