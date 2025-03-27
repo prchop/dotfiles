@@ -90,6 +90,43 @@ export NVIM_SCREENKEY=1
 # export GOPATH="$HOME/.local/go"
 # export GOBIN="$HOME/.local/bin"
 
+set-editor() {
+	export EDITOR="$1"
+	export VISUAL="$1"
+	export GH_EDITOR="$1"
+	export GIT_EDITOR="$1"
+	alias vi="\$EDITOR"
+}
+_have "vim" && set-editor vi
+_have "nvim" && set-editor nvim
+
+fpicker() {
+	local files=()
+	local preview_cmd="bat --color=always --style=numbers --line-range=:500 {}"
+	local max="${1:-4}"
+	shift
+	local search_paths=("$PWD" "$REPOS" "$DOCUMENTS" "$CODE" "$@")
+
+	# Find files and use fzf for selection
+	mapfile -t files < <(
+		find "${search_paths[@]}" \
+			-maxdepth "$max" -name ".git" \
+			-prune -o -type f -print 2>/dev/null |
+			fzf --preview="$preview_cmd" \
+				--query="$*" --multi --select-1 --exit-0
+	)
+
+	if [[ ${#files[@]} -eq 0 ]]; then
+		echo "No file selected." >&2
+		return 1
+	fi
+
+	# Open selected files
+	"${EDITOR:-vim}" "${files[@]}"
+	printf '%s\n' "${files[0]}"
+}
+_have fzf && _have bat && export fpicker
+
 pathprepend() {
 	for arg in "$@"; do
 		test -d "$arg" || continue
@@ -144,20 +181,18 @@ alias c='printf "\e[H\e[2J"'
 # personal and private bashrc config
 _source_if "$HOME/.bash_personal"
 
-# TMUX-attach
-# if [ -z "$TMUX" ] && [ "$TERM" = "xterm-kitty" ]; then
-# 	tmux attach || tmux new-session -s home && exit
-# fi
+# TMUX
+if [ -z "$TMUX" ] && [ "$TERM" = "xterm-kitty" ]; then
+	tmux attach || tmux new-session && exit
+fi
 
 if _have tmux && [[ -n "$TMUX" ]]; then
+	current_session=$(tmux display-message -p "#S")
 	session_name="$(wd session)"
-	count=1
-	base_session_name="$session_name"
-	while tmux has-session -t "$session_name" 2>/dev/null; do
-		session_name="${base_session_name}_${count}"
-		((count++))
-	done
-	tmux rename-session "$session_name"
+	if [[ "$current_session" =~ ^[0-9]+$ ]] &&
+		! tmux has-session -t "$session_name" 2>/dev/null; then
+		tmux rename-session "$(wd session)"
+	fi
 fi
 
 # nvm
