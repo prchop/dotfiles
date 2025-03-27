@@ -126,14 +126,15 @@ set statusline=   " clear default statusline
 
 " first line: mode and basic info
 set statusline+=\ [%{ModeName()}]
-set statusline+=\ %.50t
+set statusline+=\ %m%w%r
 set statusline+=\ %P
 set statusline+=\ (%l:%c)
 set statusline+=\ buf:%n
-set statusline+=\ %m%w%r
 
 " second line: file details
 set statusline+=\ %=
+set statusline+=\ %.50F
+set statusline+=\ 
 set statusline+=%{strlen(&fenc)?&fenc:&enc}
 set statusline+=\ 
 set statusline+=[%{strlen(&ft)?&ft:'none'}]
@@ -167,6 +168,7 @@ nnoremap <leader>e :Explore<CR>
 nnoremap <C-L> :nohl<CR><C-L>
 nmap <leader>w :set nowrap!<CR>
 nmap <leader>p :set paste<CR>i
+nmap <leader>s. :FZF<CR>
 map <leader>1 :set nonumber!<CR>
 nmap <F2> :call <SID>SynStack()<CR>
 set pastetoggle=<F3>
@@ -314,6 +316,8 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
     Plug 'fatih/vim-go' " GoInstallBinaries separately
     Plug 'vim-pandoc/vim-pandoc'
     Plug 'rwxrob/vim-pandoc-syntax-simple'
+    "Plug 'junegunn/fzf'
+    "Plug 'junegunn/fzf.vim'
     "Plug 'habamax/vim-asciidoctor'
     "Plug 'kana/vim-textobj-user'
     "Plug 'mjakl/vim-asciidoc'
@@ -423,6 +427,14 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
 
 else
   autocmd vimleavepre *.go !gofmt -w % " backup if fatih fails
+endif
+
+"" See `--tmux` option in `man fzf` for available options
+"" [center|top|bottom|left|right][,SIZE[%]][,SIZE[%]]
+if exists('$TMUX')
+  let g:fzf_layout = { 'tmux': 'bottom,100%,50%' }
+else
+  let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 endif
 
 " set TMUX window name to name of file

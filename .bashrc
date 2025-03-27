@@ -1,16 +1,20 @@
 #!/bin/bash
 # shellcheck disable=SC1090,SC1091
-
+#
 #set -x
+
+case $- in
+*i*) ;; # interactive
+*) return ;;
+esac
+
 test -s ~/.alias && . ~/.alias || true
 
 _have() { type "$1" &>/dev/null; }
 _source_if() { [[ -r "$1" ]] && source "$1"; }
 
-# ======================
-# ==== SMART PROMPT ====
-# ======================
-# Copyright 2024 Robert S. Muhlestein (github/rwxrob/dot)
+# --------------------------- smart prompt ---------------------------
+# Copyright 2024 Robert S. Muhlestein (linktr.ee/rwxrob)
 
 PROMPT_LONG=20
 PROMPT_MAX=95
@@ -35,8 +39,8 @@ __ps1() {
 	[[ -n "$B" ]] && B="$g($b$B$g)"
 
 	short="$u\u$g$PROMPT_AT$h\h$g:$w$dir$B$p$P$x "
-	long="${g}╔$u\u$g$PROMPT_AT$h\h$g:$w$dir$B\n${g}╚$p$P$x "
-	double="${g}╔$u\u$g$PROMPT_AT$h\h$g:$w$dir\n${g}║$B\n${g}╚$p$P$x "
+	long="${g}╔ $u\u$g$PROMPT_AT$h\h$g:$w$dir$B\n${g}╚ $p$P$x "
+	double="${g}╔ $u\u$g$PROMPT_AT$h\h$g:$w$dir\n${g}║ $B\n${g}╚ $p$P$x "
 
 	if ((${#countme} > PROMPT_MAX)); then
 		PS1="$double"
@@ -75,6 +79,7 @@ export GHREPOS="$REPOS/github.com/$GITUSER"
 export DOTFILES="$GHREPOS/dotfiles"
 export SCRIPTS="$HOME/scripts"
 export DOCUMENTS="$HOME/Documents"
+export CODE="$HOME/Code"
 export DOWNLOADS="$HOME/Downloads"
 export GOPATH="$HOME/go"
 export GOBIN="$HOME/go/bin"
@@ -84,7 +89,7 @@ export BUNBIN="$BUN_INSTALL/bin"
 export CARGOBIN="$CARGO_HOME/bin"
 export GOPROXY=direct
 export GCO_ENABLED=0
-export NVIM_SCREENKEY=1
+# export NVIM_SCREENKEY=1
 
 # for manual go install
 # export GOPATH="$HOME/.local/go"
@@ -100,32 +105,53 @@ set-editor() {
 _have "vim" && set-editor vi
 _have "nvim" && set-editor nvim
 
+# export without -f work in bash 4.3+
 fpicker() {
-	local files=()
 	local preview_cmd="bat --color=always --style=numbers --line-range=:500 {}"
-	local max="${1:-4}"
+	local pattern="${1:-*}"
 	shift
-	local search_paths=("$PWD" "$REPOS" "$DOCUMENTS" "$CODE" "$@")
+	local search_paths=("$PWD" "$REPOS" "$CODE" "$DOCUMENTS")
 
-	# Find files and use fzf for selection
+	# find matching files
+	local files=()
 	mapfile -t files < <(
-		find "${search_paths[@]}" \
-			-maxdepth "$max" -name ".git" \
-			-prune -o -type f -print 2>/dev/null |
-			fzf --preview="$preview_cmd" \
-				--query="$*" --multi --select-1 --exit-0
+		find "${search_paths[@]}" -type d \( -name ".git" -o -name "node_modules" \) \
+			-prune -o -type f -name "$pattern" -print 2>/dev/null |
+			fzf --preview="$preview_cmd" --multi --select-1 --exit-0
 	)
 
-	if [[ ${#files[@]} -eq 0 ]]; then
+	# empty selection
+	[[ ${#files[@]} -eq 0 ]] && {
 		echo "No file selected." >&2
 		return 1
-	fi
+	}
 
-	# Open selected files
+	# open selected files
 	"${EDITOR:-vim}" "${files[@]}"
 	printf '%s\n' "${files[0]}"
 }
 _have fzf && _have bat && export fpicker
+
+clone() {
+	local repo="$1" user
+	local repo="${repo#https://github.com/}"
+	local repo="${repo#git@github.com:}"
+	if [[ $repo =~ / ]]; then
+		user="${repo%%/*}"
+	else
+		user="$GITUSER"
+		[[ -z "$user" ]] && user="$USER"
+	fi
+	local name="${repo##*/}"
+	local userd="$REPOS/github.com/$user"
+	local path="$userd/$name"
+	[[ -d "$path" ]] && cd "$path" && return
+	mkdir -p "$userd"
+	cd "$userd"
+	echo gh repo clone "$user/$name" -- --recurse-submodule
+	gh repo clone "$user/$name" -- --recurse-submodule
+	cd "$name"
+} && export clone
 
 pathprepend() {
 	for arg in "$@"; do
@@ -135,7 +161,7 @@ pathprepend() {
 		PATH=${PATH/%":$arg"/}
 		export PATH="$arg${PATH:+":${PATH}"}"
 	done
-} && export -f pathprepend
+} && export pathprepend
 
 pathappend() {
 	declare arg
@@ -146,7 +172,7 @@ pathappend() {
 		PATH=${PATH/%":$arg"/}
 		export PATH="${PATH:+"$PATH:"}$arg"
 	done
-} && export -f pathappend
+} && export pathappend
 
 pathprepend \
 	"$HOME/.local/bin" \
@@ -166,14 +192,24 @@ pathappend \
 	/sbin \
 	/bin
 
-# vi mode
+# history
+export HISTCONTROL=ignoreboth
+export HISTSIZE=5000
+export HISTFILESIZE=10000
+
 set -o vi
+shopt -s histappend
 
 # alias
-alias path='echo -e "${PATH//:/\\n}"'
-alias scripts='cd $SCRIPTS'
-alias ghrepos='cd $GHREPOS'
 alias c='printf "\e[H\e[2J"'
+alias codes='cd $CODE'
+alias documents='cd $DOCUMENTS'
+alias dot='cd $DOTFILES'
+alias ghrepos='cd $GHREPOS'
+alias path='echo -e "${PATH//:/\\n}"'
+alias projects='cd $CODE/projects/'
+alias scripts='cd $SCRIPTS'
+alias '??'=google
 
 # cargo envpath
 #. "$HOME/.cargo/env"
