@@ -73,11 +73,11 @@ set nowritebackup
 
 set icon
 
-" not a fan of bracket matching or folding
-if has("eval") " vim-tiny detection
-  let g:loaded_matchparen=1
-endif
-set noshowmatch
+"" not a fan of bracket matching or folding
+"if has("eval") " vim-tiny detection
+"  let g:loaded_matchparen=1
+"endif
+"set noshowmatch
 
 " enable wild menu
 set wildmenu
@@ -127,13 +127,15 @@ set statusline=   " clear default statusline
 " first line: mode and basic info
 set statusline+=\ [%{ModeName()}]
 set statusline+=\ %m%w%r
+set statusline+=\ %t
 set statusline+=\ %P
 set statusline+=\ (%l:%c)
-set statusline+=\ buf:%n
+set statusline+=\ 0x%B
+"set statusline+=\ buf:%n
 
 " second line: file details
 set statusline+=\ %=
-set statusline+=\ %.50F
+set statusline+=\ %.30F
 set statusline+=\ 
 set statusline+=%{strlen(&fenc)?&fenc:&enc}
 set statusline+=\ 
@@ -259,7 +261,7 @@ augroup CloseLoclistWindowGroup
   autocmd QuitPre * if empty(&buftype) | lclose | endif
 augroup END
 
-autocmd BufWritePost *.{md,adoc} silent !toemoji %
+"autocmd BufWritePost *.{md,adoc} silent !toemoji %
 
 "fix bork bash detection
 if has("eval")  " vim-tiny detection
@@ -316,8 +318,6 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
     Plug 'fatih/vim-go' " GoInstallBinaries separately
     Plug 'vim-pandoc/vim-pandoc'
     Plug 'rwxrob/vim-pandoc-syntax-simple'
-    "Plug 'junegunn/fzf'
-    "Plug 'junegunn/fzf.vim'
     "Plug 'habamax/vim-asciidoctor'
     "Plug 'kana/vim-textobj-user'
     "Plug 'mjakl/vim-asciidoc'
@@ -428,6 +428,9 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
 else
   autocmd vimleavepre *.go !gofmt -w % " backup if fatih fails
 endif
+
+" higlight when yanking
+autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup='Visual', timeout=300}
 
 "" See `--tmux` option in `man fzf` for available options
 "" [center|top|bottom|left|right][,SIZE[%]][,SIZE[%]]
