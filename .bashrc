@@ -1,7 +1,7 @@
 #!/bin/bash
 # shellcheck disable=SC1090,SC1091
 #
-#set -x
+# set -x
 
 case $- in
 *i*) ;; # interactive
@@ -106,7 +106,7 @@ _have "vim" && set-editor vi
 _have "nvim" && set-editor nvim
 
 # export without -f work in bash 4.3+
-fpicker() {
+ffwide() {
 	local preview_cmd="bat --color=always --style=numbers --line-range=:500 {}"
 	local pattern="${1:-*}"
 	shift
@@ -115,12 +115,13 @@ fpicker() {
 	# find matching files
 	local files=()
 	mapfile -t files < <(
-		find "${search_paths[@]}" -type d \( -name ".git" -o -name "node_modules" \) \
+		find "${search_paths[@]}" \
+			-type d \( -name ".git" -o -name "node_modules" \) \
 			-prune -o -type f -name "$pattern" -print 2>/dev/null |
 			fzf --preview="$preview_cmd" --multi --select-1 --exit-0
 	)
 
-	# empty selection
+	# handle empty selection
 	[[ ${#files[@]} -eq 0 ]] && {
 		echo "No file selected." >&2
 		return 1
@@ -130,7 +131,21 @@ fpicker() {
 	"${EDITOR:-vim}" "${files[@]}"
 	printf '%s\n' "${files[0]}"
 }
-_have fzf && _have bat && export fpicker
+
+ffnow() {
+	local preview_cmd="bat --color=always --style=numbers --line-range=:500 {}"
+	local pattern="${1:-*}"
+
+	find . -name "$pattern" -type f 2>/dev/null |
+		grep -v -E '/(\.git|node_modules)/' |
+		fzf --preview="$preview_cmd" --multi --select-1 --exit-0 |
+		xargs -r "${EDITOR:-vim}" || echo "No file selected." >&2
+}
+
+if _have fzf && _have bat; then
+	export ffnow
+	export ffwide
+fi
 
 clone() {
 	local repo="$1" user
