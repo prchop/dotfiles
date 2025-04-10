@@ -12,13 +12,16 @@ filetype indent on
 
 " Add numbers to each line on the left-hand side.
 set number
-set numberwidth=1
+set numberwidth
 
 " Auto write files when changing
 set autowrite
 
 " Highlight cursorline horizontally
 set cursorline
+
+" decrease delay when press a key
+set timeoutlen=300
 
 " Indentation
 set autoindent
