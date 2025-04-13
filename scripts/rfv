@@ -9,4 +9,4 @@ rg --color=always --line-number --no-heading --smart-case "${*:-}" |
 		--delimiter : \
 		--preview 'bat --color=always {1} --highlight-line {2}' \
 		--preview-window 'right,60%,border-vertical,+{2}+3/3,~3' \
-		--bind 'enter:become(vi {1} +{2})'
+		--bind "enter:become($EDITOR {1} +{2})"
