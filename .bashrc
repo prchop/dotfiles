@@ -1,7 +1,7 @@
 #!/bin/bash
 # shellcheck disable=SC1090,SC1091
 #
-# set -x
+#set -x
 
 case $- in
 *i*) ;; # interactive
@@ -50,9 +50,9 @@ __ps1() {
 		PS1="$short"
 	fi
 
-	if _have tmux && [[ -n "$TMUX" ]]; then
-		tmux rename-window "$(wd)"
-	fi
+	# if _have tmux && [[ -n "$TMUX" ]]; then
+	# 	tmux rename-window "$(wd)"
+	# fi
 }
 
 wd() {
@@ -83,13 +83,9 @@ export CODE="$HOME/Code"
 export DOWNLOADS="$HOME/Downloads"
 export GOPATH="$HOME/go"
 export GOBIN="$HOME/go/bin"
-export BUN_INSTALL="$HOME/.bun"
-export CARGO_HOME="$HOME/.cargo"
-export BUNBIN="$BUN_INSTALL/bin"
-export CARGOBIN="$CARGO_HOME/bin"
 export GOPROXY=direct
 export GCO_ENABLED=0
-# export NVIM_SCREENKEY=1
+export NVIM_SCREENKEY=1
 
 # for manual go install
 # export GOPATH="$HOME/.local/go"
@@ -106,7 +102,7 @@ _have "vim" && set-editor vi
 _have "nvim" && set-editor nvim
 
 # export without -f work in bash 4.3+
-ffwide() {
+ffswd() {
 	local preview_cmd="bat --color=always --style=numbers --line-range=:500 {}"
 	local pattern="${1:-*}"
 	shift
@@ -127,12 +123,12 @@ ffwide() {
 		return 1
 	}
 
-	# open selected files
+	# Open selected files
 	"${EDITOR:-vim}" "${files[@]}"
 	printf '%s\n' "${files[0]}"
 }
 
-ffnow() {
+ffcwd() {
 	local preview_cmd="bat --color=always --style=numbers --line-range=:500 {}"
 	local pattern="${1:-*}"
 
@@ -143,8 +139,8 @@ ffnow() {
 }
 
 if _have fzf && _have bat; then
-	export ffnow
-	export ffwide
+	export ffswd
+	export ffcwd
 fi
 
 clone() {
@@ -193,10 +189,11 @@ pathprepend \
 	"$HOME/.local/bin" \
 	"$HOME/go/bin" \
 	"$HOME/.bun/bin" \
-	"$HOME/.cargo/bin" \
 	"$HOME/.config/nvm/versions/node/$(node -v)/bin" \
 	/usr/local/bin \
 	"$SCRIPTS"
+# "$HOME/.cargo/bin" \
+# "$HOME/.deno/bin" \
 # "$HOME/.local/go/bin" \
 
 pathappend \
@@ -225,9 +222,14 @@ alias path='echo -e "${PATH//:/\\n}"'
 alias projects='cd $CODE/projects/'
 alias scripts='cd $SCRIPTS'
 alias '??'=google
-
-# cargo envpath
-#. "$HOME/.cargo/env"
+alias work="timer -f 50m -n '🔥️ Time to Work' && \
+	paplay /usr/share/sounds/freedesktop/stereo/complete.oga \
+	&& notify-send -u normal -i ~/.local/share/icons/tomato.png \
+	'Pomodoro' 'Work Timer is up! Take a Break 😊'"
+alias rest="timer -f 10m -n '☕️ Time to Rest' && \
+	paplay /usr/share/sounds/freedesktop/stereo/complete.oga \
+	&& notify-send -u normal -i ~/.local/share/icons/tomato.png \
+	'Pomodoro' 'Break is over! Get back to work 😬'"
 
 # personal and private bashrc config
 _source_if "$HOME/.bash_personal"
