@@ -8,6 +8,8 @@ vim.cmd([[
   highlight Normal guibg=NONE
   highlight NonText guibg=NONE
   highlight Status guibg=NONE
+  highlight SpellBad guibg=#1c1c1c guifg=#d70000 gui=NONE
+  highlight SpellRare guibg=#1c1c1c guifg=#d70000 gui=NONE
   "highlight WinBar guibg=#303030
 ]])
 
