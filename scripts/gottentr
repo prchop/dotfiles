@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+tmux rename-window "RUN TEST"
+entr bash -c "clear; go test -v ${1:-.}" < <(find .)
