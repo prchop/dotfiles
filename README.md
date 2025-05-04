@@ -1,2 +1,2 @@
 # Personal dotfiles
-repo for backup a dotfiles configuration
+This is my personal repo for backup a dotfiles configuration
