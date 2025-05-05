@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+: >/tmp/buf
+
+while IFS= read -r line; do
+	echo "$line" >>/tmp/buf
+	echo "$line"
+done
+
+type xclip &>/dev/null && xclip -selection clipboard </tmp/buf

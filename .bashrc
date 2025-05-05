@@ -234,6 +234,10 @@ alias rest="timer -f 10m -n '☕️ Time to Rest' && \
 # personal and private bashrc config
 _source_if "$HOME/.bash_personal"
 
+# source external completion
+_have timer && . <(timer completion bash)
+_have pandoc && . <(pandoc --bash-completion)
+
 # TMUX
 if [ -z "$TMUX" ] && [ "$TERM" = "xterm-kitty" ]; then
 	tmux attach || tmux new-session && exit
