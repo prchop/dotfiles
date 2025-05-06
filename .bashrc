@@ -1,7 +1,7 @@
 #!/bin/bash
 # shellcheck disable=SC1090,SC1091
 #
-#set -x
+# set -x
 
 case $- in
 *i*) ;; # interactive
@@ -50,20 +50,16 @@ __ps1() {
 		PS1="$short"
 	fi
 
-	# if _have tmux && [[ -n "$TMUX" ]]; then
-	# 	tmux rename-window "$(wd)"
-	# fi
+	if _have tmux && [[ -n "$TMUX" ]]; then
+		tmux rename-window "$(wd)"
+	fi
 }
 
 wd() {
 	dir="${PWD##*/}"
 	parent="${PWD%"/${dir}"}"
 	parent="${parent##*/}"
-	if [[ "$1" == "session" ]]; then
-		test -z "$dir" && echo "$parent" || echo "$dir"
-	else
-		echo "$parent/$dir"
-	fi
+	echo "$parent/$dir"
 } && export wd
 
 PROMPT_COMMAND="__ps1"
@@ -83,9 +79,13 @@ export CODE="$HOME/Code"
 export DOWNLOADS="$HOME/Downloads"
 export GOPATH="$HOME/go"
 export GOBIN="$HOME/go/bin"
+export BUN_INSTALL="$HOME/.bun"
+export CARGO_HOME="$HOME/.cargo"
+export BUNBIN="$BUN_INSTALL/bin"
+export CARGOBIN="$CARGO_HOME/bin"
 export GOPROXY=direct
 export GCO_ENABLED=0
-export NVIM_SCREENKEY=1
+# export NVIM_SCREENKEY=1
 
 # for manual go install
 # export GOPATH="$HOME/.local/go"
@@ -185,16 +185,17 @@ pathappend() {
 	done
 } && export pathappend
 
+# "$HOME/.local/go/bin" \
+# /usr/local/bin \
+
 pathprepend \
 	"$HOME/.local/bin" \
 	"$HOME/go/bin" \
+	"$SCRIPTS" \
 	"$HOME/.bun/bin" \
-	"$HOME/.config/nvm/versions/node/$(node -v)/bin" \
-	/usr/local/bin \
-	"$SCRIPTS"
-# "$HOME/.cargo/bin" \
-# "$HOME/.deno/bin" \
-# "$HOME/.local/go/bin" \
+	"$HOME/.cargo/bin" \
+	"$HOME/.deno/bin" \
+	"$NVM_DIR/versions/node/$(node -v)/bin"
 
 pathappend \
 	/usr/local/bin \
@@ -221,11 +222,12 @@ alias ghrepos='cd $GHREPOS'
 alias path='echo -e "${PATH//:/\\n}"'
 alias projects='cd $CODE/projects/'
 alias scripts='cd $SCRIPTS'
+alias todo='$EDITOR $DOCUMENTS/.todo.md'
 alias '??'=google
 alias work="timer -f 50m -n '🔥️ Time to Work' && \
 	paplay /usr/share/sounds/freedesktop/stereo/complete.oga \
 	&& notify-send -u normal -i ~/.local/share/icons/tomato.png \
-	'Pomodoro' 'Work Timer is up! Take a Break 😊'"
+	'Pomodoro' 'Work Timer is up! Take a rest 😴️'"
 alias rest="timer -f 10m -n '☕️ Time to Rest' && \
 	paplay /usr/share/sounds/freedesktop/stereo/complete.oga \
 	&& notify-send -u normal -i ~/.local/share/icons/tomato.png \
@@ -245,10 +247,10 @@ fi
 
 if _have tmux && [[ -n "$TMUX" ]]; then
 	current_session=$(tmux display-message -p "#S")
-	session_name="$(wd session)"
+	session_name="$(wd)"
 	if [[ "$current_session" =~ ^[0-9]+$ ]] &&
 		! tmux has-session -t "$session_name" 2>/dev/null; then
-		tmux rename-session "$(wd session)"
+		tmux rename-session "$(wd)"
 	fi
 fi
 

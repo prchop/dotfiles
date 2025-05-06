@@ -12,7 +12,6 @@ filetype indent on
 
 " Add numbers to each line on the left-hand side.
 set number
-set numberwidth
 
 " Auto write files when changing
 set autowrite
@@ -119,7 +118,7 @@ function! ModeName()
         \ 'c':  'COMMAND'
     \ }
 
-   return get(l:mode_dict, mode(), mode())
+  return get(l:mode_dict, mode(), mode())
 endfunction
 
 " multi-line statusline configuration
@@ -130,10 +129,11 @@ set statusline=   " clear default statusline
 " first line: mode and basic info
 set statusline+=\ [%{ModeName()}]
 set statusline+=\ %m%w%r
-set statusline+=\ %t
+"set statusline+=\ %t
 set statusline+=\ %P
 set statusline+=\ (%l:%c)
-set statusline+=\ 0x%B
+set statusline+=\ %b
+"set statusline+=\ 0x%B
 "set statusline+=\ buf:%n
 
 " second line: file details
@@ -169,14 +169,13 @@ set scrolloff=3
 set termguicolors
 
 " Keymap goes here
-nnoremap <leader>e :Explore<CR>
 nnoremap <C-L> :nohl<CR><C-L>
+nmap <leader>e :Explore<CR>
 nmap <leader>w :set nowrap!<CR>
 nmap <leader>p :set paste<CR>i
-nmap <leader>s. :FZF<CR>
 map <leader>1 :set nonumber!<CR>
 nmap <F2> :call <SID>SynStack()<CR>
-set pastetoggle=<F3>
+"set pastetoggle=<F3>
 map <F4> :set list!<CR>
 map <F5> :set cursorline!<CR>
 map <F7> :set spell!<CR>
@@ -296,11 +295,7 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 " enable omni-completion
 set omnifunc=syntaxcomplete#Complete
 imap <tab><tab> <c-x><c-o>
-set completeopt=menu,popup
-
-" Remap j/k for navigating the omni-completion menu
-inoremap <expr> j pumvisible() ? "\<C-n>" : "j"
-inoremap <expr> k pumvisible() ? "\<C-p>" : "k"
+set completeopt=menu,preview
 
 " Install vim-plug if not found
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -319,6 +314,7 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
     Plug 'conradirwin/vim-bracketed-paste'
     Plug 'sainnhe/gruvbox-material'
     Plug 'fatih/vim-go' " GoInstallBinaries separately
+    Plug 'pangloss/vim-javascript'
     Plug 'vim-pandoc/vim-pandoc'
     Plug 'rwxrob/vim-pandoc-syntax-simple'
     "Plug 'habamax/vim-asciidoctor'
@@ -326,9 +322,12 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
     "Plug 'mjakl/vim-asciidoc'
     Plug 'dense-analysis/ale'
 
-    if has('nvim') || v:version >= 800
+    if has('nvim') || v:version >= 10.0
       Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
       Plug 'neoclide/coc.nvim', {'branch': 'release'}
+      "harpoon setup
+      Plug 'nvim-lua/plenary.nvim',
+      Plug 'ThePrimeagen/harpoon', {'branch': 'harpoon2'}
       if exists('$NVIM_SCREENKEY')
         Plug 'NStefan002/screenkey.nvim'
       endif
@@ -374,6 +373,10 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   let g:ale_fix_on_save = 1
   let g:ale_perl_perltidy_options = '-b'
 
+  let g:ale_linters_ignore = {
+  \   'typescript': ['tsserver', 'eslint', 'standard', 'xo', 'dprint', 'biome', 'tslint'],
+  \   'javascript': ['tsserver', 'eslint', 'standard', 'xo', 'dprint', 'biome', 'tslint'],
+  \}
   " pandoc
   let g:pandoc#formatting#mode = 'h' " A'
   let g:pandoc#formatting#textwidth = 72
@@ -399,23 +402,6 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   let g:go_auto_sameids = 0
   set updatetime=100
 
-  " python
-  let g:python_fmt_fail_silently = 0
-  let g:python_fmt_command = 'ruff'
-  let g:python_fmt_autosave = 1
-  let g:python_highlight_types = 1
-  let g:python_highlight_fields = 1
-  let g:python_highlight_functions = 1
-  let g:python_highlight_function_calls = 1
-  let g:python_highlight_operators = 1
-  let g:python_highlight_extra_types = 1
-  let g:python_highlight_variable_declarations = 1
-  let g:python_highlight_variable_assignments = 1
-  let g:python_highlight_build_constraints = 1
-  let g:python_highlight_diagnostic_errors = 1
-  let g:python_highlight_diagnostic_warnings = 1
-  let g:python_code_completion_enabled = 1
-
   " common go macros
   au FileType go nmap <leader>m ilog.Print("made")<CR><ESC>
   au FileType go nmap <leader>n iif err != nil {return err}<CR><ESC>
@@ -435,16 +421,16 @@ endif
 " higlight when yanking
 autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup='Visual', timeout=300}
 
-"" See `--tmux` option in `man fzf` for available options
-"" [center|top|bottom|left|right][,SIZE[%]][,SIZE[%]]
-if exists('$TMUX')
-  let g:fzf_layout = { 'tmux': 'bottom,100%,50%' }
-else
-  let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
-endif
+" CoC Setup for JS/TS only
+augroup CocJSTS
+  autocmd!
+  autocmd FileType javascript,javascriptreact,typescript,typescriptreact let b:ale_enabled = 0
+  autocmd FileType javascript,javascriptreact,typescript,typescriptreact nnoremap <buffer> gd <Plug>(coc-definition)
+  autocmd FileType javascript,javascriptreact,typescript,typescriptreact nnoremap <buffer> <silent> K :call CocActionAsync('doHover')<CR>
+augroup END
 
 " set TMUX window name to name of file
 " longer version `. expand('%:p:h:t') . '/' . expand('%:t')`
 if exists('$TMUX')
-    autocmd BufEnter * call system('tmux rename-window ' . expand('%:t'))
+    autocmd BufEnter * call system('tmux rename-window ' . expand('%:p:h:t') . '/' . expand('%:t'))
 endif
