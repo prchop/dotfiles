@@ -102,47 +102,6 @@ _have "vim" && set-editor vi
 _have "nvim" && set-editor nvim
 
 # export without -f work in bash 4.3+
-ffswd() {
-	local preview_cmd="bat --color=always --style=numbers --line-range=:500 {}"
-	local pattern="${1:-*}"
-	shift
-	local search_paths=("$PWD" "$REPOS" "$CODE" "$DOCUMENTS")
-
-	# find matching files
-	local files=()
-	mapfile -t files < <(
-		find "${search_paths[@]}" \
-			-type d \( -name ".git" -o -name "node_modules" \) \
-			-prune -o -type f -name "$pattern" -print 2>/dev/null |
-			fzf --preview="$preview_cmd" --multi --select-1 --exit-0
-	)
-
-	# handle empty selection
-	[[ ${#files[@]} -eq 0 ]] && {
-		echo "No file selected." >&2
-		return 1
-	}
-
-	# Open selected files
-	"${EDITOR:-vim}" "${files[@]}"
-	printf '%s\n' "${files[0]}"
-}
-
-ffcwd() {
-	local preview_cmd="bat --color=always --style=numbers --line-range=:500 {}"
-	local pattern="${1:-*}"
-
-	find . -name "$pattern" -type f 2>/dev/null |
-		grep -v -E '/(\.git|node_modules)/' |
-		fzf --preview="$preview_cmd" --multi --select-1 --exit-0 |
-		xargs -r "${EDITOR:-vim}" || echo "No file selected." >&2
-}
-
-if _have fzf && _have bat; then
-	export ffswd
-	export ffcwd
-fi
-
 clone() {
 	local repo="$1" user
 	local repo="${repo#https://github.com/}"
@@ -223,6 +182,7 @@ alias path='echo -e "${PATH//:/\\n}"'
 alias projects='cd $CODE/projects/'
 alias scripts='cd $SCRIPTS'
 alias todo='$EDITOR $DOCUMENTS/.todo.md'
+alias temp='cd $(mktemp -d)'
 alias '??'=google
 alias work="timer -f 50m -n '🔥️ Time to Work' && \
 	paplay /usr/share/sounds/freedesktop/stereo/complete.oga \
@@ -243,15 +203,6 @@ _have pandoc && . <(pandoc --bash-completion)
 # TMUX
 if [ -z "$TMUX" ] && [ "$TERM" = "xterm-kitty" ]; then
 	tmux attach || tmux new-session && exit
-fi
-
-if _have tmux && [[ -n "$TMUX" ]]; then
-	current_session=$(tmux display-message -p "#S")
-	session_name="$(wd)"
-	if [[ "$current_session" =~ ^[0-9]+$ ]] &&
-		! tmux has-session -t "$session_name" 2>/dev/null; then
-		tmux rename-session "$(wd)"
-	fi
 fi
 
 # nvm
