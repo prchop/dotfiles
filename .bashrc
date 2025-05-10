@@ -77,19 +77,12 @@ export SCRIPTS="$HOME/scripts"
 export DOCUMENTS="$HOME/Documents"
 export CODE="$HOME/Code"
 export DOWNLOADS="$HOME/Downloads"
-export GOPATH="$HOME/go"
-export GOBIN="$HOME/go/bin"
 export BUN_INSTALL="$HOME/.bun"
 export CARGO_HOME="$HOME/.cargo"
-export BUNBIN="$BUN_INSTALL/bin"
-export CARGOBIN="$CARGO_HOME/bin"
+export GOPATH="$HOME/.local/share/go"
+export GOBIN="$HOME/.local/bin"
 export GOPROXY=direct
 export GCO_ENABLED=0
-# export NVIM_SCREENKEY=1
-
-# for manual go install
-# export GOPATH="$HOME/.local/go"
-# export GOBIN="$HOME/.local/bin"
 
 set-editor() {
 	export EDITOR="$1"
@@ -102,6 +95,19 @@ _have "vim" && set-editor vi
 _have "nvim" && set-editor nvim
 
 # export without -f work in bash 4.3+
+envx() {
+	local envfile="${1:-"$HOME/.env"}"
+	[[ ! -e "$envfile" ]] && echo "$envfile not found" && return 1
+	while IFS= read -r line; do
+		name=${line%%=*}
+		value=${line#*=}
+		[[ -z "${name}" || $name =~ ^# ]] && continue
+		export "$name"="$value"
+	done <"$envfile"
+} && export envx
+
+[[ -e "$HOME/.env" ]] && envx "$HOME/.env"
+
 clone() {
 	local repo="$1" user
 	local repo="${repo#https://github.com/}"
@@ -148,13 +154,13 @@ pathappend() {
 # /usr/local/bin \
 
 pathprepend \
-	"$HOME/.local/bin" \
-	"$HOME/go/bin" \
-	"$SCRIPTS" \
-	"$HOME/.bun/bin" \
-	"$HOME/.cargo/bin" \
+	"$BUN_INSTALL/bin" \
+	"$CARGO_HOME/bin" \
+	"$NVM_DIR/versions/node/$(node -v)/bin" \
 	"$HOME/.deno/bin" \
-	"$NVM_DIR/versions/node/$(node -v)/bin"
+	"$HOME/.local/bin" \
+	"$HOME/.local/go/bin" \
+	"$SCRIPTS"
 
 pathappend \
 	/usr/local/bin \
@@ -182,6 +188,7 @@ alias documents='cd $DOCUMENTS'
 alias dot='cd $DOTFILES'
 alias ghrepos='cd $GHREPOS'
 alias path='echo -e "${PATH//:/\\n}"'
+alias cdpath='echo -e "${CDPATH//:/\\n}"'
 alias projects='cd $CODE/projects/'
 alias scripts='cd $SCRIPTS'
 alias todo='$EDITOR $DOCUMENTS/.todo.md'
@@ -202,6 +209,7 @@ _source_if "$HOME/.bash_personal"
 # source external completion
 _have timer && . <(timer completion bash)
 _have pandoc && . <(pandoc --bash-completion)
+_have dlv && . <(dlv completion bash)
 
 # TMUX
 if [ -z "$TMUX" ] && [ "$TERM" = "xterm-kitty" ]; then
