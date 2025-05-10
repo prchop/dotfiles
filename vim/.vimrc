@@ -173,7 +173,7 @@ nnoremap <C-L> :nohl<CR><C-L>
 nmap <leader>e :Explore<CR>
 nmap <leader>w :set nowrap!<CR>
 nmap <leader>p :set paste<CR>i
-map <leader>1 :set nonumber!<CR>
+map <leader><F1> :set nonumber!<CR>
 nmap <F2> :call <SID>SynStack()<CR>
 "set pastetoggle=<F3>
 map <F4> :set list!<CR>
