@@ -164,6 +164,9 @@ pathappend \
 	/sbin \
 	/bin
 
+# cd path
+export CDPATH=".:$GHREPOS:$DOTFILES:$REPOS:$HOME"
+
 # history
 export HISTCONTROL=ignoreboth
 export HISTSIZE=5000
