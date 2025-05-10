@@ -10,7 +10,8 @@ sub lookup_file {
     my $os   = lc(`uname -s`);
     my $arch = `uname -m`;
     chomp( $arch, $os );
-    $arch = ($arch eq "x86_64") ? "amd64" : $arch;
+    # $arch = ($arch eq "x86_64") ? "amd64" : $arch;
+    $arch = 'amd64' if ($arch eq 'x86_64');
     my $file = `curl -sSL "https://go.dev/dl/?mode=json" \\
        | jq -r '.[0].files[]
        | select(.os == "$os")
