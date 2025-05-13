@@ -2,7 +2,7 @@
 use v5.26;
 
 for my $tool (qw(jq tar curl)) {
-    system("command -v $tool >/dev/null 2>&1") == 0
+    system("command -v $tool > /dev/null 2>&1") == 0
         or die "$tool not found\n";
 }
 
