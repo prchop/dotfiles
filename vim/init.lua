@@ -3,8 +3,10 @@ vim.opt.runtimepath:append(vim.env.HOME .. "/.vim/after")
 vim.opt.packpath = vim.opt.runtimepath:get()
 
 vim.cmd("source ~/.vimrc")
-require 'plugins.gitsigns' -- adds gitsigns recommend keymaps
-require 'plugins.harpoon' -- require harpoon and setup
+if vim.fn.has('nvim-0.10') == 1 then
+    require 'plugins.gitsigns'
+    require 'plugins.harpoon'
+end
 
 vim.cmd([[
   highlight Normal guibg=NONE
