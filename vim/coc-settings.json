@@ -1,0 +1,23 @@
+{
+  "languageserver": {
+    "golang": {
+      "enable": false
+    }
+  },
+
+  "diagnostic.enable": false,
+  "[typescript]": {
+    "diagnostic.enable": true
+  },
+  "[javascript]": {
+    "diagnostic.enable": true
+  },
+  "[go]": {
+    "diagnostic.enable": false
+  },
+
+  "diagnostic.errorSign": "🔥 ",
+  "diagnostic.warningSign": "❗️ ",
+  "diagnostic.infoSign": "✨ ",
+  "diagnostic.hintSign": "💡 "
+}
