@@ -30,6 +30,7 @@
 
 ;; Load evil mode
 (setq evil-want-C-u-scroll t)
+(setq evil-undo-system 'undo-redo)
 (require 'evil)
 (require 'evil-commentary)
 (evil-mode 1)
