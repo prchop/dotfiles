@@ -85,6 +85,11 @@
 (add-hook 'javascript-mode-hook #'lsp-deferred)
 (add-hook 'go-mode-hook #'lsp-deferred)
 
+(require 'flycheck)
+(setq lsp-diagnostics-provider :flycheck)
+(global-flycheck-mode)
+(fringe-mode 8) ;; sets fringe width to 8 pixels on each side
+
 (with-eval-after-load 'lsp-mode
   (define-key evil-normal-state-map (kbd "K") #'lsp-describe-thing-at-point))
 
@@ -158,9 +163,7 @@
 ;   (interactive)
 ;   (eglot-code-actions nil nil "source.organizeImports" t))
 
-
 ; (with-eval-after-load 'go-mode
 ;   (define-key go-mode-map (kbd "C-c i") #'my/eglot-organize-imports))
-
 
 ;;; .emacs end here
