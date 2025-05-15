@@ -41,26 +41,73 @@
 ;; Load evil mode
 (setq evil-want-C-u-scroll t)
 (require 'evil)
+(require 'evil-commentary)
 (evil-mode 1)
+(evil-commentary-mode)
 
-(require 'markdown-mode)
+;; Add keybinding for display-line-numbers-mode
+(global-set-key (kbd "C-c l") 'display-line-numbers-mode)
+
+(setq package-list '(dap-mode))
+(dolist (package package-list)
+  (unless (package-installed-p package) (package-install package)))
+
+(package-install 'markdown-mode)
+(package-install 'typescript-mode)
+(package-install 'go-mode)
+;;(package-install 'javascript-mode)
+(package-install 'tree-sitter-langs)
+
+
+(setq package-list '(dap-mode typescript-mode go-mode))
+(setq package-list '(dap-mode typescript-mode go-mode tree-sitter tree-sitter-langs))
+(require 'tree-sitter-langs)
+(require 'tree-sitter)
 (require 'go-mode)
-(require 'eglot)
+(require 'markdown-mode)
+
+;; Activate tree-sitter globally (minor mode registered on every buffer)
+(global-tree-sitter-mode)
+(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+(defun my/disable-tree-sitter-in-go-mode ()
+  "Disable tree-sitter and re-enable font-lock in Go mode."
+  (when (derived-mode-p 'go-mode)
+    (tree-sitter-mode -1)
+    (tree-sitter-hl-mode -1)
+    ;; Re-enable traditional font-lock
+    (font-lock-mode 1)))
+
+(add-hook 'tree-sitter-after-on-hook #'my/disable-tree-sitter-in-go-mode)
+
+(setq package-list '(dap-mode typescript-mode tree-sitter tree-sitter-langs lsp-mode lsp-ui))
+(require 'lsp-mode)
+(add-hook 'typescript-mode-hook 'lsp-deferred)
+(add-hook 'javascript-mode-hook 'lsp-deferred)
+(add-hook 'go-mode-hook 'lsp-deferred)
+
+(defun my-setup-dap-node ()
+  "Require dap-node feature and run dap-node-setup if VSCode module isn't already installed"
+  (require 'dap-node)
+  (unless (file-exists-p dap-node-debug-path) (dap-node-setup)))
+
+(add-hook 'typescript-mode-hook 'my-setup-dap-node)
+(add-hook 'javascript-mode-hook 'my-setup-dap-node)
+(add-hook 'go-mode-hook 'my-setup-dap-node)
+
 ;; Load markdown mode
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-
 ;; Load go mode
 (autoload 'go-mode "go-mode" nil t)
-
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
 
+(require 'vterm)
 (defun open-term ()
   "Open `term` with bash in a horizontal split."
   (interactive)
   (split-window-below)                           ;; Create horizontal split
   (other-window 1)                               ;; Move focus to the new window
   (let ((explicit-shell-file-name "/usr/bin/bash"))  ;; Force bash instead of sh
-    (term explicit-shell-file-name)))
+    (vterm explicit-shell-file-name)))
 
 (global-set-key (kbd "C-c '") 'open-term)
 
@@ -72,8 +119,8 @@
 
 (add-hook 'markdown-mode-hook #'evil-markdown-specific)
 
+(require 'eglot)
 (add-hook 'prog-mode-hook #'eglot-ensure)
-
 (with-eval-after-load 'eglot
   (define-key evil-normal-state-map (kbd "K") #'eldoc-doc-buffer))
 
@@ -85,11 +132,9 @@
 (with-eval-after-load 'go-mode
   (define-key go-mode-map (kbd "C-c i") #'my/eglot-organize-imports))
 
-(defun my/go-mode-organize-imports-on-save ()
-  (add-hook 'before-save-hook #'my/eglot-organize-imports nil t))
+(add-hook 'before-save-hook 'gofmt-before-save)
 
-(add-hook 'go-mode-hook #'my/go-mode-organize-imports-on-save)
-
+; go path
 (when (display-graphic-p)
   (require 'exec-path-from-shell)
   (setq exec-path-from-shell-variables '("PATH" "GOPATH" "GOROOT"))
@@ -97,28 +142,5 @@
 
 (require 'xclip)
 (xclip-mode 1)
-
-; (use-package go-mode
-;   :ensure t
-;   :hook ((go-mode . lsp-deferred)
-;          (before-save . gofmt-before-save))
-;   :config (setq gofmt-command "goimports"))
-;
-; (use-package lsp-mode
-;   :ensure t
-;   :hook (go-mode . lsp-deferred)
-;   :commands lsp lsp-deferred)
-;
-; (use-package lsp-ui
-;   :ensure t
-;   :commands lsp-ui-mode
-;   :hook (lsp-mode . lsp-ui-mode))
-
-; (use-package flycheck
-;   :ensure t
-;   :init (global-flycheck-mode))
-
-; (autoload 'go-mode "go-mode" nil t)
-; (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
 
 ;;; .emacs end here
