@@ -64,6 +64,8 @@
 (require 'tree-sitter-langs)
 (require 'tree-sitter)
 (require 'go-mode)
+(require 'typescript-mode)
+(require 'python-mode)
 (require 'markdown-mode)
 
 ;; Activate tree-sitter globally (minor mode registered on every buffer)
@@ -79,17 +81,22 @@
 
 (add-hook 'tree-sitter-after-on-hook #'my/disable-tree-sitter-in-go-mode)
 
-(setq package-list '(dap-mode typescript-mode go-mode tree-sitter tree-sitter-langs lsp-mode lsp-ui))
+(setq package-list '(dap-mode typescript-mode go-mode python-mode tree-sitter tree-sitter-langs lsp-mode lsp-ui))
 (setq lsp-headerline-breadcrumb-enable nil)
 (require 'lsp-mode)
+(require 'lsp-pyright)
 (add-hook 'typescript-mode-hook #'lsp-deferred)
 (add-hook 'javascript-mode-hook #'lsp-deferred)
 (add-hook 'go-mode-hook #'lsp-deferred)
+(add-hook 'python-mode-hook #'lsp-deferred)
 
 (require 'flycheck)
 (setq lsp-diagnostics-provider :flycheck)
 (global-flycheck-mode)
 (fringe-mode 8) ;; sets fringe width to 8 pixels on each side
+
+(require 'ruff-format)
+(add-hook 'python-mode-hook 'ruff-format-on-save-mode)
 
 (with-eval-after-load 'lsp-mode
   (define-key evil-normal-state-map (kbd "K") #'lsp-describe-thing-at-point))
@@ -101,9 +108,14 @@
   ;; lsp-execute-code-action takes a predicate to filter actions
   (lsp-execute-code-action-by-kind "source.organizeImports"))
 
-;; Bind organize imports to C-c i in go-mode
-(with-eval-after-load 'go-mode
-  (define-key go-mode-map (kbd "C-c i") #'my/lsp-organize-imports))
+(defun my/setup-organize-imports-keybinding ()
+  "Set up C-c i keybinding for organizing imports in the current buffer."
+  (local-set-key (kbd "C-c i") #'my/lsp-organize-imports))
+
+(add-hook 'go-mode-hook #'my/setup-organize-imports-keybinding)
+(add-hook 'typescript-mode-hook #'my/setup-organize-imports-keybinding)
+(add-hook 'python-mode-hook #'my/setup-organize-imports-keybinding)
+(add-hook 'javascript-mode-hook #'my/setup-organize-imports-keybinding)
 
 (defun my-setup-dap-node ()
   "Require dap-node feature and run dap-node-setup if VSCode module isn't already installed"
@@ -117,6 +129,16 @@
           (lambda ()
             (require 'dap-go)
             (dap-go-setup)))
+
+;; Python debug adapter configuration
+(add-hook 'python-mode-hook
+          (lambda ()
+            (require 'dap-mode)
+            ;; Check if dap-python is available before trying to use it
+            (when (require 'dap-python nil t)
+              ;; Only call setup if the function exists
+              (when (fboundp 'dap-python-setup)
+                (dap-python-setup)))))
 
 ;; Load markdown mode
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
