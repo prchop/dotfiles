@@ -25,16 +25,6 @@
 (setq make-backup-files nil)
 (add-hook 'prog-mode-hook #'hl-line-mode)
 
-;;; display-line-numbers-mode
-(global-display-line-numbers-mode 0)
-(defun my/enable-line-numbers-if-file ()
-  "Enable line numbers only for file-visiting buffers."
-  (when buffer-file-name
-    (display-line-numbers-mode 1)))
-
-(add-hook 'prog-mode-hook #'my/enable-line-numbers-if-file)
-(add-hook 'text-mode-hook #'my/enable-line-numbers-if-file)
-
 ;; Load theme forcibly and silently
 (load-theme 'gruvbox-dark-soft t)
 
@@ -45,7 +35,16 @@
 (evil-mode 1)
 (evil-commentary-mode)
 
-;; Add keybinding for display-line-numbers-mode
+;;; display-line-numbers-mode
+(global-display-line-numbers-mode 0)
+(defun my/enable-line-numbers-if-file ()
+  "Enable line numbers only for file-visiting buffers."
+  (when buffer-file-name
+    (display-line-numbers-mode 1)))
+
+(add-hook 'prog-mode-hook #'my/enable-line-numbers-if-file)
+(add-hook 'text-mode-hook #'my/enable-line-numbers-if-file)
+
 (global-set-key (kbd "C-c l") 'display-line-numbers-mode)
 
 (setq package-list '(dap-mode))
@@ -58,9 +57,9 @@
 ;;(package-install 'javascript-mode)
 (package-install 'tree-sitter-langs)
 
-
 (setq package-list '(dap-mode typescript-mode go-mode))
 (setq package-list '(dap-mode typescript-mode go-mode tree-sitter tree-sitter-langs))
+
 (require 'tree-sitter-langs)
 (require 'tree-sitter)
 (require 'go-mode)
@@ -79,20 +78,39 @@
 
 (add-hook 'tree-sitter-after-on-hook #'my/disable-tree-sitter-in-go-mode)
 
-(setq package-list '(dap-mode typescript-mode tree-sitter tree-sitter-langs lsp-mode lsp-ui))
+(setq package-list '(dap-mode typescript-mode go-mode tree-sitter tree-sitter-langs lsp-mode lsp-ui))
+(setq lsp-headerline-breadcrumb-enable nil)
 (require 'lsp-mode)
-(add-hook 'typescript-mode-hook 'lsp-deferred)
-(add-hook 'javascript-mode-hook 'lsp-deferred)
-(add-hook 'go-mode-hook 'lsp-deferred)
+(add-hook 'typescript-mode-hook #'lsp-deferred)
+(add-hook 'javascript-mode-hook #'lsp-deferred)
+(add-hook 'go-mode-hook #'lsp-deferred)
+
+(with-eval-after-load 'lsp-mode
+  (define-key evil-normal-state-map (kbd "K") #'lsp-describe-thing-at-point))
+
+;; Define a function to organize imports using lsp
+(defun my/lsp-organize-imports ()
+  "Run source.organizeImports code action via LSP."
+  (interactive)
+  ;; lsp-execute-code-action takes a predicate to filter actions
+  (lsp-execute-code-action-by-kind "source.organizeImports"))
+
+;; Bind organize imports to C-c i in go-mode
+(with-eval-after-load 'go-mode
+  (define-key go-mode-map (kbd "C-c i") #'my/lsp-organize-imports))
 
 (defun my-setup-dap-node ()
   "Require dap-node feature and run dap-node-setup if VSCode module isn't already installed"
   (require 'dap-node)
   (unless (file-exists-p dap-node-debug-path) (dap-node-setup)))
 
-(add-hook 'typescript-mode-hook 'my-setup-dap-node)
-(add-hook 'javascript-mode-hook 'my-setup-dap-node)
-(add-hook 'go-mode-hook 'my-setup-dap-node)
+(add-hook 'typescript-mode-hook #'my-setup-dap-node)
+(add-hook 'javascript-mode-hook #'my-setup-dap-node)
+
+(add-hook 'go-mode-hook
+          (lambda ()
+            (require 'dap-go)
+            (dap-go-setup)))
 
 ;; Load markdown mode
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
@@ -119,28 +137,30 @@
 
 (add-hook 'markdown-mode-hook #'evil-markdown-specific)
 
-(require 'eglot)
-(add-hook 'prog-mode-hook #'eglot-ensure)
-(with-eval-after-load 'eglot
-  (define-key evil-normal-state-map (kbd "K") #'eldoc-doc-buffer))
-
-(defun my/eglot-organize-imports ()
-  "Run source.organizeImports action via Eglot."
-  (interactive)
-  (eglot-code-actions nil nil "source.organizeImports" t))
-
-(with-eval-after-load 'go-mode
-  (define-key go-mode-map (kbd "C-c i") #'my/eglot-organize-imports))
-
 (add-hook 'before-save-hook 'gofmt-before-save)
 
 ; go path
 (when (display-graphic-p)
   (require 'exec-path-from-shell)
-  (setq exec-path-from-shell-variables '("PATH" "GOPATH" "GOROOT"))
+  (setq exec-path-from-shell-variables '("PATH" "GOPATH" "GOROOT" "GOBIN"))
   (exec-path-from-shell-initialize))
 
 (require 'xclip)
 (xclip-mode 1)
+
+; (require 'eglot)
+; (add-hook 'prog-mode-hook #'eglot-ensure)
+
+; (with-eval-after-load 'eglot
+;   (define-key evil-normal-state-map (kbd "K") #'eldoc-doc-buffer))
+; (defun my/eglot-organize-imports ()
+;   "Run source.organizeImports action via Eglot."
+;   (interactive)
+;   (eglot-code-actions nil nil "source.organizeImports" t))
+
+
+; (with-eval-after-load 'go-mode
+;   (define-key go-mode-map (kbd "C-c i") #'my/eglot-organize-imports))
+
 
 ;;; .emacs end here
