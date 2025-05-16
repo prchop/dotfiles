@@ -166,7 +166,18 @@ set ttyfast
 set scrolloff=3
 
 " term gui colors
-set termguicolors
+"set termguicolors
+
+" find files and populate the quickfix list
+fun! FindFiles(filename)
+  let error_file = tempname()
+  silent exe '!find . -name "'.a:filename.'" | xargs file | perl -p -E "s/:/:1:/" > '.error_file
+  set errorformat=%f:%l:%m
+  exe "cfile ". error_file
+  copen
+  call delete(error_file)
+endfun
+command! -nargs=1 FindFile call FindFiles(<q-args>)
 
 " Keymap goes here
 nnoremap <C-L> :nohl<CR><C-L>
@@ -200,7 +211,7 @@ au bufnewfile,bufRead *gitconfig set filetype=gitconfig
 au bufnewfile,bufRead /tmp/psql.edit.* set syntax=sql
 au bufnewfile,bufRead *.go set nospell spellcapcheck=0
 au bufnewfile,bufRead commands.yaml set spell
-au bufnewfile,bufRead *.{txt,md,adoc} set spell
+au bufnewfile,bufRead *.{txt,md,adoc} set spell nonumber
 
 " base default color changes (gruvbox dark friendly)
 hi StatusLine ctermfg=black ctermbg=NONE
@@ -328,6 +339,8 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
       "harpoon setup
       Plug 'nvim-lua/plenary.nvim',
       Plug 'ThePrimeagen/harpoon', {'branch': 'harpoon2'}
+      "gitsigns
+      Plug 'lewis6991/gitsigns.nvim',
       if exists('$NVIM_SCREENKEY')
         Plug 'NStefan002/screenkey.nvim'
       endif
@@ -356,9 +369,9 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
 
   " gopls, gometalinter
   let g:ale_linters = {
-        \'go': ['golangci-lint','gofmt','gobuild'],
-        \'perl': ['perl','perlcritic'],
-        \'python': ['pylint', 'pyright', 'isort', 'ruff'],
+        \'go': ['golangci-lint', 'gofmt', 'gobuild'],
+        \'perl': ['perl', 'perlcritic'],
+        \'python': ['ruff'],
         \}
   let g:ale_linter_aliases = {'bash': 'sh'}
   let g:ale_perl_perlcritic_options = '--severity 3'
@@ -367,6 +380,7 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
         \'sh': ['shfmt'],
         \'bash': ['shfmt'],
         \'perl': ['perltidy'],
+        \'python': ['ruff', 'ruff_format',],
         \'javascript':['prettier'],
         \'typescript':['prettier'],
         \}
@@ -374,13 +388,12 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   let g:ale_perl_perltidy_options = '-b'
 
   let g:ale_linters_ignore = {
-  \   'typescript': ['tsserver', 'eslint', 'standard', 'xo', 'dprint', 'biome', 'tslint'],
-  \   'javascript': ['tsserver', 'eslint', 'standard', 'xo', 'dprint', 'biome', 'tslint'],
+  \   "typescript": ['tsserver', 'eslint', 'standard', 'xo', 'dprint', 'biome', 'tslint'],
+  \   "javascript": ['tsserver', 'eslint', 'standard', 'xo', 'dprint', 'biome', 'tslint'],
   \}
   " pandoc
   let g:pandoc#formatting#mode = 'h' " A'
   let g:pandoc#formatting#textwidth = 72
-
   " golang
   let g:go_fmt_fail_silently = 0
   "let g:go_fmt_options = '-s'
@@ -402,6 +415,10 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   let g:go_auto_sameids = 0
   set updatetime=100
 
+  " python
+  "let g:ale_python_pyright_use_global = 1
+  "let g:ale_python_ruff_use_global = 1
+  "
   " common go macros
   au FileType go nmap <leader>m ilog.Print("made")<CR><ESC>
   au FileType go nmap <leader>n iif err != nil {return err}<CR><ESC>
@@ -427,6 +444,14 @@ augroup CocJSTS
   autocmd FileType javascript,javascriptreact,typescript,typescriptreact let b:ale_enabled = 0
   autocmd FileType javascript,javascriptreact,typescript,typescriptreact nnoremap <buffer> gd <Plug>(coc-definition)
   autocmd FileType javascript,javascriptreact,typescript,typescriptreact nnoremap <buffer> <silent> K :call CocActionAsync('doHover')<CR>
+augroup END
+
+" CoC Setup for python only
+augroup CocPython
+  autocmd!
+  autocmd FileType python,py let b:ale_enabled = 1
+  autocmd FileType python,py nnoremap <buffer> gd <Plug>(coc-definition)
+  autocmd FileType python,py nnoremap <buffer> <silent> K :call CocActionAsync('doHover')<CR>
 augroup END
 
 " set TMUX window name to name of file

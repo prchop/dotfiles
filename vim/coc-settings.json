@@ -6,6 +6,12 @@
   },
 
   "diagnostic.enable": false,
+  "diagnostic.enableSign": true,
+  "diagnostic.errorSign": "🔥 ",
+  "diagnostic.warningSign": "❗️ ",
+  "diagnostic.infoSign": "✨ ",
+  "diagnostic.hintSign": "💡 "
+
   "[typescript]": {
     "diagnostic.enable": true
   },
@@ -13,16 +19,14 @@
     "diagnostic.enable": true
   },
   "[go]": {
-    "diagnostic.enable": false
+    "diagnostic.enable": false,
+    "diagnostic.enableSign": false
   },
   "[python]": {
     "diagnostic.enable": true,
     "inlayHint.enable": false,
-    "python.formatting.provider": "none"
-  },
+    "python.formatting.provider": "none",
+    "diagnostic.enableSign": false
+  }
 
-  "diagnostic.errorSign": "🔥 ",
-  "diagnostic.warningSign": "❗️ ",
-  "diagnostic.infoSign": "✨ ",
-  "diagnostic.hintSign": "💡 "
 }
