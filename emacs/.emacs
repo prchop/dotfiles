@@ -145,6 +145,7 @@
 ;; Load go mode
 (autoload 'go-mode "go-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
+(add-hook 'before-save-hook 'gofmt-before-save)
 
 (require 'vterm)
 (defun open-term ()
@@ -165,7 +166,13 @@
 
 (add-hook 'markdown-mode-hook #'evil-markdown-specific)
 
-(add-hook 'before-save-hook 'gofmt-before-save)
+(defun enable-wrapping ()
+  "Enable both auto fill and visual line modes."
+  (visual-line-mode 1))
+
+(add-hook 'markdown-mode-hook #'enable-wrapping)
+(add-hook 'org-mode-hook #'enable-wrapping)
+(add-hook 'text-mode-hook #'enable-wrapping)
 
 ; go path
 (when (display-graphic-p)
