@@ -1,0 +1,29 @@
+#!/bin/sh
+# shellcheck disable=2059
+
+target="$1"
+red="\033[38;2;255;0;0m"
+grey="\033[38;2;100;100;100m"
+green="\033[38;2;0;255;0m"
+x="\033[0m"
+
+if ! command -v muffet >/dev/null; then
+	printf "${red}Requires ${grey}https://github.com/raviqqe/muffet$x\n"
+	exit 1
+fi
+
+if test -z "$target"; then
+	echo "usage: checkurls <pageurl>"
+	exit 1
+fi
+
+if test "$(printf "%.4s" "$1")" != http; then
+	target="http://$1"
+fi
+
+muffet \
+	--one-page-only "$target" \
+	--buffer-size=16384 \
+	--timeout=45 \
+	--max-connections=10 &&
+	printf "${green}No Broken URLs detected.$x\n"
