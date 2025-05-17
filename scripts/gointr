@@ -3,6 +3,6 @@
 path="$1"
 path="${path%/}"
 file=${path##*/}
-find . -name '*.go' | entr bash -c "clear; go install $path; $file"
+entr bash -c "clear; go install $path; $file" < <(find . -name '*.go')
 
-#entr bash -c "clear; go install $path; $file" < <(find . -name '*.go')
+# find . -name '*.go' | entr bash -c "clear; go install $path; $file"
