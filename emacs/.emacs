@@ -18,12 +18,35 @@
 
 ;; Frame and display settings
 (add-to-list 'default-frame-alist '(font . "Iosevka Nerd Font Medium"))
+(set-face-attribute 'default nil :font "Iosevka Nerd Font Medium" :height 120) ; 140 corresponds to 14pt
 (setq default-frame-alist '((left . 0) (width . 122) (height . 31)))
 (setq fill-column 78)
-(setq-default indent-tabs-mode nil)
-(setq-default tab-width 2)
 (setq make-backup-files nil)
 (add-hook 'prog-mode-hook #'hl-line-mode)
+(setq-default tab-width 2)
+(setq-default standard-indent 2)
+
+(dolist (hook '(python-mode-hook
+                c-mode-hook
+                java-mode-hook))
+  (add-hook hook
+            (lambda ()
+              (setq indent-tabs-mode nil)
+              (setq tab-width 4))))
+
+(dolist (hook '(go-mode-hook
+                typescript-mode-hook))
+  (add-hook hook
+            (lambda ()
+              (setq indent-tabs-mode t)
+              (setq tab-width 2)
+              (setq standard-indent 2))))
+
+(add-hook 'markdown-mode-hook
+          (lambda ()
+            (setq-local indent-tabs-mode nil)
+            (setq-local tab-width 2)
+            (setq-local markdown-list-indent-width 2)))
 
 ;; Load theme forcibly and silently
 (load-theme 'gruvbox-dark-soft t)
