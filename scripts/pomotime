@@ -1,0 +1,54 @@
+#!/usr/bin/bash
+
+workFifty() {
+	timer -f 50m -n '🔥️ Time to Work' &&
+		paplay /usr/share/sounds/freedesktop/stereo/complete.oga &&
+		notify-send -u normal -i ~/.local/share/icons/tomato.png \
+			'Pomodoro' 'Work Timer is up! Take a rest 😴️'
+}
+
+workTwentyFive() {
+	timer -f 25m -n '🔥️ Time to Work' &&
+		paplay /usr/share/sounds/freedesktop/stereo/complete.oga &&
+		notify-send -u normal -i ~/.local/share/icons/tomato.png \
+			'Pomodoro' 'Work Timer is up! Take a rest 😴️'
+
+}
+
+restTen() {
+	timer -f 10m -n '☕️ Time to Rest' &&
+		paplay /usr/share/sounds/freedesktop/stereo/complete.oga &&
+		notify-send -u normal -i ~/.local/share/icons/tomato.png \
+			'Pomodoro' 'Break is over! Get back to work 😬'
+}
+
+restFive() {
+	timer -f 5m -n '☕️ Time to Rest' &&
+		paplay /usr/share/sounds/freedesktop/stereo/complete.oga &&
+		notify-send -u normal -i ~/.local/share/icons/tomato.png \
+			'Pomodoro' 'Break is over! Get back to work 😬'
+}
+
+main() {
+	if ! command -v timer >/dev/null; then
+		echo "Requires timer 'github.com/caarlos0/timer'"
+		exit 1
+	fi
+
+	case "$1" in
+	50)
+		workFifty
+		restTen
+		;;
+	25)
+		workTwentyFive
+		restFive
+		;;
+	*)
+		workFifty
+		restTen
+		;;
+	esac
+}
+
+main "$1"
