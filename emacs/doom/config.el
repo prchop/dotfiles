@@ -96,8 +96,7 @@
 ;; keymap
 (global-set-key (kbd "C-c l") 'display-line-numbers-mode)
 
-(setq split-height-threshold nil)
-(setq split-width-threshold 0)
+(add-hook 'markdown-mode-hook #'turn-off-smartparens-mode)
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwiseDoom's defaults may override your settings. E.g.
 ;;
