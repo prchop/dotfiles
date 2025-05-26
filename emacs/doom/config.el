@@ -38,6 +38,10 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
 
+;;; change leader key to default vim
+(setq doom-leader-key ","
+      doom-localleader-key "\\")
+
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/Documents/org/")
@@ -94,7 +98,7 @@
 (add-hook 'python-mode-hook 'ruff-format-on-save-mode)
 
 ;; keymap
-(global-set-key (kbd "C-c l") 'display-line-numbers-mode)
+(global-set-key (kbd "C-c l n") 'display-line-numbers-mode)
 
 (add-hook 'markdown-mode-hook #'turn-off-smartparens-mode)
 
