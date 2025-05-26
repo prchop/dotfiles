@@ -97,6 +97,13 @@
 (global-set-key (kbd "C-c l") 'display-line-numbers-mode)
 
 (add-hook 'markdown-mode-hook #'turn-off-smartparens-mode)
+
+;; thinner window divider
+(custom-set-faces!
+  '(vertical-border :foreground "#222222")
+  '(vertical-border :background "#282828")) ;; Gruvbox dark gray
+
+
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwiseDoom's defaults may override your settings. E.g.
 ;;
