@@ -181,9 +181,15 @@ command! -nargs=1 FindFile call FindFiles(<q-args>)
 
 " Keymap goes here
 nnoremap <C-L> :nohl<CR><C-L>
-nmap <leader>e :Explore<CR>
 nmap <leader>w :set nowrap!<CR>
 nmap <leader>p :set paste<CR>i
+nnoremap <leader>, :find **/
+nnoremap <leader>b :buf *
+nmap <leader>e :Sex<CR>
+nmap <leader>bl :buffers<CR>
+nmap <leader>bn :bn<CR>
+map <leader>bp :bp<CR>
+nmap <leader>bd :bd<CR>
 map <leader><F1> :set nonumber!<CR>
 nmap <F2> :call <SID>SynStack()<CR>
 "set pastetoggle=<F3>
