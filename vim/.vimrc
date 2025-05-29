@@ -183,7 +183,8 @@ command! -nargs=1 FindFile call FindFiles(<q-args>)
 nnoremap <C-L> :nohl<CR><C-L>
 nmap <leader>w :set nowrap!<CR>
 nmap <leader>p :set paste<CR>i
-nnoremap <leader>, :find **/
+nnoremap <leader>, :edit **/
+nnoremap <leader>f :find **/
 nnoremap <leader>b :buf *
 nmap <leader>e :Sex<CR>
 nmap <leader>bl :buffers<CR>
