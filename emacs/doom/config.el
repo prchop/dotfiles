@@ -52,6 +52,12 @@
 ;; disable save confirm
 (setq confirm-kill-emacs nil)
 
+;; transparency
+(unless (display-graphic-p)
+  (set-face-background 'default "unspecified-bg"))
+
+(add-hook 'doom-init-ui-hook (lambda () (solaire-global-mode -1)))
+
 ;; automatically organize imports
 (add-hook 'go-mode-hook #'lsp-deferred)
 (add-hook 'python-mode-hook #'lsp-deferred)
@@ -91,6 +97,7 @@
 (add-hook 'markdown-mode-hook #'enable-wrapping)
 (add-hook 'org-mode-hook #'enable-wrapping)
 (add-hook 'text-mode-hook #'enable-wrapping)
+(add-hook 'markdown-mode-hook #'turn-off-smartparens-mode)
 
 (require 'xclip)
 (require 'ruff-format)
@@ -99,14 +106,12 @@
 
 ;; keymap
 (global-set-key (kbd "C-c l n") 'display-line-numbers-mode)
-
-(add-hook 'markdown-mode-hook #'turn-off-smartparens-mode)
+(global-set-key (kbd "C-c t t") 'solaire-global-mode)
 
 ;; thinner window divider
 (custom-set-faces!
   '(vertical-border :foreground "#222222")
   '(vertical-border :background "#282828")) ;; Gruvbox dark gray
-
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwiseDoom's defaults may override your settings. E.g.
