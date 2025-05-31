@@ -113,6 +113,11 @@
   '(vertical-border :foreground "#222222")
   '(vertical-border :background "#282828")) ;; Gruvbox dark gray
 
+;; remove code block color background; for markdown-mode
+(after! markdown-mode
+  (custom-set-faces!
+    '(markdown-code-face :background nil)))
+
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwiseDoom's defaults may override your settings. E.g.
 ;;
