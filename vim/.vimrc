@@ -430,6 +430,8 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   au FileType go nmap <leader>m ilog.Print("made")<CR><ESC>
   au FileType go nmap <leader>n iif err != nil {return err}<CR><ESC>
 
+  "let g:gruvbox_material_dim_inactive_windows = 0 
+  let g:gruvbox_material_transparent_background = 1
   if !exists('g:colors_name') || g:colors_name !=# 'gruvbox-material'
     try
       colorscheme gruvbox-material

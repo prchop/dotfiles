@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+entr bash -c "clear; python3 $1" < <(find .)
