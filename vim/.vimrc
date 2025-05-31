@@ -165,20 +165,6 @@ set ttyfast
 " limit scroll line
 set scrolloff=3
 
-" term gui colors
-"set termguicolors
-
-" find files and populate the quickfix list
-fun! FindFiles(filename)
-  let error_file = tempname()
-  silent exe '!find . -name "'.a:filename.'" | xargs file | perl -p -E "s/:/:1:/" > '.error_file
-  set errorformat=%f:%l:%m
-  exe "cfile ". error_file
-  copen
-  call delete(error_file)
-endfun
-command! -nargs=1 FindFile call FindFiles(<q-args>)
-
 " Keymap goes here
 nnoremap <C-L> :nohl<CR><C-L>
 nmap <leader>w :set nowrap!<CR>
@@ -186,7 +172,7 @@ nmap <leader>p :set paste<CR>i
 nnoremap <leader>, :edit **/
 nnoremap <leader>f :find **/
 nnoremap <leader>b :buf *
-nmap <leader>e :Sex<CR>
+nmap <leader>e :Ex<CR>
 nmap <leader>bl :buffers<CR>
 nmap <leader>bn :bn<CR>
 map <leader>bp :bp<CR>
@@ -338,6 +324,7 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
     "Plug 'habamax/vim-asciidoctor'
     "Plug 'kana/vim-textobj-user'
     "Plug 'mjakl/vim-asciidoc'
+    "Plug 'preservim/nerdtree'
     Plug 'dense-analysis/ale'
 
     if has('nvim') || v:version >= 10.0
@@ -425,12 +412,17 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   " python
   "let g:ale_python_pyright_use_global = 1
   "let g:ale_python_ruff_use_global = 1
-  "
+
   " common go macros
   au FileType go nmap <leader>m ilog.Print("made")<CR><ESC>
   au FileType go nmap <leader>n iif err != nil {return err}<CR><ESC>
 
-  "let g:gruvbox_material_dim_inactive_windows = 0 
+  if has('termguicolors')
+    set termguicolors
+  endif
+
+  "let g:gruvbox_material_dim_inactive_windows = 0
+  let g:gruvbox_material_foreground = 'mix'
   let g:gruvbox_material_transparent_background = 1
   if !exists('g:colors_name') || g:colors_name !=# 'gruvbox-material'
     try
