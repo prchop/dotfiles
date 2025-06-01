@@ -82,7 +82,8 @@ export CARGO_HOME="$HOME/.cargo"
 export GOPATH="$HOME/.local/share/go"
 export GOBIN="$HOME/.local/bin"
 export GOPROXY=direct
-export GCO_ENABLED=0
+export CGO_ENABLED=0
+export PYTHONDONTWRITEBYTECODE=2
 
 set-editor() {
 	export EDITOR="$1"
