@@ -73,7 +73,7 @@ export GITUSER="$USER"
 export REPOS="$HOME/Repos"
 export GHREPOS="$REPOS/github.com/$GITUSER"
 export DOTFILES="$GHREPOS/dotfiles"
-export SCRIPTS="$HOME/scripts"
+export SCRIPTS="$HOME/Scripts"
 export DOCUMENTS="$HOME/Documents"
 export CODE="$HOME/Code"
 export DOWNLOADS="$HOME/Downloads"
@@ -159,9 +159,10 @@ pathprepend \
 	"$CARGO_HOME/bin" \
 	"$NVM_DIR/versions/node/$(node -v)/bin" \
 	"$HOME/.deno/bin" \
-	"$HOME/.local/bin" \
 	"$HOME/.local/go/bin" \
-	"$SCRIPTS"
+	"$HOME/.local/bin" \
+	"$SCRIPTS" \
+	"$HOME/.config/emacs/bin"
 
 pathappend \
 	/usr/local/bin \
@@ -187,6 +188,7 @@ alias c='printf "\e[H\e[2J"'
 alias codes='cd $CODE'
 alias documents='cd $DOCUMENTS'
 alias dot='cd $DOTFILES'
+alias emacs='emacs -nw'
 alias ghrepos='cd $GHREPOS'
 alias path='echo -e "${PATH//:/\\n}"'
 alias cdpath='echo -e "${CDPATH//:/\\n}"'
