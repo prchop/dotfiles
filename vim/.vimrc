@@ -25,10 +25,12 @@ set timeoutlen=300
 " Indentation
 set autoindent
 set smartindent
+
 set expandtab
-set smarttab
 set tabstop=2
 set softtabstop=2
+set smarttab
+
 set shiftwidth=2
 
 if v:version >= 800
@@ -154,6 +156,11 @@ set hidden
 " command history
 set history=100
 
+" check for terminal support
+if has('termguicolors')
+  set termguicolors
+endif
+
 " here because plugins and stuff need it
 if has("syntax")
   syntax enable
@@ -164,6 +171,9 @@ set ttyfast
 
 " limit scroll line
 set scrolloff=3
+
+" netrw list style
+let g:netrw_liststyle = 3
 
 " Keymap goes here
 nnoremap <C-L> :nohl<CR><C-L>
@@ -302,9 +312,11 @@ imap <tab><tab> <c-x><c-o>
 set completeopt=menu,preview
 
 " Install vim-plug if not found
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+if has('nvim') || v:version >= 9.0
+  if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  endif
 endif
 
 " only load plugins if Plug detected
@@ -416,10 +428,6 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   " common go macros
   au FileType go nmap <leader>m ilog.Print("made")<CR><ESC>
   au FileType go nmap <leader>n iif err != nil {return err}<CR><ESC>
-
-  if has('termguicolors')
-    set termguicolors
-  endif
 
   "let g:gruvbox_material_dim_inactive_windows = 0
   let g:gruvbox_material_foreground = 'mix'
