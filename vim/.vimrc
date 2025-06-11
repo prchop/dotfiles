@@ -134,7 +134,8 @@ set statusline+=\ %m%w%r
 "set statusline+=\ %t
 set statusline+=\ %P
 set statusline+=\ (%l:%c)
-set statusline+=\ %b
+set statusline+=\ %{get(b:,'gitsigns_head','')}
+"set statusline+=\ %b
 "set statusline+=\ 0x%B
 "set statusline+=\ buf:%n
 
