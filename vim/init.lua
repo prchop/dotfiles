@@ -38,7 +38,8 @@ vim.diagnostic.config({
 })
 
 -- Set cursor highlight with background color
-vim.cmd("highlight Cursor guibg=#928374 guifg=NONE")
+--vim.cmd("highlight Cursor guibg=#928374 guifg=NONE")
+vim.cmd("highlight Cursor guibg=#32302F guifg=NONE")
 
 ---- Set the statusline without background colors
 --vim.opt.statusline = "%f %m %r %= %y %l:%c %p%%"
