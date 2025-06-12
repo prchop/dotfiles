@@ -309,8 +309,8 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 
 " enable omni-completion
 set omnifunc=syntaxcomplete#Complete
+set completeopt=menu,menuone,popup
 imap <tab><tab> <c-x><c-o>
-set completeopt=menu,preview
 
 " Install vim-plug if not found
 if has('nvim') || v:version >= 9.0
