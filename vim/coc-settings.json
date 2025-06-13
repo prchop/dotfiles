@@ -1,32 +1,42 @@
 {
   "languageserver": {
     "golang": {
-      "enable": false
+      // "enable": false
+      "command": "gopls",
+      "filetypes": ["go"],
+      "initializationOptions": {
+        "analyses": {
+          "fillstruct": true,
+          "nonewvars": true,
+          "unusedparams": true,
+          "unusedwrite": true,
+          "useany": true,
+          "composites": true,
+          "ST1003": true,
+          "SA1019": true
+        },
+        "staticcheck": true,
+        "gofumpt": true,
+        "usePlaceholders": true,
+        "completeUnimported": true
+      }
     }
   },
 
-  "diagnostic.enable": false,
+  "diagnostic.enable": true,
+  "diagnostic.virtualText": true,
+  "diagnostic.virtualTextCurrentLineOnly": false,
+"diagnostic.virtualTextPrefix": " ▣ ",
+  "diagnostic.messageTarget": "echo",
+  "diagnostic.checkCurrentLine": true,
   "diagnostic.enableSign": true,
   "diagnostic.errorSign": "🔥 ",
   "diagnostic.warningSign": "❗️ ",
   "diagnostic.infoSign": "✨ ",
-  "diagnostic.hintSign": "💡 "
+  "diagnostic.hintSign": "💡 ",
 
-  "[typescript]": {
-    "diagnostic.enable": true
-  },
-  "[javascript]": {
-    "diagnostic.enable": true
-  },
-  "[go]": {
-    "diagnostic.enable": false,
-    "diagnostic.enableSign": false
-  },
   "[python]": {
-    "diagnostic.enable": true,
     "inlayHint.enable": false,
-    "python.formatting.provider": "none",
-    "diagnostic.enableSign": false
+    "python.formatting.provider": "none"
   }
-
 }

@@ -130,8 +130,8 @@ set statusline=   " clear default statusline
 
 " first line: mode and basic info
 set statusline+=\ [%{ModeName()}]
-set statusline+=\ %m%w%r
 "set statusline+=\ %t
+set statusline+=\ %m%w%r
 set statusline+=\ %P
 set statusline+=\ (%l:%c)
 set statusline+=\ %{get(b:,'gitsigns_head','')}
@@ -308,9 +308,9 @@ endif
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
 " enable omni-completion
-set omnifunc=syntaxcomplete#Complete
-set completeopt=menu,menuone,popup
-imap <tab><tab> <c-x><c-o>
+"set omnifunc=syntaxcomplete#Complete
+"set completeopt=menu,menuone,popup
+"imap <tab><tab> <c-x><c-o>
 
 " Install vim-plug if not found
 if has('nvim') || v:version >= 9.0
@@ -361,7 +361,19 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
     endif
   call plug#end()
 
+
+  " lsp completion
+  let g:go_def_mapping_enabled = 0
+  nmap <silent> gd <Plug>(coc-definition)
+  nmap <silent> gy <Plug>(coc-type-definition)
+  nmap <silent> gi <Plug>(coc-implementation)
+  nmap <silent> gr <Plug>(coc-references)
+  inoremap <expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+
   "let g:vim_asciidoc_initial_foldlevel=1
+
+  " disable ALE's LSP completion (use CoC instead)
+  let g:ale_completion_enabled = 0
 
   set signcolumn=yes
   let g:ale_set_signs = 1
@@ -376,9 +388,11 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
 
   " gopls, gometalinter
   let g:ale_linters = {
-        \'go': ['golangci-lint', 'gofmt', 'gobuild'],
+        \'go': [],
         \'perl': ['perl', 'perlcritic'],
-        \'python': ['ruff'],
+        \'python': [],
+        \'typescript': [],
+        \'javascript': [],
         \}
   let g:ale_linter_aliases = {'bash': 'sh'}
   let g:ale_perl_perlcritic_options = '--severity 3'
@@ -387,9 +401,9 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
         \'sh': ['shfmt'],
         \'bash': ['shfmt'],
         \'perl': ['perltidy'],
-        \'python': ['ruff', 'ruff_format',],
-        \'javascript':['prettier'],
-        \'typescript':['prettier'],
+        \'python': ['ruff', 'ruff_format'],
+        \'javascript':['prettier', 'eslint'],
+        \'typescript':['prettier', 'eslint'],
         \}
   let g:ale_fix_on_save = 1
   let g:ale_perl_perltidy_options = '-b'
@@ -398,10 +412,12 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   \   "typescript": ['tsserver', 'eslint', 'standard', 'xo', 'dprint', 'biome', 'tslint'],
   \   "javascript": ['tsserver', 'eslint', 'standard', 'xo', 'dprint', 'biome', 'tslint'],
   \}
+
   " pandoc
   let g:pandoc#formatting#mode = 'h' " A'
   let g:pandoc#formatting#textwidth = 72
-  " golang
+
+  " golang (vim-go)
   let g:go_fmt_fail_silently = 0
   "let g:go_fmt_options = '-s'
   let g:go_fmt_command = 'goimports'
@@ -418,13 +434,9 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   let g:go_highlight_build_constraints = 1
   let g:go_highlight_diagnostic_errors = 1
   let g:go_highlight_diagnostic_warnings = 1
-  let g:go_code_completion_enabled = 1
+  let g:go_code_completion_enabled = 0
   let g:go_auto_sameids = 0
   set updatetime=100
-
-  " python
-  "let g:ale_python_pyright_use_global = 1
-  "let g:ale_python_ruff_use_global = 1
 
   " common go macros
   au FileType go nmap <leader>m ilog.Print("made")<CR><ESC>
@@ -451,8 +463,7 @@ autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup='Visual', time
 " CoC Setup for JS/TS only
 augroup CocJSTS
   autocmd!
-  autocmd FileType javascript,javascriptreact,typescript,typescriptreact let b:ale_enabled = 0
-  autocmd FileType javascript,javascriptreact,typescript,typescriptreact nnoremap <buffer> gd <Plug>(coc-definition)
+  autocmd FileType javascript,javascriptreact,typescript,typescriptreact let b:ale_enabled = 1
   autocmd FileType javascript,javascriptreact,typescript,typescriptreact nnoremap <buffer> <silent> K :call CocActionAsync('doHover')<CR>
 augroup END
 
@@ -460,7 +471,6 @@ augroup END
 augroup CocPython
   autocmd!
   autocmd FileType python,py let b:ale_enabled = 1
-  autocmd FileType python,py nnoremap <buffer> gd <Plug>(coc-definition)
   autocmd FileType python,py nnoremap <buffer> <silent> K :call CocActionAsync('doHover')<CR>
 augroup END
 
