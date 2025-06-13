@@ -185,8 +185,8 @@ nnoremap <leader>f :find **/
 nnoremap <leader>b :buf *
 nmap <leader>e :Ex<CR>
 nmap <leader>bl :buffers<CR>
-nmap <leader>bn :bn<CR>
-map <leader>bp :bp<CR>
+nmap <leader>K :bn<CR>
+map <leader>J :bp<CR>
 nmap <leader>bd :bd<CR>
 map <leader><F1> :set nonumber!<CR>
 nmap <F2> :call <SID>SynStack()<CR>
