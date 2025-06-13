@@ -105,7 +105,7 @@ envx() {
 		[[ -z "${name}" || $name =~ ^# ]] && continue
 		export "$name"="$value"
 	done <"$envfile"
-} && export envx
+} && export -f envx
 
 [[ -e "$HOME/.env" ]] && envx "$HOME/.env"
 
@@ -128,7 +128,7 @@ clone() {
 	echo gh repo clone "$user/$name" -- --recurse-submodule
 	gh repo clone "$user/$name" -- --recurse-submodule
 	cd "$name"
-} && export clone
+} && export -f clone
 
 pathprepend() {
 	for arg in "$@"; do
@@ -138,7 +138,7 @@ pathprepend() {
 		PATH=${PATH/%":$arg"/}
 		export PATH="$arg${PATH:+":${PATH}"}"
 	done
-} && export pathprepend
+} && export -f pathprepend
 
 pathappend() {
 	declare arg
@@ -149,7 +149,7 @@ pathappend() {
 		PATH=${PATH/%":$arg"/}
 		export PATH="${PATH:+"$PATH:"}$arg"
 	done
-} && export pathappend
+} && export -f pathappend
 
 # "$HOME/.local/go/bin" \
 # /usr/local/bin \
