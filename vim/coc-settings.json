@@ -3,6 +3,7 @@
     "golang": {
       // "enable": false
       "command": "gopls",
+      "rootPatterns": ["go.mod", ".git/"],
       "filetypes": ["go"],
       "initializationOptions": {
         "analyses": {
@@ -26,7 +27,7 @@
   "diagnostic.enable": true,
   "diagnostic.virtualText": true,
   "diagnostic.virtualTextCurrentLineOnly": false,
-"diagnostic.virtualTextPrefix": " ▣ ",
+  "diagnostic.virtualTextPrefix": " ▣  ",
   "diagnostic.messageTarget": "echo",
   "diagnostic.checkCurrentLine": true,
   "diagnostic.enableSign": true,
