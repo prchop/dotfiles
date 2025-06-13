@@ -1,0 +1,13 @@
+// Place your key bindings in this file to override the defaults
+[
+	{
+		"key": "shift+5",
+		"command": "explorer.newFile",
+		"when": "explorerViewletFocus"
+	},
+	{
+		"key": "d",
+		"command": "explorer.newFolder",
+		"when": "explorerViewletFocus"
+	}
+]
