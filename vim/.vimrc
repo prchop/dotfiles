@@ -368,7 +368,8 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   nmap <silent> gy <Plug>(coc-type-definition)
   nmap <silent> gi <Plug>(coc-implementation)
   nmap <silent> gr <Plug>(coc-references)
-  inoremap <expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+  "inoremap <expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+  inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#insert() : "\<C-Y>"
 
   "let g:vim_asciidoc_initial_foldlevel=1
 
