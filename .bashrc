@@ -180,8 +180,13 @@ export HISTCONTROL=ignoreboth
 export HISTSIZE=5000
 export HISTFILESIZE=10000
 
+# shopt is for BASHOPTS, set is for SHELLOPTS
 set -o vi
+# shopt -s expand_aliases
 shopt -s histappend
+shopt -s globstar
+shopt -s dotglob
+shopt -s extglob
 
 # alias
 alias c='printf "\e[H\e[2J"'
