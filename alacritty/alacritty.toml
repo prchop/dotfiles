@@ -1,21 +1,28 @@
-#import = [
-#"~/.config/alacritty.toml",
-#]
+[general]
+import = [
+    "~/.config/alacritty/themes/gruvbox-dark.toml"
+]
 
-[shell]
-program = "C:\\Program Files\\PowerShell\\7\\pwsh.exe"
-args = [" "]
+[env]
+TERM = "xterm-256color"
 
 [window]
-decorations = "Full"
-title = "Alacritty - Terminal"
+dimensions = { columns = 80, lines = 24 }
+padding = { x = 4, y = 0 }
+startup_mode = "Fullscreen"
 opacity = 0.9
-startup_mode = "Windowed"
-dynamic_title = true
 
 [font]
-normal = { family = "JetBrainsMono Nerd Font", style = "Bold" }
-size = 11
+normal = { family = "Iosevka Nerd Font Mono", style = "Medium" }
+bold = { family = "Iosevka Nerd Font Mono", style = "Bold" }
+italic = { family = "Iosevka Nerd Font Mono", style = "Medium Italic" }
+bold_italic = { family = "Iosevka Nerd Font Mono", style = "Bold Italic" }
+size = 9.5
 
-[scrolling]
-history = 10000
+[selection]
+save_to_clipboard = true
+semantic_escape_chars = ",│`|:\"' ()[]{}<>\t"
+
+[cursor]
+style = { shape = "Block", blinking = "On" }
+
