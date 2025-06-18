@@ -184,10 +184,11 @@ nnoremap <leader>, :edit **/
 nnoremap <leader>f :find **/
 nnoremap <leader>b :buf *
 nmap <leader>e :Ex<CR>
-nmap <leader>bl :buffers<CR>
+nmap <leader>lb :buffers<CR>
 nmap <leader>K :bn<CR>
 map <leader>J :bp<CR>
-nmap <leader>bd :bd<CR>
+map <C-k> :GoDocBrowser<CR>
+nmap <C-x> :bd<CR>
 map <leader><F1> :set nonumber!<CR>
 nmap <F2> :call <SID>SynStack()<CR>
 "set pastetoggle=<F3>
@@ -309,7 +310,7 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 
 " enable omni-completion
 "set omnifunc=syntaxcomplete#Complete
-"set completeopt=menu,menuone,popup
+"set completeopt=menu,menuone,noselect
 "imap <tab><tab> <c-x><c-o>
 
 " Install vim-plug if not found
@@ -445,7 +446,7 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   au FileType go nmap <leader>n iif err != nil {return err}<CR><ESC>
 
   "let g:gruvbox_material_dim_inactive_windows = 0
-  let g:gruvbox_material_foreground = 'mix'
+  let g:gruvbox_material_foreground = 'original'
   let g:gruvbox_material_transparent_background = 1
   if !exists('g:colors_name') || g:colors_name !=# 'gruvbox-material'
     try
