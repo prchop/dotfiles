@@ -331,7 +331,6 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
     Plug 'conradirwin/vim-bracketed-paste'
     Plug 'sainnhe/gruvbox-material'
     Plug 'fatih/vim-go' " GoInstallBinaries separately
-    Plug 'pangloss/vim-javascript'
     Plug 'vim-pandoc/vim-pandoc'
     Plug 'rwxrob/vim-pandoc-syntax-simple'
     "Plug 'habamax/vim-asciidoctor'
