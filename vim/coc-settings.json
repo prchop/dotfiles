@@ -31,7 +31,7 @@
   "diagnostic.enableMessage": "never",
   // "diagnostic.messageTarget": "echo",
   "diagnostic.checkCurrentLine": true,
-  "diagnostic.enableSign": false,
+  "diagnostic.enableSign": true,
   "diagnostic.errorSign": "🔥 ",
   "diagnostic.warningSign": "❗️ ",
   "diagnostic.infoSign": "✨ ",
