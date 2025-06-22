@@ -2,3 +2,4 @@
 
 url="https://search.brave.com/search?q=$(urlencode "$*")"
 exec lynx "$url"
+# exec w3m "$url"
