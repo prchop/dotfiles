@@ -43,7 +43,7 @@
 # resize-overlay-duration = 4s 200ms
 
 font-family = "Iosevka Nerd Font Mono"
-font-style = "Medium"
+font-style = "SemiBold"
 font-size = 10.5
 
 theme = GruvboxDark
