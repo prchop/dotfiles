@@ -110,8 +110,8 @@ keymap i NULL
 keymap gC-g NULL
 keymap C-g NULL
 keymap ";" NULL
-keymap M NULL
-keymap ESC-M NULL
+#keymap M NULL
+#keymap ESC-M NULL
 keymap F NULL
 keymap ESC-u NULL
 keymap t NULL
@@ -163,10 +163,10 @@ keymap ZZ NULL
 keymap ZQ NULL
 
 #urls operations................................................................
-keymap C-l     GOTO
-keymap p       PEEK_LINK
-keymap ,      EXTERN  	    #open current page in external browser
-keymap .      EXTERN_LINK  	#open link under cursor in external browser
+keymap C-l    GOTO
+keymap p      PEEK_LINK
+keymap ,      EXTERN
+keymap .      EXTERN_LINK
 
 #scrolling....................................................................
 #pager-like scrolling.
@@ -180,7 +180,7 @@ keymap  M-[6~   NEXT_PAGE
 keymap  M-[5~   PREV_PAGE
 keymap  C-f     NEXT_PAGE
 keymap  C-b     PREV_PAGE
-keymap  zz      CENTER_V					#center vertical-screen in cursor position
+keymap  zz      CENTER_V
 
 #-cursor.......................................................................
 #Move the cursor with arrow keys.
@@ -204,8 +204,10 @@ keymap gt       TAB_MENU					#Tab menu
 keymap :t       TAB_MENU					#Tab menu
 
 #-navigation...................................................................
+keymap l        NEXT						     #Go next in history
 keymap j        NEXT_LINK
 keymap k        PREV_LINK
+keymap h        PREV						   #Go back in history
 keymap [        LINK_BEGIN					#nf Move cursor to link n
 keymap ]        LINK_END					  #Move cursor to last link/nf Move cursor to link [n]
 #Move cursor to next left or upward link/n{ execute the function n times
@@ -216,14 +218,12 @@ keymap C-p      MOVE_UP
 keymap C-n      MOVE_DOWN
 
 #-history navigation...........................................................
-keymap l        NEXT						#Go forward in history
-keymap h        PREV						#Go back in history
 keymap s        SELECT_MENU     #open list buffer
 keymap :h       HISTORY					#Show history
 keymap C-h      HISTORY					#Show history
 
 #-bookmarks....................................................................
-keymap ga        ADD_BOOKMARK					#Add current page to bookmarks
+keymap ga       ADD_BOOKMARK					#Add current page to bookmarks
 keymap gv       VIEW_BOOKMARK					#Show bookmarks
 keymap :v       VIEW_BOOKMARK					#Show bookmarks
 
@@ -260,11 +260,10 @@ keymap :W       PRINT
 keymap C-o      LOAD
 
 #-info.........................................................................
-keymap gC-g     INFO						#current page info
-#keymap C-i     INFO						#current page info
+keymap C-i      INFO						#current page info
 keymap C-g      LINE_INFO				#line under cursor info
 keymap gf       VIEW						#See source of current page. dwb key
-keymap C-u       VIEW						#See source of current page. FF key
+keymap C-u      VIEW						#See source of current page. FF key
 
 #-miscellany....................................................................
 keymap C-Y      DOWNLOAD_LIST					#Show download menu
@@ -274,8 +273,8 @@ keymap :e       EDIT						#Edit current local file wtih sensible-editor
 
 keymap M-u	LIST						#Show list of all links, anchors and images
 keymap M-m	MOUSE_TOGGLE    				#Toggle activity of mouse
-keymap M-i      VIEW_IMAGE					#pendant change SC.View image in extern viewer
-keymap M-I DISPLAY_IMAGE
+keymap M-i  VIEW_IMAGE					#pendant change SC.View image in extern viewer
+keymap M-I  DISPLAY_IMAGE
 #Show Context menu. It has specific option for links under the cursor.
 keymap M-c      MENU
 

@@ -60,7 +60,7 @@ emacs_like_lineedit 0
 space_autocomplete 0
 vi_prec_num 0
 mark_all_pages 0
-wrap_search 0
+wrap_search 1
 ignorecase_search 1
 use_mouse 1
 reverse_mouse 0
@@ -83,8 +83,8 @@ urimethodmap ~/.w3m/urimethodmap, /etc/w3m/urimethodmap
 editor /usr/bin/vi
 mailto_options 1
 mailer /usr/bin/mail
-extbrowser brave-browser %s
-extbrowser2 
+extbrowser brave-browser &
+extbrowser2 xdg-open &
 extbrowser3 
 extbrowser4 
 extbrowser5 
