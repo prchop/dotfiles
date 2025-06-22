@@ -1,0 +1,4 @@
+#!/bin/bash
+
+url="https://search.brave.com/search?q=$(urlencode "$*")"
+exec lynx "$url"
