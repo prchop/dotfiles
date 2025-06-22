@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+mkdir ~/.config/ 2>/dev/null
+rm -rf ~/.config/ghostty 2>/dev/null
+ln -s "$PWD" "$HOME/.config/ghostty"
+ls -l ~/.config/ghostty
