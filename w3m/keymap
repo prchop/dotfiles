@@ -271,7 +271,7 @@ keymap C-y      DOWNLOAD_LIST					#Show download menu
 keymap :E       EDIT_SCREEN					#Edit current rendered document with sensible-editor
 keymap :e       EDIT						#Edit current local file wtih sensible-editor
 
-keymap M-u	LIST						#Show list of all links, anchors and images
+keymap M-l	LIST						#Show list of all links, anchors and images
 keymap M-m	MOUSE_TOGGLE    				#Toggle activity of mouse
 keymap M-i  VIEW_IMAGE					#pendant change SC.View image in extern viewer
 keymap M-I  DISPLAY_IMAGE

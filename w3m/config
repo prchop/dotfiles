@@ -6,7 +6,7 @@ frame 0
 target_self 0
 open_tab_blank 0
 open_tab_dl_list 0
-display_link 0
+display_link 1
 display_link_number 0
 decode_url 0
 display_lineinfo 0
@@ -16,10 +16,10 @@ use_dictcommand 1
 dictcommand file:///$LIB/w3mdict.cgi
 multicol 0
 alt_entity 0
-graphic_char 0
+graphic_char 1
 display_borders 0
 disable_center 0
-fold_textarea 0
+fold_textarea 1
 display_ins_del 1
 ignore_null_img_alt 1
 view_unseenobject 0
@@ -32,10 +32,10 @@ image_scale 100
 inline_img_protocol 0
 imgdisplay w3mimgdisplay
 image_map_list 1
-fold_line 0
+fold_line 1
 show_lnum 0
 show_srch_str 1
-label_topline 0
+label_topline 1
 nextpage_topline 0
 color 1
 high-intensity 0
@@ -52,7 +52,7 @@ visited_color magenta
 pagerline 10000
 use_history 1
 history 100
-save_hist 1
+save_hist 0
 confirm_qq 1
 close_tab_back 0
 mark 0
