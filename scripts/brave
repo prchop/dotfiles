@@ -1,5 +1,14 @@
 #!/bin/bash
 
 url="https://search.brave.com/search?q=$(urlencode "$*")"
-exec lynx "$url"
-# exec w3m "$url"
+#exec lynx "$url"
+
+if [ -e "$HOME/.w3m/config" ]; then
+	conf="$HOME/.w3m/config"
+fi
+
+if [ -e "$HOME/.w3m_bookmarks.html" ]; then
+	book="$HOME/.w3m_bookmarks.html"
+fi
+
+exec w3m -config "$conf" -bookmark "$book" "$url"

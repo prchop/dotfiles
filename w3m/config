@@ -41,7 +41,7 @@ color 1
 high-intensity 0
 basic_color terminal
 anchor_color green
-image_color blue
+image_color yellow
 form_color red
 mark_color cyan
 bg_color terminal
