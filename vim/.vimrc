@@ -187,8 +187,9 @@ nmap <leader>e :Ex<CR>
 nmap <leader>lb :buffers<CR>
 nmap <leader>K :bn<CR>
 map <leader>J :bp<CR>
-map <C-k> :GoDocBrowser<CR>
 nmap <C-x> :bd<CR>
+map <leader>d :CocDiagnostics<CR>
+map <C-k> :GoDocBrowser<CR>
 map <leader><F1> :set nonumber!<CR>
 nmap <F2> :call <SID>SynStack()<CR>
 "set pastetoggle=<F3>
