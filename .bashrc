@@ -191,7 +191,7 @@ shopt -s extglob
 # alias
 alias c='printf "\e[H\e[2J"'
 alias codes='cd $CODE'
-alias documents='cd $DOCUMENTS'
+alias docs='cd $DOCUMENTS'
 alias dot='cd $DOTFILES'
 alias emacs='emacs -nw'
 alias ghrepos='cd $GHREPOS'
