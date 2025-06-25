@@ -185,8 +185,8 @@ nnoremap <leader>f :find **/
 nnoremap <leader>b :buf *
 nmap <leader>e :Ex<CR>
 nmap <leader>lb :buffers<CR>
-nmap <leader>K :bn<CR>
-map <leader>J :bp<CR>
+nmap <leader>k :bn<CR>
+map <leader>j :bp<CR>
 nmap <C-x> :bd<CR>
 map <leader>d :CocDiagnostics<CR>
 map <C-k> :GoDocBrowser<CR>
