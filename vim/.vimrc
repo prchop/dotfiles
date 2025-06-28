@@ -369,21 +369,23 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   nmap <silent> gy <Plug>(coc-type-definition)
   nmap <silent> gi <Plug>(coc-implementation)
   nmap <silent> gr <Plug>(coc-references)
+
   " use <tab> to trigger completion and navigate to the next complete item
-  function! CheckBackspace() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
-  endfunction
+  "function! CheckBackspace() abort
+  "  let col = col('.') - 1
+  "  return !col || getline('.')[col - 1]  =~# '\s'
+  "endfunction
+  "
+  "inoremap <silent><expr> <Tab>
+  "      \ coc#pum#visible() ? coc#pum#next(1) :
+  "      \ CheckBackspace() ? "\<Tab>" :
+  "      \ coc#refresh()
 
+  "coc#pum#insert()
   inoremap <silent><expr> <Tab>
-        \ coc#pum#visible() ? coc#pum#next(1) :
-        \ CheckBackspace() ? "\<Tab>" :
-        \ coc#refresh()
-
-  "inoremap <silent><expr> <CR>
-  "      \ coc#pum#visible() && coc#pum#info()['index'] != -1
-  "      \ ? coc#pum#insert()
-  "      \ : "\<tab>\<CR>"
+        \ coc#pum#visible() && coc#pum#info()['index'] != -1
+        \ ? coc#pum#confirm()
+        \ : "\<Tab>"
 
   "let g:vim_asciidoc_initial_foldlevel=1
 
