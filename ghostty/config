@@ -47,8 +47,7 @@ font-style = "Medium"
 # font-size = 12
 font-size = 12
 
-# theme = GruvboxDark
-# theme = gruber-darker
+theme = GruvboxDark
 
 cursor-style = "block"
 cursor-style-blink = true
