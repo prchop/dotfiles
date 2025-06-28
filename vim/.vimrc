@@ -217,7 +217,7 @@ au bufnewfile,bufRead *gitconfig set filetype=gitconfig
 au bufnewfile,bufRead /tmp/psql.edit.* set syntax=sql
 au bufnewfile,bufRead *.go set nospell spellcapcheck=0
 au bufnewfile,bufRead commands.yaml set spell
-au bufnewfile,bufRead *.{txt,md,adoc} set spell "nonumber
+au bufnewfile,bufRead *.{txt,md,adoc} set spell nonumber
 
 " base default color changes (gruvbox dark friendly)
 hi StatusLine ctermfg=black ctermbg=NONE
