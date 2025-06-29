@@ -382,10 +382,10 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   "      \ coc#refresh()
 
   "coc#pum#insert()
-  inoremap <silent><expr> <Tab>
+  inoremap <silent><expr> <CR>
         \ coc#pum#visible() && coc#pum#info()['index'] != -1
         \ ? coc#pum#confirm()
-        \ : "\<Tab>"
+        \ : "\<C-g>u\<CR>"
 
   "let g:vim_asciidoc_initial_foldlevel=1
 
