@@ -370,6 +370,11 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   nmap <silent> gi <Plug>(coc-implementation)
   nmap <silent> gr <Plug>(coc-references)
 
+  inoremap <silent><expr> <TAB>
+        \ coc#pum#visible() && coc#pum#info()['index'] != -1
+        \ ? coc#pum#confirm()
+        \ : "\<C-g>u\<TAB>"
+
   " use <tab> to trigger completion and navigate to the next complete item
   "function! CheckBackspace() abort
   "  let col = col('.') - 1
@@ -382,10 +387,10 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   "      \ coc#refresh()
 
   "coc#pum#insert()
-  inoremap <silent><expr> <CR>
-        \ coc#pum#visible() && coc#pum#info()['index'] != -1
-        \ ? coc#pum#confirm()
-        \ : "\<C-g>u\<CR>"
+  "inoremap <silent><expr> <CR>
+  "      \ coc#pum#visible() && coc#pum#info()['index'] != -1
+  "      \ ? coc#pum#confirm()
+  "      \ : "\<C-g>u\<CR>"
 
   "let g:vim_asciidoc_initial_foldlevel=1
 
