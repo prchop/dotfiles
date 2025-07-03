@@ -48,7 +48,7 @@ font-style = "Medium"
 font-size = 12
 
 # theme = GruvboxDark
-theme = gruvbox-ghostty
+theme = gruvbox-custom
 
 cursor-style = "block"
 cursor-style-blink = true
