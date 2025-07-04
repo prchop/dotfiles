@@ -14,7 +14,7 @@ vim.cmd([[
   highlight NonText guibg=NONE
   highlight SpellBad guibg=#1c1c1c guifg=#d70000 gui=NONE
   highlight SpellRare guibg=#1c1c1c guifg=#d70000 gui=NONE
-  highlight StatusLine guibg=#282828
+  highlight StatusLine guibg=NONE
 ]])
 
 -- will be deprecated in nvim 0.12
