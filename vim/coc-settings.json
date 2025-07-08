@@ -32,13 +32,12 @@
   // "diagnostic.messageTarget": "echo",
   "diagnostic.checkCurrentLine": true,
   "diagnostic.enableSign": true,
-  "diagnostic.errorSign": "🔥 ",
-  "diagnostic.warningSign": "❗️ ",
-  "diagnostic.infoSign": "✨ ",
-  "diagnostic.hintSign": "💡 ",
+  "diagnostic.errorSign": "🔥",
+  "diagnostic.warningSign": "❗️",
+  "diagnostic.infoSign": "✨",
+  "diagnostic.hintSign": "💡",
 
   "[python]": {
-    "inlayHint.enable": false,
-    "python.formatting.provider": "none"
+    "inlayHint.enable": false
   }
 }
