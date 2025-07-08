@@ -10,6 +10,7 @@ my $os   = lc(`uname -s`);
 my $arch = `uname -m`;
 chomp( $arch, $os );
 $arch = 'amd64' if ($arch eq 'x86_64');
+$arch = 'arm64' if ($arch eq 'aarch64');
 
 my $repo = "cli/cli";
 my $tag = `curl -sSL "https://api.github.com/repos/$repo/releases/latest" | jq -r .tag_name`;
@@ -20,12 +21,11 @@ my $url = "https://github.com/$repo/releases/download/$tag/$tar";
 say "URL found: $url";
 not $url and die "No URL found to fetch";
 
-my $downloads = $ENV{DOWNLOADS} || '/tmp';
-my $homedown  = $ENV{HOME} . "/Downloads";
-$downloads = $homedown if -d $homedown;
+my $temp = `mktemp -d`;
+chomp ( $temp );
 
 $tar =~ s/v//;
-my $path        = $downloads . '/' . $tar;
+my $path        = $temp . '/' . $tar;
 my $install_dir = $ENV{HOME} . '/.local/bin';
 say "Installing gh into $install_dir/gh ... ";
 
