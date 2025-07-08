@@ -1,0 +1,39 @@
+#!/usr/bin/perl
+use v5.26;
+
+for my $tool (qw(jq tar curl)) {
+    system("command -v $tool > /dev/null 2>&1") == 0
+    or die "$tool not found\n";
+}
+
+my $os   = lc(`uname -s`);
+my $arch = `uname -m`;
+chomp( $arch, $os );
+$arch = 'amd64' if ($arch eq 'x86_64');
+
+my $repo = "cli/cli";
+my $tag = `curl -sSL "https://api.github.com/repos/$repo/releases/latest" | jq -r .tag_name`;
+chomp ( $tag );
+my $tar = "gh_${tag}_${os}_${arch}.tar.gz";
+my $url = "https://github.com/$repo/releases/download/$tag/$tar";
+
+say "URL found: $url";
+not $url and die "No URL found to fetch";
+
+my $downloads = $ENV{DOWNLOADS} || '/tmp';
+my $homedown  = $ENV{HOME} . "/Downloads";
+$downloads = $homedown if -d $homedown;
+
+$tar =~ s/v//;
+my $path        = $downloads . '/' . $tar;
+my $install_dir = $ENV{HOME} . '/.local/bin';
+say "Installing gh into $install_dir/gh ... ";
+
+`curl -fL "$url"`;
+`mkdir -p "$install_dir"`;
+`tar -C "$install_dir/gh" -xzf "$path"`;
+`rm -rf $path`;
+
+say "Installed.";
+
+# Reference: Rob Muhelstein @https://linktr.ee/rwxrob
