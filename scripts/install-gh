@@ -19,8 +19,8 @@ my $tar = "gh_${tag}_${os}_${arch}.tar.gz";
 $tar =~ s/v//;
 my $url = "https://github.com/$repo/releases/download/$tag/$tar";
 
-say "URL found: $url";
-not $url and die "No URL found to fetch";
+say "File found: $tar";
+not $tar and die "No file found to fetch";
 
 my $temp = `mktemp -d`;
 chomp ( $temp );
@@ -29,8 +29,8 @@ my $path        = $temp . '/' . $tar;
 my $install_dir = $ENV{HOME} . '/.local/bin';
 say "Installing gh into $install_dir ... ";
 
-`curl -fL "$url"`;
-`tar -xzf -C "$path"`;
+`curl -fL "$url" -o "$path"`;
+`tar -C $temp -xzf "$path"`;
 `mkdir -p "$install_dir"`;
 `cp "$temp/$tar/bin/gh" "$install_dir"`;
 `rm -rf $temp`;
