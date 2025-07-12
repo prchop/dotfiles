@@ -33,7 +33,7 @@ say "Installing gh into $install_dir ... ";
 `tar -C $temp -xzf "$path"`;
 `mkdir -p "$install_dir"`;
 `cp "$temp/$tar/bin/gh" "$install_dir"`;
-`rm -rf $temp`;
+# `rm -rf $temp`; ## optional
 
 say "Installed.";
 
