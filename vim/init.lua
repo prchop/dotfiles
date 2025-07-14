@@ -7,6 +7,7 @@ vim.cmd("source ~/.vimrc")
 if vim.fn.has('nvim-0.10') == 1 then
     require 'plugins.gitsigns'
     require 'plugins.harpoon'
+    require 'plugins.indent_line'
 end
 
 vim.cmd([[
