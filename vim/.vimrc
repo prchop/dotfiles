@@ -38,6 +38,7 @@ if v:version >= 800
   set nofixendofline
   " better ascii friendly listchars
   set listchars=space:*,trail:*,nbsp:*,extends:>,precedes:<,tab:\|>
+  set listchars+=eol:↩
   " disable automatic folding
   set foldmethod=manual
   set nofoldenable
@@ -467,7 +468,7 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   au FileType go nmap <leader>n iif err != nil {return err}<CR><ESC>
 
   "let g:gruvbox_material_dim_inactive_windows = 0
-  let g:gruvbox_material_foreground = 'original'
+  let g:gruvbox_material_foreground = 'mix'
   let g:gruvbox_material_transparent_background = 1
   if !exists('g:colors_name') || g:colors_name !=# 'gruvbox-material'
     try
