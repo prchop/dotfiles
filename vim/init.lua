@@ -4,10 +4,9 @@ vim.opt.packpath = vim.opt.runtimepath:get()
 
 vim.cmd("source ~/.vimrc")
 
-if vim.fn.has('nvim-0.10') == 1 then
-    require 'plugins.gitsigns'
-    require 'plugins.harpoon'
-    require 'plugins.indent_line'
+if vim.fn.has("nvim-0.10") == 1 then
+	require("plugins.gitsigns")
+	require("plugins.harpoon")
 end
 
 vim.cmd([[
@@ -15,14 +14,15 @@ vim.cmd([[
   highlight NonText guibg=NONE
   highlight SpellBad guibg=#1c1c1c guifg=#d70000 gui=NONE
   highlight SpellRare guibg=#1c1c1c guifg=#d70000 gui=NONE
-  highlight StatusLine guibg=NONE
+  highlight StatusLine guibg=#141414
+  highlight CursorLine guibg=#141414 guifg=NONE
 ]])
 
--- will be deprecated in nvim 0.12
---vim.fn.sign_define("DiagnosticSignError", { text = "🔥", texthl = "DiagnosticError" })
---vim.fn.sign_define("DiagnosticSignWarn", { text = "❗️", texthl = "DiagnosticWarn" })
---vim.fn.sign_define("DiagnosticSignInfo", { text = "✨", texthl = "DiagnosticInfo" })
---vim.fn.sign_define("DiagnosticSignHint", { text = "💡", texthl = "DiagnosticHint" })
+--- will be deprecated in nvim 0.12
+---vim.fn.sign_define("DiagnosticSignError", { text = "🔥", texthl = "DiagnosticError" })
+---vim.fn.sign_define("DiagnosticSignWarn", { text = "❗️", texthl = "DiagnosticWarn" })
+---vim.fn.sign_define("DiagnosticSignInfo", { text = "✨", texthl = "DiagnosticInfo" })
+---vim.fn.sign_define("DiagnosticSignHint", { text = "💡", texthl = "DiagnosticHint" })
 
 vim.diagnostic.config({
 	signs = {
@@ -40,7 +40,8 @@ vim.diagnostic.config({
 })
 
 -- Set cursor highlight with background color
-vim.cmd("highlight Cursor guibg=#928374 guifg=NONE")
+-- vim.cmd("highlight Cursor guibg=#928374 guifg=NONE")
+-- vim.cmd("highlight Cursor guibg=NONE guifg=#2a283e")
 
 ---- Set the statusline without background colors
 --vim.opt.statusline = "%f %m %r %= %y %l:%c %p%%"
@@ -60,10 +61,10 @@ if screenkey_available then
 	})
 end
 
-require('nvim-treesitter.configs').setup {
-  ensure_installed = { "python", "lua", "bash", "vim", "c" },
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = false,
-  },
-}
+require("nvim-treesitter.configs").setup({
+	ensure_installed = { "python", "lua", "bash", "vim", "c" },
+	highlight = {
+		enable = true,
+		additional_vim_regex_highlighting = false,
+	},
+})
