@@ -186,6 +186,8 @@ nnoremap <leader>f :find **/
 nnoremap <leader>b :buf *
 nmap <leader>e :Ex<CR>
 nmap <leader>lb :buffers<CR>
+nmap <leader>lq :cwindow<CR>
+nmap <leader>sg :silent! grep 
 nmap <leader>k :bn<CR>
 map <leader>j :bp<CR>
 nmap <C-x> :bd<CR>
@@ -484,6 +486,9 @@ endif
 
 " higlight when yanking
 autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup='Visual', timeout=300}
+
+" open grep result in quickfix list
+autocmd QuickFixCmdPost *grep* cwindow
 
 " CoC Setup for JS/TS only
 augroup CocJSTS
