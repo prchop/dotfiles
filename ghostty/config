@@ -53,7 +53,7 @@ theme = gruvbox-custom
 cursor-style = "block"
 cursor-style-blink = true
 
-background-opacity = 0.94
+background-opacity = 0.98
 
 window-decoration = "server"
 maximize = true
