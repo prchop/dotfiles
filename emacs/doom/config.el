@@ -36,7 +36,8 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+; (setq display-line-numbers-type t)
+(setq display-line-numbers-type nil)
 
 ;;; change leader key to default vim
 (setq doom-leader-key ","
@@ -47,7 +48,7 @@
 (setq org-directory "~/Documents/org/")
 
 ;; set font
-(setq doom-font (font-spec :family "Iosevka Nerd Font" :size 15))
+(setq doom-font (font-spec :family "Iosevka Nerd Font" :size 18))
 
 ;; disable save confirm
 (setq confirm-kill-emacs nil)
@@ -113,10 +114,23 @@
   '(vertical-border :foreground "#222222")
   '(vertical-border :background "#282828")) ;; Gruvbox dark gray
 
-;; remove code block color background; for markdown-mode
+;; for markdown-mode
 (after! markdown-mode
   (custom-set-faces!
     '(markdown-code-face :background nil)))
+
+;; for python
+(add-hook 'python-mode-hook
+          (lambda ()
+            ;; Setting 1:
+            (setq indent-tabs-mode nil)))
+
+;; change default split
+(setq split-height-threshold nil)
+(setq split-width-threshold 0)
+
+;; cursor line
+(setq global-hl-line-modes nil)
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwiseDoom's defaults may override your settings. E.g.
