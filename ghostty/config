@@ -42,6 +42,7 @@
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
 
+# Font
 font-family = "Iosevka Nerd Font Mono"
 font-style = "Medium"
 font-size = 12
