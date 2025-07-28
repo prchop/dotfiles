@@ -54,7 +54,6 @@ theme = gruvbox-custom
 cursor-style = "block"
 cursor-style-blink = true
 
-# Transparent
 background-opacity = 0.96
 
 window-decoration = "server"
