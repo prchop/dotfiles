@@ -222,7 +222,7 @@ _have pandoc && . <(pandoc --bash-completion)
 _have dlv && . <(dlv completion bash)
 
 # TMUX
-if [ -z "$TMUX" ] && [ "$TERM" = "xterm-kitty" ]; then
+if [ -z "$TMUX" ] && [ "$TERM" = "xterm-ghostty" ]; then
 	tmux attach || tmux new-session && exit
 fi
 
