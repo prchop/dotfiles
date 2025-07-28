@@ -50,6 +50,7 @@ font-size = 12
 # theme = GruvboxDark
 theme = gruvbox-custom
 
+# Cursor
 cursor-style = "block"
 cursor-style-blink = true
 
