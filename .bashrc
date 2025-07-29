@@ -93,6 +93,7 @@ set-editor() {
 	alias vi="\$EDITOR"
 }
 _have "vim" && set-editor vi
+_have "vim" && set-editor vim
 _have "nvim" && set-editor nvim
 
 # export without -f work in bash 4.3+
@@ -200,6 +201,7 @@ alias path='echo -e "${PATH//:/\\n}"'
 alias cdpath='echo -e "${CDPATH//:/\\n}"'
 alias projects='cd $CODE/projects/'
 alias py='python3'
+alias reload='exec $SHELL -l'
 alias scripts='cd $SCRIPTS'
 alias todo='$EDITOR $DOCUMENTS/.todo.md'
 alias temp='cd $(mktemp -d)'
