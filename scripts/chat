@@ -1,9 +1,10 @@
 #!/bin/sh
 
-if ! command -v mods >/dev/null; then
+_have() { command -v "$1" >/dev/null; }
+if ! _have mods; then
 	echo "requires charmbracelet/mods"
 	exit 1
 fi
 GOOGLE_API_KEY="$(cat ~/.config/gemini/key)" mods -a google \
-	-m gemini-2.0-flash-001 --no-cache --status-text "Humm..." "$*"
-# OPENAI_API_KEY="$(cat ~/.config/gpt/key)" mods --continue-last --status-text "Humm..." "$*"
+	-m gemini-2.0-flash-001 --word-wrap 68 --no-cache --status-text "Humm..." "$*"
+# OPENAI_API_KEY="$(cat ~/.config/gpt/key)" mods -t "GPT" --status-text "Humm..." "$*" | glow

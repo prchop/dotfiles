@@ -152,9 +152,6 @@ pathappend() {
 	done
 } && export -f pathappend
 
-# "$HOME/.local/go/bin" \
-# /usr/local/bin \
-
 pathprepend \
 	"$BUN_INSTALL/bin" \
 	"$CARGO_HOME/bin" \
@@ -162,6 +159,8 @@ pathprepend \
 	"$HOME/.deno/bin" \
 	"$HOME/.local/go/bin" \
 	"$HOME/.local/bin" \
+	/usr/local/go/bin \
+	/usr/local/bin \
 	"$SCRIPTS" \
 	"$HOME/.config/emacs/bin"
 
@@ -205,7 +204,9 @@ alias reload='exec $SHELL -l'
 alias scripts='cd $SCRIPTS'
 alias todo='$EDITOR $DOCUMENTS/.todo.md'
 alias temp='cd $(mktemp -d)'
-alias '??'=google
+alias '?'=brave-lynx
+alias '??'=brave
+alias '???'=chat
 alias work="timer -f 50m -n '🔥️ Time to Work' && \
 	paplay /usr/share/sounds/freedesktop/stereo/complete.oga \
 	&& notify-send -u normal -i ~/.local/share/icons/tomato.png \
@@ -224,9 +225,9 @@ _have pandoc && . <(pandoc --bash-completion)
 _have dlv && . <(dlv completion bash)
 
 # TMUX
-if [ -z "$TMUX" ] && [ "$TERM" = "xterm-ghostty" ]; then
-	tmux attach || tmux new-session && exit
-fi
+# if [ -z "$TMUX" ] && [ "$TERM" = "xterm-ghostty" ]; then
+# 	tmux attach || tmux new-session && exit
+# fi
 
 # nvm
 export NVM_DIR="$HOME/.config/nvm"
