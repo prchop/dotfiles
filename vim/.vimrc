@@ -353,6 +353,8 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
       Plug 'ThePrimeagen/harpoon', {'branch': 'harpoon2'}
       "gitsigns
       Plug 'lewis6991/gitsigns.nvim',
+      "markdown preview
+      Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
       if exists('$NVIM_SCREENKEY')
         Plug 'NStefan002/screenkey.nvim'
       endif
