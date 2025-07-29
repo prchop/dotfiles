@@ -10,6 +10,7 @@ if vim.fn.has("nvim-0.10") == 1 then
 end
 
 vim.cmd([[
+  colorscheme gruber-darker
   highlight Normal guifg=#d4be98 guibg=NONE
   highlight NonText guibg=NONE
   highlight SpellBad guibg=#1c1c1c guifg=#d70000 gui=NONE

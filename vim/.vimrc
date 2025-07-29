@@ -334,7 +334,8 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
 
   call plug#begin('~/.local/share/vim/plugins')
     Plug 'conradirwin/vim-bracketed-paste'
-    Plug 'sainnhe/gruvbox-material'
+    "Plug 'sainnhe/gruvbox-material'
+    Plug 'blazkowolf/gruber-darker.nvim'
     Plug 'fatih/vim-go' " GoInstallBinaries separately
     Plug 'vim-pandoc/vim-pandoc'
     Plug 'rwxrob/vim-pandoc-syntax-simple'
