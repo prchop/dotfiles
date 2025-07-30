@@ -32,12 +32,13 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-gruvbox)
+(setq doom-theme 'gruber-darker)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-; (setq display-line-numbers-type t)
+;; (setq display-line-numbers-type t)
 (setq display-line-numbers-type nil)
+(add-to-list 'load-path "~/Repos/github.com/akermu/emacs-libvterm")
 
 ;;; change leader key to default vim
 (setq doom-leader-key ","
@@ -48,14 +49,16 @@
 (setq org-directory "~/Documents/org/")
 
 ;; set font
-(setq doom-font (font-spec :family "Iosevka Nerd Font" :size 18))
+(setq doom-font (font-spec :family "Iosevka Nerd Font" :size 20))
+(setq doom-variable-pitch-font (font-spec :family "Iosevka Nerd Font" :size 20))
+(setq doom-big-font (font-spec :family "Iosevka Nerd Font" :size 20))
 
 ;; disable save confirm
 (setq confirm-kill-emacs nil)
 
 ;; transparency
-(unless (display-graphic-p)
-  (set-face-background 'default "unspecified-bg"))
+;; (unless (display-graphic-p)
+;;   (set-face-background 'default "unspecified-bg"))
 
 (add-hook 'doom-init-ui-hook (lambda () (solaire-global-mode -1)))
 
