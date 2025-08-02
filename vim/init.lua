@@ -7,6 +7,7 @@ vim.cmd("source ~/.vimrc")
 if vim.fn.has("nvim-0.10") == 1 then
 	require("plugins.gitsigns")
 	require("plugins.harpoon")
+	require("plugins.zettelkasten")
 end
 
 vim.cmd([[
@@ -18,12 +19,6 @@ vim.cmd([[
   highlight StatusLine guibg=#141414
   highlight CursorLine guibg=#141414 guifg=NONE
 ]])
-
---- will be deprecated in nvim 0.12
----vim.fn.sign_define("DiagnosticSignError", { text = "🔥", texthl = "DiagnosticError" })
----vim.fn.sign_define("DiagnosticSignWarn", { text = "❗️", texthl = "DiagnosticWarn" })
----vim.fn.sign_define("DiagnosticSignInfo", { text = "✨", texthl = "DiagnosticInfo" })
----vim.fn.sign_define("DiagnosticSignHint", { text = "💡", texthl = "DiagnosticHint" })
 
 vim.diagnostic.config({
 	signs = {
