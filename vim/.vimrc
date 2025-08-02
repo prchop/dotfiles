@@ -11,7 +11,7 @@ filetype plugin on
 filetype indent on
 
 " Add numbers to each line on the left-hand side.
-set number
+set nonumber
 
 " Auto write files when changing
 set autowrite
@@ -178,10 +178,12 @@ set scrolloff=3
 let g:netrw_liststyle = 3
 
 " Keymap goes here
+
+" example
 nnoremap <C-L> :nohl<CR><C-L>
 nmap <leader>w :set nowrap!<CR>
 nmap <leader>p :set paste<CR>i
-nnoremap <leader>, :edit **/
+nnoremap <leader>/ :edit **/
 nnoremap <leader>f :find **/
 nnoremap <leader>b :buf *
 nmap <leader>e :Ex<CR>
@@ -339,7 +341,6 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
     Plug 'fatih/vim-go' " GoInstallBinaries separately
     Plug 'vim-pandoc/vim-pandoc'
     Plug 'rwxrob/vim-pandoc-syntax-simple'
-    Plug 'lukas-reineke/indent-blankline.nvim'
     Plug 'Furkanzmc/zettelkasten.nvim'
     "Plug 'habamax/vim-asciidoctor'
     "Plug 'kana/vim-textobj-user'
@@ -393,12 +394,6 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   "      \ coc#pum#visible() ? coc#pum#next(1) :
   "      \ CheckBackspace() ? "\<Tab>" :
   "      \ coc#refresh()
-
-  "coc#pum#insert()
-  "inoremap <silent><expr> <CR>
-  "      \ coc#pum#visible() && coc#pum#info()['index'] != -1
-  "      \ ? coc#pum#confirm()
-  "      \ : "\<C-g>u\<CR>"
 
   "let g:vim_asciidoc_initial_foldlevel=1
 
@@ -474,15 +469,15 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   au FileType go nmap <leader>n iif err != nil {return err}<CR><ESC>
 
   "let g:gruvbox_material_dim_inactive_windows = 0
-  let g:gruvbox_material_foreground = 'mix'
-  let g:gruvbox_material_transparent_background = 1
-  if !exists('g:colors_name') || g:colors_name !=# 'gruvbox-material'
-    try
-      colorscheme gruvbox-material
-    catch /^Vim\%((\a\+)\)\=:E185/
-      colorscheme desert
-    endtry
-  endif
+  "let g:gruvbox_material_foreground = 'original'
+  "let g:gruvbox_material_transparent_background = 1
+  "if !exists('g:colors_name') || g:colors_name !=# 'gruvbox-material'
+  "  try
+  "    colorscheme gruvbox-material
+  "  catch /^Vim\%((\a\+)\)\=:E185/
+  "    colorscheme desert
+  "  endtry
+  "endif
 
 else
   autocmd vimleavepre *.go !gofmt -w % " backup if fatih fails
