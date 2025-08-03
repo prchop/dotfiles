@@ -90,9 +90,8 @@ set-editor() {
 	export VISUAL="$1"
 	export GH_EDITOR="$1"
 	export GIT_EDITOR="$1"
-	alias vi="\$EDITOR"
+	alias v="\$EDITOR"
 }
-_have "vim" && set-editor vi
 _have "vim" && set-editor vim
 _have "nvim" && set-editor nvim
 
