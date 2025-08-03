@@ -226,9 +226,9 @@ _have pandoc && . <(pandoc --bash-completion)
 _have dlv && . <(dlv completion bash)
 
 # TMUX
-# if [ -z "$TMUX" ] && [ "$TERM" = "xterm-ghostty" ]; then
-# 	tmux attach || tmux new-session && exit
-# fi
+if [ -z "$TMUX" ] && [ "$TERM" = "xterm-ghostty" ]; then
+	tmux attach || tmux new-session && exit
+fi
 
 # nvm
 export NVM_DIR="$HOME/.config/nvm"
