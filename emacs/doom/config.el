@@ -36,8 +36,10 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-;; (setq display-line-numbers-type t)
-(setq display-line-numbers-type nil)
+(setq display-line-numbers-type t)
+;; (setq display-line-numbers-type nil)
+;; (setq display-line-numbers-type 'relative)
+
 (add-to-list 'load-path "~/Repos/github.com/akermu/emacs-libvterm")
 
 ;;; change leader key to default vim
@@ -49,12 +51,24 @@
 (setq org-directory "~/Documents/org/")
 
 ;; set font
-(setq doom-font (font-spec :family "Iosevka Nerd Font" :size 20))
-(setq doom-variable-pitch-font (font-spec :family "Iosevka Nerd Font" :size 20))
-(setq doom-big-font (font-spec :family "Iosevka Nerd Font" :size 20))
+(setq doom-font (font-spec :family "Iosevka Nerd Font" :size 18))
+(setq doom-variable-pitch-font (font-spec :family "Iosevka Nerd Font" :size 18))
+(setq doom-big-font (font-spec :family "Iosevka Nerd Font" :size 18))
 
 ;; disable save confirm
 (setq confirm-kill-emacs nil)
+
+(require 'ido-completing-read+)
+(ido-mode 1)
+(ido-everywhere 1)
+(ido-ubiquitous-mode 1)
+
+(require 'smex)
+(smex-initialize)
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+;; This is your old M-x.
+(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 
 ;; transparency
 ;; (unless (display-graphic-p)
@@ -127,6 +141,10 @@
           (lambda ()
             ;; Setting 1:
             (setq indent-tabs-mode nil)))
+
+;; markdown pandoc
+(custom-set-variables
+ '(markdown-command "/home/prchop/.local/bin/pandoc"))
 
 ;; change default split
 (setq split-height-threshold nil)
