@@ -63,12 +63,20 @@
 (ido-everywhere 1)
 (ido-ubiquitous-mode 1)
 
-(require 'smex)
-(smex-initialize)
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
-;; This is your old M-x.
-(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+(use-package! smex
+  :config
+  (smex-initialize)
+  ;; Force override of M-x globally
+  (define-key! global-map
+    [remap execute-extended-command] #'smex)
+  ;; Optional fallback
+  (define-key! global-map
+    (kbd "C-c C-c M-x") #'execute-extended-command))
+
+;;(global-set-key (kbd "M-x") 'smex)
+;;(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+;;This is your old M-x.
+;;(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 
 ;; transparency
 ;; (unless (display-graphic-p)
