@@ -36,9 +36,9 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+(setq display-line-numbers-type 'relative)
+(setq display-line-numbers-width-start t)
 ;; (setq display-line-numbers-type nil)
-;; (setq display-line-numbers-type 'relative)
 
 (add-to-list 'load-path "~/Repos/github.com/akermu/emacs-libvterm")
 
@@ -57,6 +57,13 @@
 
 ;; disable save confirm
 (setq confirm-kill-emacs nil)
+
+(use-package! nerd-icons
+  :custom
+  ;; (nerd-icons-font-family  "Iosevka Nerd Font Mono")
+  ;; (nerd-icons-scale-factor 2)
+  ;; (nerd-icons-default-adjust -.075)
+  (doom-modeline-major-mode-icon t))
 
 (require 'ido-completing-read+)
 (ido-mode 1)
