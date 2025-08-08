@@ -85,6 +85,13 @@
 ;;This is your old M-x.
 ;;(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 
+(use-package! rg
+  :config
+  (rg-enable-default-bindings))  ;; Optional default keybindings
+
+(after! rg
+  (set-popup-rule! "^\\*rg\\*" :size 0.35 :side 'bottom :select t :quit t))
+
 ;; transparency
 ;; (unless (display-graphic-p)
 ;;   (set-face-background 'default "unspecified-bg"))
