@@ -36,7 +36,8 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type 'relative)
+(setq display-line-numbers-type t)
+; (setq display-line-numbers-type 'relative)
 (setq display-line-numbers-width-start t)
 ;; (setq display-line-numbers-type nil)
 
@@ -91,6 +92,9 @@
 
 (after! rg
   (set-popup-rule! "^\\*rg\\*" :size 0.35 :side 'bottom :select t :quit t))
+
+(add-hook 'help-mode-hook #'visual-line-mode)
+(add-hook 'Man-mode-hook  #'visual-line-mode)
 
 ;; transparency
 ;; (unless (display-graphic-p)
