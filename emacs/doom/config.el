@@ -151,6 +151,7 @@
 ;; keymap
 (global-set-key (kbd "C-c l n") 'display-line-numbers-mode)
 (global-set-key (kbd "C-c t t") 'solaire-global-mode)
+(global-set-key (kbd "<f5>") 'hl-line-mode)
 
 ;; thinner window divider
 (custom-set-faces!
@@ -177,7 +178,7 @@
 (setq split-width-threshold 0)
 
 ;; cursor line
-(setq global-hl-line-modes nil)
+;; (setq global-hl-line-modes nil)
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwiseDoom's defaults may override your settings. E.g.
