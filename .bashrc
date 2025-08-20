@@ -50,6 +50,8 @@ __ps1() {
 		PS1="$short"
 	fi
 
+	[[ "${VENVS[$PWD]}" =~ ^y ]] && PS1="${PS1//\$/🐍}"
+
 	if _have tmux && [[ -n "$TMUX" ]]; then
 		tmux rename-window "$(wd)"
 	fi
@@ -62,7 +64,26 @@ wd() {
 	echo "$parent/$dir"
 } && export wd
 
-PROMPT_COMMAND="__ps1"
+found-venv() { test -e .venv/bin/activate; }
+venv-is-on() { [[ "$(command -v python)" =~ \.venv\/bin\/python$ ]]; }
+
+declare -A VENVS
+export VENVS
+
+llvenv() {
+	found-venv || return
+	venv-is-on && return
+	test -n "${VENVS[$PWD]}" && return
+	read -rp "Want to activate the .venv? [Y/n]" answer
+	answer=${answer,,}
+	test -z "$answer" && answer=y
+	VENVS["$PWD"]="$answer"
+	if [[ $answer =~ ^y ]]; then
+		. .venv/bin/activate
+	fi
+}
+
+PROMPT_COMMAND="llvenv;__ps1"
 
 # ===============================
 # ==== ENVIRONMENT VARIABLES ====
@@ -84,6 +105,8 @@ export GOBIN="$HOME/.local/bin"
 export GOPROXY=direct
 export CGO_ENABLED=0
 export PYTHONDONTWRITEBYTECODE=2
+# export TERM="xterm-256color"
+# export COLORTERM="truecolor"
 
 set-editor() {
 	export EDITOR="$1"
@@ -181,7 +204,7 @@ export HISTFILESIZE=10000
 
 # shopt is for BASHOPTS, set is for SHELLOPTS
 set -o vi
-# shopt -s expand_aliases
+shopt -s expand_aliases
 shopt -s histappend
 shopt -s globstar
 shopt -s dotglob
@@ -203,7 +226,7 @@ alias projects='cd $CODE/projects/'
 alias py='python3'
 alias reload='exec $SHELL -l'
 alias scripts='cd $SCRIPTS'
-alias todo='$EDITOR $DOCUMENTS/.todo.md'
+alias todo='$EDITOR $DOCUMENTS/tmpnotes/.todo.md'
 alias temp='cd $(mktemp -d)'
 alias '?'=brave-lynx
 alias '??'=brave
@@ -226,9 +249,9 @@ _have pandoc && . <(pandoc --bash-completion)
 _have dlv && . <(dlv completion bash)
 
 # TMUX
-if [ -z "$TMUX" ] && [ "$TERM" = "xterm-ghostty" ]; then
-	tmux attach || tmux new-session && exit
-fi
+# if [ -z "$TMUX" ] && [ "$TERM" = "xterm-ghostty" ]; then
+# 	tmux attach || tmux new-session && exit
+# fi
 
 # nvm
 export NVM_DIR="$HOME/.config/nvm"
