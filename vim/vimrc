@@ -189,7 +189,7 @@ nnoremap <leader>b :buf *
 nmap <leader>e :Ex<CR>
 nmap <leader>lb :buffers<CR>
 nmap <leader>lq :cwindow<CR>
-nmap <leader>sg :silent! grep 
+nmap <leader>gs :silent! grep 
 nmap <leader>k :bn<CR>
 map <leader>j :bp<CR>
 nmap <C-x> :bd<CR>
