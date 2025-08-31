@@ -96,11 +96,6 @@
 (add-hook 'help-mode-hook #'visual-line-mode)
 (add-hook 'Man-mode-hook  #'visual-line-mode)
 
-(custom-set-faces
- ;; Active modeline
- '(doom-modeline-bar ((t (:background "#101010"))))  ;; change left bar
- '(doom-modeline ((t (:background "#101010"))))) ;; main background
-
 ;; transparency
 ;;(unless (display-graphic-p)
 ;;  (set-face-background 'default "unspecified-bg"))
@@ -161,7 +156,16 @@
 ;; thinner window divider
 (custom-set-faces!
   '(vertical-border :foreground "#222222")
-  '(vertical-border :background "#282828")) ;; Gruvbox dark gray
+  '(vertical-border :background "#282828"))
+
+(custom-set-faces
+  '(doom-modeline ((t (:background "#101010"))))
+  '(doom-modeline-bar ((t (:background "#101010"))))
+  '(mode-line ((t (:background "#101010"))))
+  '(lsp-modeline-code-actions-face
+    ((t (:inherit mode-line
+        :background "#101010"
+        :foreground "#ffcc00")))))
 
 ;; for markdown-mode
 (after! markdown-mode
