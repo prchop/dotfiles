@@ -96,9 +96,14 @@
 (add-hook 'help-mode-hook #'visual-line-mode)
 (add-hook 'Man-mode-hook  #'visual-line-mode)
 
+(custom-set-faces
+ ;; Active modeline
+ '(doom-modeline-bar ((t (:background "#101010"))))  ;; change left bar
+ '(doom-modeline ((t (:background "#101010"))))) ;; main background
+
 ;; transparency
-;; (unless (display-graphic-p)
-;;   (set-face-background 'default "unspecified-bg"))
+;;(unless (display-graphic-p)
+;;  (set-face-background 'default "unspecified-bg"))
 
 (add-hook 'doom-init-ui-hook (lambda () (solaire-global-mode -1)))
 
@@ -178,8 +183,14 @@
 (setq split-width-threshold 0)
 
 ;; cursor line
-;; (setq global-hl-line-modes nil)
+(setq global-hl-line-modes nil)
 
+;; Show listchars (whitespace symbols) in all code buffers
+(add-hook 'prog-mode-hook #'whitespace-mode)
+;;;; Don’t show newlines
+(setq whitespace-style
+      '(face tabs spaces trailing space-before-tab
+             indentation empty space-after-tab tab-mark space-mark))
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwiseDoom's defaults may override your settings. E.g.
 ;;
