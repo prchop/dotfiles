@@ -37,7 +37,7 @@
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
-; (setq display-line-numbers-type 'relative)
+;; (setq display-line-numbers-type 'relative)
 (setq display-line-numbers-width-start t)
 ;; (setq display-line-numbers-type nil)
 
@@ -158,13 +158,14 @@
   '(vertical-border :foreground "#222222")
   '(vertical-border :background "#282828"))
 
+;; modeline
 (custom-set-faces
-  '(doom-modeline ((t (:background "#101010"))))
-  '(doom-modeline-bar ((t (:background "#101010"))))
-  '(mode-line ((t (:background "#101010"))))
-  '(lsp-modeline-code-actions-face
-    ((t (:inherit mode-line
-        :background "#101010"
+ '(doom-modeline ((t (:background "#141414"))))
+ '(doom-modeline-bar ((t (:background "#141414"))))
+ '(mode-line ((t (:background "#141414"))))
+ '(lsp-modeline-code-actions-face
+   ((t (:inherit mode-line
+        :background "#141414"
         :foreground "#ffcc00")))))
 
 ;; for markdown-mode
@@ -194,7 +195,7 @@
 ;;;; Don’t show newlines
 (setq whitespace-style
       '(face tabs spaces trailing space-before-tab
-             indentation empty space-after-tab tab-mark space-mark))
+        indentation empty space-after-tab tab-mark space-mark))
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwiseDoom's defaults may override your settings. E.g.
 ;;
