@@ -93,6 +93,13 @@
 (after! rg
   (set-popup-rule! "^\\*rg\\*" :size 0.35 :side 'bottom :select t :quit t))
 
+(defun +default/search-project-for-symbol-at-point ()
+  (interactive)
+  (let ((symbol (thing-at-point 'symbol t)))
+    (if symbol
+        (+default/search-project symbol)
+      (message "No symbol at point"))))
+
 (add-hook 'help-mode-hook #'visual-line-mode)
 (add-hook 'Man-mode-hook  #'visual-line-mode)
 
