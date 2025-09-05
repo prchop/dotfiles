@@ -110,6 +110,7 @@
 (add-hook 'doom-init-ui-hook (lambda () (solaire-global-mode -1)))
 
 ;; automatically organize imports
+(add-hook 'go-mode-hook (lambda () (flycheck-mode -1)))
 (add-hook 'go-mode-hook #'lsp-deferred)
 (add-hook 'python-mode-hook #'lsp-deferred)
 
@@ -123,14 +124,22 @@
 (add-hook 'python-mode-hook #'lsp-py-install-save-hooks)
 
 ;; enable all analyzers; not done by default
+;; (after! lsp-mode
+;;   (setq  lsp-go-analyses '((nilness . t)
+;;                            (shadow . t)
+;;                            (unusedparams . t)
+;;                            (unusedwrite . t)
+;;                            (useany . t)
+;;                            (unusedvariable . nil)
+;;  )))
 (after! lsp-mode
-  (setq  lsp-go-analyses '((nilness . t)
-                           (shadow . t)
-                           (unusedparams . t)
-                           (unusedwrite . t)
-                           (useany . t)
-                           (unusedvariable . t)))
-  )
+  (lsp-register-custom-settings
+   '(("gopls.analyses.unusedvariable" :json-false)
+     ("gopls.analyses.nilness" t)
+     ("gopls.analyses.shadow" t)
+     ("gopls.analyses.unusedparams" t)
+     ("gopls.analyses.unusedwrite" t)
+     ("gopls.analyses.useany" t))))
 
 (defun evil-markdown-specific ()
   "Remap j/k to gj/gk for screen-line navigation."
@@ -199,10 +208,12 @@
 
 ;; Show listchars (whitespace symbols) in all code buffers
 (add-hook 'prog-mode-hook #'whitespace-mode)
+
 ;;;; Don’t show newlines
 (setq whitespace-style
       '(face tabs spaces trailing space-before-tab
         indentation empty space-after-tab tab-mark space-mark))
+
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwiseDoom's defaults may override your settings. E.g.
 ;;
