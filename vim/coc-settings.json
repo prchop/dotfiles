@@ -11,8 +11,10 @@
           "nonewvars": true,
           "unusedparams": true,
           "unusedwrite": true,
+          "unusedvariable": false,
           "useany": true,
           "composites": true,
+          "shadow": true,
           "ST1003": true,
           "SA1019": true
         },
