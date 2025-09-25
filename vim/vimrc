@@ -11,7 +11,7 @@ filetype plugin on
 filetype indent on
 
 " Add numbers to each line on the left-hand side.
-set nonumber
+set number
 
 " Auto write files when changing
 set autowrite
@@ -336,17 +336,16 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
 
   call plug#begin('~/.local/share/vim/plugins')
     Plug 'conradirwin/vim-bracketed-paste'
-    "Plug 'sainnhe/gruvbox-material'
-    Plug 'blazkowolf/gruber-darker.nvim'
+    Plug 'sainnhe/gruvbox-material'
     Plug 'fatih/vim-go' " GoInstallBinaries separately
     Plug 'vim-pandoc/vim-pandoc'
     Plug 'rwxrob/vim-pandoc-syntax-simple'
     Plug 'Furkanzmc/zettelkasten.nvim'
+    Plug 'dense-analysis/ale'
     "Plug 'habamax/vim-asciidoctor'
     "Plug 'kana/vim-textobj-user'
     "Plug 'mjakl/vim-asciidoc'
     "Plug 'preservim/nerdtree'
-    Plug 'dense-analysis/ale'
 
     if has('nvim') || v:version >= 10.0
       Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -447,7 +446,7 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   "let g:go_fmt_options = '-s'
   let g:go_fmt_command = 'goimports'
   let g:go_fmt_autosave = 1
-  let g:go_gopls_enabled = 1
+  let g:go_gopls_enabled = 0
   let g:go_highlight_types = 1
   let g:go_highlight_fields = 1
   let g:go_highlight_functions = 1
@@ -468,16 +467,16 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   au FileType go nmap <leader>m ilog.Print("made")<CR><ESC>
   au FileType go nmap <leader>n iif err != nil {return err}<CR><ESC>
 
-  "let g:gruvbox_material_dim_inactive_windows = 0
-  "let g:gruvbox_material_foreground = 'original'
-  "let g:gruvbox_material_transparent_background = 1
-  "if !exists('g:colors_name') || g:colors_name !=# 'gruvbox-material'
-  "  try
-  "    colorscheme gruvbox-material
-  "  catch /^Vim\%((\a\+)\)\=:E185/
-  "    colorscheme desert
-  "  endtry
-  "endif
+  let g:gruvbox_material_dim_inactive_windows = 0
+  let g:gruvbox_material_foreground = 'original'
+  let g:gruvbox_material_transparent_background = 1
+  if !exists('g:colors_name') || g:colors_name !=# 'gruvbox-material'
+    try
+      colorscheme gruvbox-material
+    catch /^Vim\%((\a\+)\)\=:E185/
+      colorscheme desert
+    endtry
+  endif
 
 else
   autocmd vimleavepre *.go !gofmt -w % " backup if fatih fails
@@ -489,22 +488,28 @@ autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup='Visual', time
 " open grep result in quickfix list
 autocmd QuickFixCmdPost *grep* cwindow
 
+" CoC Setup for Go
+augroup CocGo
+  autocmd!
+  autocmd FileType go nnoremap <buffer> <silent> K :call CocActionAsync('doHover')<CR>
+augroup END
+
 " CoC Setup for JS/TS only
 augroup CocJSTS
   autocmd!
-  autocmd FileType javascript,javascriptreact,typescript,typescriptreact let b:ale_enabled = 1
+  autocmd FileType javascript,javascriptreact,typescript,typescriptreact let b:ale_enabled = 0
   autocmd FileType javascript,javascriptreact,typescript,typescriptreact nnoremap <buffer> <silent> K :call CocActionAsync('doHover')<CR>
 augroup END
 
 " CoC Setup for python only
 augroup CocPython
   autocmd!
-  autocmd FileType python,py let b:ale_enabled = 1
+  autocmd FileType python,py let b:ale_enabled = 0
   autocmd FileType python,py nnoremap <buffer> <silent> K :call CocActionAsync('doHover')<CR>
 augroup END
 
 " set TMUX window name to name of file
 " longer version `. expand('%:p:h:t') . '/' . expand('%:t')`
-if exists('$TMUX')
-    autocmd BufEnter * call system('tmux rename-window ' . expand('%:p:h:t') . '/' . expand('%:t'))
-endif
+"if exists('$TMUX')
+"    autocmd BufEnter * call system('tmux rename-window ' . expand('%:p:h:t') . '/' . expand('%:t'))
+"endif

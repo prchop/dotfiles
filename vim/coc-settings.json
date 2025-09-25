@@ -1,7 +1,7 @@
 {
   "languageserver": {
     "golang": {
-      // "enable": false
+      //"enable": false,
       "command": "gopls",
       "rootPatterns": ["go.mod", ".git/"],
       "filetypes": ["go"],
@@ -38,8 +38,25 @@
   "diagnostic.warningSign": "❗️",
   "diagnostic.infoSign": "✨",
   "diagnostic.hintSign": "💡",
+  "ruff.enable": true,
+  "ruff.nativeServer": true,
+  "ruff.useDetectRuffCommand": true,
+  "python.linting.enabled": false,
+  "python.formatting.provider": "none",
 
   "[python]": {
     "inlayHint.enable": false
+  },
+  "[javascript]": {
+    "coc.preferences.formatOnSave": true
+  },
+  "[javascriptreact]": {
+    "coc.preferences.formatOnSave": true
+  },
+  "[typescript]": {
+    "coc.preferences.formatOnSave": true
+  },
+  "[typescriptreact]": {
+    "coc.preferences.formatOnSave": true
   }
 }
