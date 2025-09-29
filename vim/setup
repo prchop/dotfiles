@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [[ -z "$(which vim)" ]] || [[ -z "$(which nvim)" ]]; then
+	echo "Doesn't, look like you have vim/nvim"
+fi
+
+ln -sf "$PWD/vimrc" "$HOME/.vimrc"
+mkdir -p "$HOME/.vim/autoload"
+ln -sf "$PWD/plug.vim" "$HOME/.vim/autoload/plug.vim"
+mkdir -p "$HOME/.config/nvim"
+ln -sf "$PWD/coc-settings.json" "$HOME/.config/nvim/coc-settings.json"
+ln -sf "$PWD/init.lua" "$HOME/.config/nvim/init.lua"
+rm "$HOME/.config/nvim/lua" 2>/dev/null
+ln -s "$PWD/lua" "$HOME/.config/nvim/lua"
