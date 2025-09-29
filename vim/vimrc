@@ -189,7 +189,7 @@ nnoremap <leader>, :buf *
 nmap <leader>e :Ex<CR>
 nmap <leader>lb :buffers<CR>
 nmap <leader>lq :cwindow<CR>
-nmap <leader>gs :silent! grep 
+nmap <leader>gs :silent! grep <C-R><C-W> -g '!{node_modules,.git}/**'<CR>
 nmap <leader>k :bn<CR>
 map <leader>j :bp<CR>
 nmap <C-x> :bd<CR>
@@ -469,7 +469,7 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
 
   let g:gruvbox_material_dim_inactive_windows = 0
   let g:gruvbox_material_foreground = 'original'
-  let g:gruvbox_material_transparent_background = 1
+  let g:gruvbox_material_transparent_background = 0
   if !exists('g:colors_name') || g:colors_name !=# 'gruvbox-material'
     try
       colorscheme gruvbox-material
