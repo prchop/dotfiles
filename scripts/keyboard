@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# This script can be used to disable your laptop's built-in
+# keyboard using xinput as a troubleshooting step if it's
+# malfunctioning or causing unwanted input. It's recommended
+# to have an external keyboard connected before running this script.
+if ! command -v "xinput" >/dev/null; then
+	echo "requires xinput"
+	exit 1
+fi
+
+key() {
+	input=$1
+	id=$(xinput list | grep "AT Translated Set 2 keyboard")
+	id="${id##*=}"
+	id="${id%%\[*}"
+	cleaned_id="${id//	/}" # remove all tabs
+
+	case $input in
+	off) exec xinput disable "$cleaned_id" ;;
+	on) exec xinput enable "$cleaned_id" ;;
+	*) printf "[USAGE] keyboard [on|off]\nControls whether keyboard input is enabled.\nUse 'on' to enable, 'off' to disable.\n" ;;
+	esac
+}
+
+key "$1"
