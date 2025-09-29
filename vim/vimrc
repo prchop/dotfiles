@@ -177,9 +177,14 @@ set scrolloff=3
 " netrw list style
 let g:netrw_liststyle = 3
 
-" Keymap goes here
+function! GrepPrompt()
+  let word = input('Search for: ')
+  if word != ''
+    execute 'silent! grep ' . shellescape(word) . ' -g "!{node_modules,.git}/**"'
+  endif
+endfunction
 
-" example
+" Keymap goes here
 nnoremap <C-L> :nohl<CR><C-L>
 nmap <leader>w :set nowrap!<CR>
 nmap <leader>p :set paste<CR>i
@@ -189,7 +194,8 @@ nnoremap <leader>, :buf *
 nmap <leader>e :Ex<CR>
 nmap <leader>lb :buffers<CR>
 nmap <leader>lq :cwindow<CR>
-nmap <leader>gs :silent! grep <C-R><C-W> -g '!{node_modules,.git}/**'<CR>
+nmap <leader>gw :silent! grep <C-R><C-W> -g "!{node_modules,.git}/**"<CR>
+nmap <leader>gs :call GrepPrompt()<CR>
 nmap <leader>k :bn<CR>
 map <leader>j :bp<CR>
 nmap <C-x> :bd<CR>
