@@ -1,6 +1,14 @@
 #!/bin/bash
 # shellcheck disable=SC1090,SC1091
 #
+# There are 3 different types of shells in bash: the login shell, normal shell
+# and interactive shell. Login shells read ~/.profile and interactive shells
+# read ~/.bashrc; in our setup, /etc/profile sources ~/.bashrc - thus all
+# settings made here will also take effect in a login shell.
+#
+# NOTE: It is recommended to make language settings in ~/.profile rather than
+# here, since multilingual X sessions would not work properly if LANG is over-
+# ridden in every subshell.
 # set -x
 
 case $- in
@@ -52,9 +60,9 @@ __ps1() {
 
 	[[ "${VENVS[$PWD]}" =~ ^y ]] && PS1="${PS1//\$/🐍}"
 
-	if _have tmux && [[ -n "$TMUX" ]]; then
-		tmux rename-window "$(wd)"
-	fi
+	# if _have tmux && [[ -n "$TMUX" ]]; then
+	# 	tmux rename-window "$(wd)"
+	# fi
 }
 
 wd() {
@@ -247,6 +255,10 @@ _source_if "$HOME/.bash_personal"
 _have timer && . <(timer completion bash)
 _have pandoc && . <(pandoc --bash-completion)
 _have dlv && . <(dlv completion bash)
+_have sqlc && . <(sqlc completion bash)
+
+# disable internal keyboard
+# _have keyboard && keyboard off
 
 # TMUX
 # if [ -z "$TMUX" ] && [ "$TERM" = "xterm-ghostty" ]; then
