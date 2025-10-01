@@ -4,5 +4,5 @@ set -e
 ln -sf "$PWD/.bashrc" "$HOME/.bashrc"
 ln -sf "$PWD/.profile" "$HOME/.profile"
 
-#rm "$HOME/scripts" 2>/dev/null
+#rm "$HOME/Scripts" 2>/dev/null
 #ln -sf "$PWD/scripts" "$HOME/Scripts"

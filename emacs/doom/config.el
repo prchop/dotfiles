@@ -32,7 +32,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'gruber-darker)
+(setq doom-theme 'doom-gruvbox)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -104,10 +104,8 @@
 (add-hook 'Man-mode-hook  #'visual-line-mode)
 
 ;; transparency
-;;(unless (display-graphic-p)
-;;  (set-face-background 'default "unspecified-bg"))
-
-(add-hook 'doom-init-ui-hook (lambda () (solaire-global-mode -1)))
+(unless (display-graphic-p)
+  (set-face-background 'default "unspecified-bg"))
 
 ;; automatically organize imports
 (add-hook 'go-mode-hook (lambda () (flycheck-mode -1)))
@@ -192,7 +190,6 @@
 ;; for python
 (add-hook 'python-mode-hook
           (lambda ()
-            ;; Setting 1:
             (setq indent-tabs-mode nil)))
 
 ;; markdown pandoc
@@ -206,8 +203,12 @@
 ;; cursor line
 (setq global-hl-line-modes nil)
 
+;; change leader *
+(map! :leader
+      "*" #'isearch-forward)
+
 ;; Show listchars (whitespace symbols) in all code buffers
-(add-hook 'prog-mode-hook #'whitespace-mode)
+;; (add-hook 'prog-mode-hook #'whitespace-mode)
 
 ;;;; Don’t show newlines
 (setq whitespace-style
