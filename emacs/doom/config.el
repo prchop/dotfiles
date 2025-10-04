@@ -173,14 +173,14 @@
   '(vertical-border :background "#282828"))
 
 ;; modeline
- (custom-set-faces
-  '(doom-modeline ((t (:background "#32302f"))))
-  '(doom-modeline-bar ((t (:background "#32302f"))))
-  '(mode-line ((t (:background "#32302f")))))
-  ; '(lsp-modeline-code-actions-face
-  ;   ((t (:inherit mode-line
-  ;        :background "#141414"
-  ;        :foreground "#ffcc00")))))
+(custom-set-faces
+  '(doom-modeline ((t (:background "#222222"))))
+  '(doom-modeline-bar ((t (:background "#222222"))))
+  '(mode-line ((t (:background "#222222")))))
+  ;; '(lsp-modeline-code-actions-face
+  ;;   ((t (:inherit mode-line
+  ;;        :background "#141414"
+  ;;        :foreground "#ffcc00")))))
 
 ;; for markdown-mode
 (after! markdown-mode
