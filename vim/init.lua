@@ -16,8 +16,8 @@ vim.cmd([[
   highlight NonText guibg=NONE
   highlight SpellBad guibg=#1c1c1c guifg=#d70000 gui=NONE
   highlight SpellRare guibg=#1c1c1c guifg=#d70000 gui=NONE
-  highlight StatusLine guibg=#141414
-  highlight CursorLine guibg=#141414 guifg=NONE
+  "highlight StatusLine guibg=#141414
+  "highlight CursorLine guibg=#141414 guifg=NONE
 ]])
 
 vim.diagnostic.config({

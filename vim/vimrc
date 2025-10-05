@@ -126,31 +126,26 @@ endfunction
 
 " multi-line statusline configuration
 set ruler
-set laststatus=2  " 0 to not show
-set statusline=   " clear default statusline
+set laststatus=0  " 0 to not show
+set ruf=%30(%=%#LineNr#%.50F\ [%{strlen(&ft)?&ft:'none'}]\ %l:%c\ %p%%%)
+
+"set statusline=   " clear default statusline
 
 " first line: mode and basic info
-set statusline+=\ [%{ModeName()}]
-"set statusline+=\ %t
-set statusline+=\ %m%w%r
-set statusline+=\ %P
-set statusline+=\ (%l:%c)
-set statusline+=\ %{get(b:,'gitsigns_head','')}
-"set statusline+=\ %b
-"set statusline+=\ 0x%B
-"set statusline+=\ buf:%n
+"set statusline+=\ [%{ModeName()}]
+"set statusline+=\ %m%w%r
+"set statusline+=\ %P
+"set statusline+=\ (%l:%c)
+"set statusline+=\ %{get(b:,'gitsigns_head','')}
 
 " second line: file details
-set statusline+=\ %=
-set statusline+=\ %.30F
-set statusline+=\ 
-set statusline+=%{strlen(&fenc)?&fenc:&enc}
-set statusline+=\ 
-set statusline+=[%{strlen(&ft)?&ft:'none'}]
-set statusline+=\ 
-
-"set ruf=%30(%=%#LineNr#%.50F\ [%{strlen(&ft)?&ft:'none'}]\ %l:%c\ %p%%%)
-"set statusline=[%{ModeName()}]\ %t\ [%n]\ %l:%c\ %m%w\ %r%=%100(%F\ [%{strlen(&ft)?&ft:'none'}]\ %{strlen(&fenc)?&fenc:&enc}\ %p%%%)
+"set statusline+=\ %=
+"set statusline+=\ %.30F
+"set statusline+=\ 
+"set statusline+=%{strlen(&fenc)?&fenc:&enc}
+"set statusline+=\ 
+"set statusline+=[%{strlen(&ft)?&ft:'none'}]
+"set statusline+=\ 
 
 " stop complaints about switching buffer with changes
 set hidden
