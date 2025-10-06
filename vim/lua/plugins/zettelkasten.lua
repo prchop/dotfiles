@@ -4,7 +4,7 @@ require("zettelkasten").setup({
 	browseformat = "%d - %h [%r Refs] [%b B-Refs] %t",
 })
 
--- Fix Shif+K in zkbrowse
+-- Fix Shif+K in kbrowse
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = { "zkbrowser" },
 	callback = function()

@@ -16,8 +16,8 @@ vim.cmd([[
   highlight NonText guibg=NONE
   highlight SpellBad guibg=#1c1c1c guifg=#d70000 gui=NONE
   highlight SpellRare guibg=#1c1c1c guifg=#d70000 gui=NONE
-  "highlight StatusLine guibg=#141414
-  "highlight CursorLine guibg=#141414 guifg=NONE
+  "highlight StatusLine guibg=#282828 guifg=NONE
+  highlight CursorLine guibg=#282828 guifg=NONE
 ]])
 
 vim.diagnostic.config({
@@ -42,19 +42,23 @@ vim.diagnostic.config({
 ---- Set the statusline without background colors
 --vim.opt.statusline = "%f %m %r %= %y %l:%c %p%%"
 
-local screenkey_available = vim.fn.has("nvim-0.8") == 1
+local screenkey_available = vim.fn.has("nvim-0.10") == 1
 	and vim.fn.getenv("NVIM_SCREENKEY") ~= nil
 	and pcall(require, "screenkey")
 
 if screenkey_available then
-	vim.g.screenkey_statusline_component = 1
+  local sckey = require("screenkey")
 	vim.o.winbar = "%{%v:lua.require('screenkey').get_keys()%}"
-	vim.api.nvim_set_keymap("n", "<leader>sc", ":Screenkey<CR>", { noremap = true, silent = true })
-	require("screenkey").setup({
+	sckey.setup({
 		win_opts = {
 			width = 90,
 		},
 	})
+	vim.api.nvim_set_hl(0, "WinBar", { link = "CursorLine" })
+	if not sckey.statusline_component_is_active() then
+		sckey.toggle_statusline_component()
+	end
+	vim.api.nvim_set_keymap("n", "<leader>sc", ":Screenkey toggle_statusline_component<CR>", { noremap = true, silent = true })
 end
 
 require("nvim-treesitter.configs").setup({
