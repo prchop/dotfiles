@@ -220,26 +220,25 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 
 # class                 border  bground text    indicator child_border
-client.focused          #141414 #141414 #F8F8F2 #141414   #141414
-client.focused_inactive #44475A #44475A #F8F8F2 #44475A   #44475A
-client.unfocused        #282A36 #282A36 #BFBFBF #282A36   #282A36
-client.urgent           #44475A #FF5555 #F8F8F2 #FF5555   #FF5555
-client.placeholder      #282A36 #282A36 #F8F8F2 #282A36   #282A36
-client.background       #F8F8F2
+client.focused          #282828 #282828 #EBDBB2 #282828   #282828
+client.focused_inactive #3C3836 #3C3836 #EBDBB2 #3C3836   #3C3836
+client.unfocused        #1D2021 #1D2021 #A89984 #1D2021   #1D2021
+client.urgent           #3C3836 #FF5555 #EBDBB2 #FB4934   #FB4934
+client.placeholder      #1D2021 #1D2021 #EBDBB2 #1D2021   #1D2021
+client.background       #EBDBB2
 
 bar {
         status_command i3status
         position top
         colors {
-          background #141414
-          statusline #F8F8F2
-          separator  #44475A
-
-          focused_workspace  #44475A #44475A #F8F8F2
-          active_workspace   #282A36 #44475A #F8F8F2
-          inactive_workspace #282A36 #282A36 #BFBFBF
-          urgent_workspace   #FF5555 #FF5555 #F8F8F2
-          binding_mode       #FF5555 #FF5555 #F8F8F2
-      }
+            background #282828
+            statusline #EBDBB2
+            separator  #504945
+            focused_workspace  #504945 #504945 #EBDBB2
+            active_workspace   #3C3836 #504945 #EBDBB2
+            inactive_workspace #3C3836 #3C3836 #A89984
+            urgent_workspace   #FB4934 #FB4934 #EBDBB2
+            binding_mode       #FB4934 #FB4934 #EBDBB2
+        }
 }
 

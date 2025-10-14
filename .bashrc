@@ -259,6 +259,7 @@ _have sqlc && . <(sqlc completion bash)
 
 # disable internal keyboard
 # _have keyboard && keyboard off
+#_have xmodmap && xmodmap -e "keycode 113 = NoSymbol"
 
 # TMUX
 # if [ -z "$TMUX" ] && [ "$TERM" = "xterm-ghostty" ]; then
