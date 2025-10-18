@@ -55,7 +55,7 @@ cursor-style = "block"
 cursor-style-blink = true
 
 # Transparent
-#background-opacity = 0.96
+background-opacity = 0.94
 
 window-decoration = "server"
 maximize = true
