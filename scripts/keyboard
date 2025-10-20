@@ -11,14 +11,20 @@ fi
 
 key() {
 	input=$1
-	id=$(xinput list | grep "AT Translated Set 2 keyboard")
-	id="${id##*=}"
-	id="${id%%\[*}"
-	cleaned_id="${id//	/}" # remove all tabs
+
+	master_id=$(xinput list | grep "Virtual core keyboard")
+	master_id="${master_id##*=}"
+	master_id="${master_id%%\[*}"
+	master_id="${master_id//	/}" # remove all tabs
+
+	slave_id=$(xinput list | grep "AT Translated Set 2 keyboard")
+	slave_id="${slave_id##*=}"
+	slave_id="${slave_id%%\[*}"
+	slave_id="${slave_id//	/}" # remove all tabs
 
 	case $input in
-	off) exec xinput disable "$cleaned_id" ;;
-	on) exec xinput enable "$cleaned_id" ;;
+	off) exec xinput float "$slave_id" ;;
+	on) exec xinput reattach "$slave_id" "$master_id" ;;
 	*) printf "[USAGE] keyboard [on|off]\nControls whether keyboard input is enabled.\nUse 'on' to enable, 'off' to disable.\n" ;;
 	esac
 }
