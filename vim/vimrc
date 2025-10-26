@@ -16,6 +16,9 @@ set number
 " Auto write files when changing
 set autowrite
 
+" Auto read files when changing
+set autoread
+
 " Highlight cursorline horizontally
 set cursorline
 
@@ -194,6 +197,7 @@ nmap <leader>gs :call GrepPrompt()<CR>
 nmap <leader>k :bn<CR>
 map <leader>j :bp<CR>
 nmap <C-x> :bd<CR>
+map <leader>cr :silent! CocRestart<CR>
 map <leader>d :CocDiagnostics<CR>
 map <C-k> :GoDocBrowser<CR>
 map <leader><F1> :set nonumber!<CR>
