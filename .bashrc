@@ -262,6 +262,14 @@ _have sqlc && . <(sqlc completion bash)
 # _have keyboard && keyboard off
 #_have xmodmap && xmodmap -e "keycode 113 = NoSymbol"
 
+if _have dircolors; then
+	if [[ -r "$HOME/.dircolors" ]]; then
+		eval "$(dircolors -b "$HOME/.dircolors")"
+	else
+		eval "$(dircolors -b)"
+	fi
+fi
+
 # TMUX
 # if [ -z "$TMUX" ] && [ "$TERM" = "xterm-ghostty" ]; then
 # 	tmux attach || tmux new-session && exit
