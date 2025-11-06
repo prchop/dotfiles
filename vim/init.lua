@@ -16,7 +16,6 @@ vim.cmd([[
   highlight NonText guibg=NONE
   highlight SpellBad guibg=#1c1c1c guifg=#d70000 gui=NONE
   highlight SpellRare guibg=#1c1c1c guifg=#d70000 gui=NONE
-  "highlight StatusLine guibg=#282828 guifg=NONE
   highlight CursorLine guibg=#282828 guifg=NONE
 ]])
 
@@ -58,7 +57,9 @@ if screenkey_available then
 	if not sckey.statusline_component_is_active() then
 		sckey.toggle_statusline_component()
 	end
-	vim.api.nvim_set_keymap("n", "<leader>sc", ":Screenkey toggle_statusline_component<CR>", { noremap = true, silent = true })
+	vim.api.nvim_set_keymap("n", "<leader>sc",
+    ":Screenkey toggle_statusline_component<CR>",
+      { noremap = true, silent = true })
 end
 
 require("nvim-treesitter.configs").setup({
