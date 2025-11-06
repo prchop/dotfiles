@@ -51,6 +51,8 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 # Brightness (requires brightnessctl)
 bindsym XF86MonBrightnessUp exec brightnessctl set +1000
 bindsym XF86MonBrightnessDown exec brightnessctl set 1000-
+bindsym $mod+Shift+F4 exec brightnessctl set 10%-
+bindsym $mod+Shift+F5 exec brightnessctl set +10%
 
 # R: Use flameshot instead of i3-scrot. Print to capture a screenshot with the UI, mod+Print to capture screen
 bindsym Print exec --no-startup-id flameshot gui
@@ -73,6 +75,7 @@ tiling_drag modifier titlebar
 
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Shift+t exec ghostty
 
 # kill focused window
 bindsym $mod+Shift+q kill

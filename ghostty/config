@@ -57,7 +57,7 @@ cursor-style-blink = true
 # Transparent
 background-opacity = 0.90
 
-window-decoration = "server"
+window-decoration = "none"
 maximize = true
 
 copy-on-select = true
