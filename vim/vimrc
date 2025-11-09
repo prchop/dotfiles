@@ -95,6 +95,7 @@ set showmode
 
 " max text width
 set textwidth=72
+set colorcolumn=+1
 
 " left column
 set foldcolumn=0
