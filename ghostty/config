@@ -47,8 +47,8 @@ font-family = "Iosevka Nerd Font Mono"
 font-style = "Medium"
 font-size = 12
 
-theme = GruvboxDarkHard
-# theme = gruvbox-custom
+#theme = GruvboxDarkHard
+theme = gruvbox-custom
 
 # Cursor
 cursor-style = "block"
