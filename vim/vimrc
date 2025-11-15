@@ -1,7 +1,8 @@
 " Disable compatibility with vi which can cause unexpected issues.
 set nocompatible
 
-" Enable type file detection. Vim will be able to try to detect the type of file in use.
+" Eable type file detection. Vim will be able to try to detect the 
+" type of file in use.
 filetype on
 
 " Enable plugins and load plugin for the detected file type.
@@ -474,7 +475,7 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   au FileType go nmap <leader>m ilog.Print("made")<CR><ESC>
   au FileType go nmap <leader>n iif err != nil {return err}<CR><ESC>
 
-  let g:gruvbox_material_dim_inactive_windows = 0
+  let g:gruvbox_material_dim_inactive_windows = 1
   let g:gruvbox_material_foreground = 'original'
   let g:gruvbox_material_transparent_background = 0
   if !exists('g:colors_name') || g:colors_name !=# 'gruvbox-material'

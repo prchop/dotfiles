@@ -272,9 +272,9 @@ if _have dircolors; then
 fi
 
 # TMUX
-# if [ -z "$TMUX" ] && [ "$TERM" = "xterm-ghostty" ]; then
-# 	tmux attach || tmux new-session && exit
-# fi
+if [[ -z "$TMUX" && "$TERM" = "xterm-ghostty" ]]; then
+	tmux attach || tmux && exit
+fi
 
 # nvm
 export NVM_DIR="$HOME/.config/nvm"
