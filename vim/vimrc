@@ -186,6 +186,8 @@ function! GrepPrompt()
 endfunction
 
 " Keymap goes here
+xnoremap <silent> K :move '<-2<CR>gv-gv
+xnoremap <silent> J :move '>+1<CR>gv-gv
 nnoremap <C-L> :nohl<CR><C-L>
 nmap <leader>w :set nowrap!<CR>
 nmap <leader>p :set paste<CR>i

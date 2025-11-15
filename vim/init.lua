@@ -41,6 +41,13 @@ vim.diagnostic.config({
 ---- Set the statusline without background colors
 --vim.opt.statusline = "%f %m %r %= %y %l:%c %p%%"
 
+-- Additional keymap
+--local opts = { noremap = true, silent = true }
+--local keymap = vim.keymap.set
+--
+--keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
+--keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
+
 local screenkey_available = vim.fn.has("nvim-0.10") == 1
 	and vim.fn.getenv("NVIM_SCREENKEY") ~= nil
 	and pcall(require, "screenkey")
