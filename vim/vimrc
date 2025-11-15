@@ -192,11 +192,13 @@ nnoremap <C-L> :nohl<CR><C-L>
 nmap <leader>w :set nowrap!<CR>
 nmap <leader>p :set paste<CR>i
 nnoremap <leader>/ :edit **/
-nnoremap <leader>f :find **/
+nnoremap <leader>. :find **/
 nnoremap <leader>, :buf *
 nmap <leader>e :Ex<CR>
 nmap <leader>lb :buffers<CR>
-nmap <leader>lq :cwindow<CR>
+nmap <leader>cw :cwindow<CR>
+nmap <leader>co :copen<CR>
+nmap <leader>cc :cclose<CR>
 nmap <leader>gw :silent! grep <C-R><C-W> -g "!{node_modules,.git}/**"<CR>
 nmap <leader>gs :call GrepPrompt()<CR>
 nmap <leader>k :bn<CR>
@@ -360,8 +362,9 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
     if has('nvim') || v:version >= 10.0
       Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
       Plug 'neoclide/coc.nvim', {'branch': 'release'}
-      "harpoon setup
       Plug 'nvim-lua/plenary.nvim',
+      Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
+      "harpoon setup
       Plug 'ThePrimeagen/harpoon', {'branch': 'harpoon2'}
       "gitsigns
       Plug 'lewis6991/gitsigns.nvim',

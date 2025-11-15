@@ -8,6 +8,7 @@ if vim.fn.has("nvim-0.10") == 1 then
 	require("plugins.gitsigns")
 	require("plugins.harpoon")
 	require("plugins.zettelkasten")
+	require("plugins.telescope")
 end
 
 vim.cmd([[
@@ -41,13 +42,6 @@ vim.diagnostic.config({
 ---- Set the statusline without background colors
 --vim.opt.statusline = "%f %m %r %= %y %l:%c %p%%"
 
--- Additional keymap
---local opts = { noremap = true, silent = true }
---local keymap = vim.keymap.set
---
---keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
---keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
-
 local screenkey_available = vim.fn.has("nvim-0.10") == 1
 	and vim.fn.getenv("NVIM_SCREENKEY") ~= nil
 	and pcall(require, "screenkey")
@@ -76,3 +70,61 @@ require("nvim-treesitter.configs").setup({
 		additional_vim_regex_highlighting = false,
 	},
 })
+
+local opts = { noremap = true, silent = true }
+local keymap = vim.keymap.set
+
+-- Additional keymap (telescope)
+local builtin = require("telescope.builtin")
+vim.keymap.set("n", "<C-p>", function()
+	builtin.find_files({
+		find_command = {
+			"fd",
+			"--type",
+			"f",
+			"--strip-cwd-prefix",
+			"--hidden",
+			"--exclude",
+			"node_modules",
+			"--exclude",
+			".git",
+		},
+	})
+end, opts)
+
+keymap("n", "<leader>of", function()
+	builtin.oldfiles({
+		only_cwd = true,
+	})
+end, opts)
+
+keymap("n", "<leader>lg", function()
+	builtin.live_grep()
+end, opts)
+
+keymap("n", "<leader>fb", function()
+	builtin.buffers()
+end, opts)
+
+keymap("n", "<leader>fh", function()
+	builtin.help_tags()
+end, opts)
+
+keymap("n", "<leader>fc", function()
+	builtin.commands()
+end, opts)
+
+keymap("n", "<leader>fr", function()
+	builtin.resume()
+end, opts)
+
+keymap("n", "<leader>fq", function()
+	builtin.quickfix()
+end, opts)
+
+keymap("n", "<leader>f/", function()
+	builtin.current_buffer_fuzzy_find()
+end, opts)
+
+--keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
+--keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
