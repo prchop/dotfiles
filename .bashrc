@@ -237,8 +237,8 @@ alias reload='exec $SHELL -l'
 alias scripts='cd $SCRIPTS'
 alias todo='$EDITOR $DOCUMENTS/tmpnotes/.todo.md'
 alias temp='cd $(mktemp -d)'
-alias '?'=brave
-alias '??'=brave-lynx
+alias '?'=brave-lynx
+alias '??'=brave
 alias '???'=chat
 alias work="timer -f 50m -n '🔥️ Time to Work' && \
 	paplay /usr/share/sounds/freedesktop/stereo/complete.oga \
