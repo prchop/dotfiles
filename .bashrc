@@ -205,6 +205,9 @@ pathappend \
 # cd path
 export CDPATH=".:$GHREPOS:$DOTFILES:$REPOS:$HOME"
 
+# additional man path
+export MANPATH="$HOME/.local/share/man:$MANPATH"
+
 # history
 export HISTCONTROL=ignoreboth
 export HISTSIZE=5000

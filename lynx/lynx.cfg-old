@@ -1,13 +1,10 @@
-# $LynxId: lynx.cfg,v 1.302 2018/07/08 15:22:44 tom Exp $
+# $LynxId: lynx.cfg,v 1.358 2024/05/31 22:09:16 tom Exp $
 # lynx.cfg file.
 # The default placement for this file is /usr/local/lib/lynx.cfg (Unix)
 #                                     or Lynx_Dir:lynx.cfg (VMS)
 #
-# $Format: "#PRCS LYNX_VERSION \"$ProjectVersion$\""$
-#PRCS LYNX_VERSION "2.8.9rel.1"
-#
-# $Format: "#PRCS LYNX_DATE \"$ProjectDate$\""$
-#PRCS LYNX_DATE "Sun, 08 Jul 2018 06:46:06 -0400"
+# LYNX_VERSION "2.9.2"
+# LYNX_DATE    "31 May 2024"
 #
 # Definition pairs (configuration settings) are of the form
 #	VARIABLE:DEFINITION
@@ -108,7 +105,7 @@
 #
 # Normally we expect you will connect to a remote site, e.g., the Lynx starting
 # site:
-STARTFILE:https://rwx.gg
+STARTFILE:https://lynx.invisible-island.net/
 #
 # As an alternative, you may want to use a local URL.  A good choice for this is
 # the user's home directory:
@@ -132,9 +129,9 @@ STARTFILE:https://rwx.gg
 # This definition will be overridden if the "LYNX_HELPFILE" environment
 # variable has been set.
 #
-HELPFILE:https://lynx.invisible-island.net/lynx_help/lynx_help_main.html
+#HELPFILE:https://lynx.invisible-island.net/lynx_help/lynx_help_main.html
 .ex
-#HELPFILE:file://localhost/PATH_TO/lynx_help/lynx_help_main.html
+HELPFILE:file://localhost/home/prchop/.local/share/lynx_help/lynx_help_main.html
 
 .h2 DEFAULT_INDEX_FILE
 # DEFAULT_INDEX_FILE is the default file retrieved when the
@@ -142,7 +139,7 @@ HELPFILE:https://lynx.invisible-island.net/lynx_help/lynx_help_main.html
 # An index to your CWIS can be placed here or a document containing
 # pointers to lots of interesting places on the web.
 #
-DEFAULT_INDEX_FILE:https://search.brave.com/
+DEFAULT_INDEX_FILE:http://scout.wisc.edu/
 
 .h1 Interaction
 
@@ -454,7 +451,7 @@ DEFAULT_INDEX_FILE:https://search.brave.com/
 # Find RFC 1345 at
 .url http://tools.ietf.org/html/rfc1345
 #
-CHARACTER_SET:iso-8859-1
+#CHARACTER_SET:iso-8859-1
 
 .h2 LOCALE_CHARSET
 # LOCALE_CHARSET overrides CHARACTER_SET if true, using the current locale to
@@ -468,7 +465,6 @@ CHARACTER_SET:iso-8859-1
 # happens to give useful values, but other implementations are not guaranteed
 # to do this.
 #LOCALE_CHARSET:FALSE
-LOCALE_CHARSET:TRUE
 
 .h2 HTML5_CHARSETS
 # HTML5_CHARSETS is an alternative to ASSUME_CHARSET and ASSUME_LOCAL_CHARSET.
@@ -566,7 +562,7 @@ LOCALE_CHARSET:TRUE
 # compatibility problems with other browsers, see also PREPEND_BASE_TO_SOURCE.
 # Note that the prepending is not done for -source dumps.
 #
-PREPEND_CHARSET_TO_SOURCE:FALSE
+#PREPEND_CHARSET_TO_SOURCE:TRUE
 
 .h2 NCR_IN_BOOKMARKS
 # NCR_IN_BOOKMARKS:TRUE allows you to save 8-bit characters in bookmark titles
@@ -618,7 +614,7 @@ PREPEND_CHARSET_TO_SOURCE:FALSE
 # the 'o'ptions menu and save that preference in their RC file.
 # This may be a comma-separated list of languages in decreasing preference.
 #
-PREFERRED_LANGUAGE:en
+#PREFERRED_LANGUAGE:en
 
 .h2 PREFERRED_CHARSET
 # PREFERRED_CHARSET specifies the character set in MIME notation (e.g.,
@@ -770,7 +766,7 @@ PREFERRED_LANGUAGE:en
 #INFOSECS:1
 #MESSAGESECS:2
 #ALERTSECS:3
-NO_PAUSE:TRUE
+#NO_PAUSE:FALSE
 
 .h2 DEBUGSECS
 # Set DEBUGSECS to a nonzero value to slow down progress messages
@@ -810,7 +806,7 @@ NO_PAUSE:TRUE
 # 'o'ptions menu and saved in the RC file, and always can be toggled
 # via the -show_cursor command line switch.
 #
-SHOW_CURSOR:TRUE
+#SHOW_CURSOR:FALSE
 
 .h2 UNDERLINE_LINKS
 # UNDERLINE_LINKS controls whether links are underlined by default, or shown
@@ -1046,7 +1042,7 @@ SHOW_CURSOR:TRUE
 # as well (i.e., they will only be able to access lynxexec or lynxprog
 # URLs which meet any ALWAYS_TRUSTED_EXEC rules).
 #
-TRUSTED_EXEC:none
+#TRUSTED_EXEC:none
 
 .h2 ALWAYS_TRUSTED_EXEC
 # If EXEC_LINKS was defined, any lynxexec or lynxprog URL can be made
@@ -1067,7 +1063,7 @@ TRUSTED_EXEC:none
 #
 # The default ALWAYS_TRUSTED_EXEC rule is "none".
 #
-ALWAYS_TRUSTED_EXEC:none
+#ALWAYS_TRUSTED_EXEC:none
 
 .h2 TRUSTED_LYNXCGI
 # Unix:
@@ -1324,6 +1320,17 @@ ALWAYS_TRUSTED_EXEC:none
 
 .h1 Cookies
 
+.h2 COOKIE_VERSION
+# Select the RFC cookie version using the RFC number.  Most users will not
+# need to change this, but because RFC 6265 makes incompatible changes versus
+# the older RFCs, it is interesting to compare behavior.
+#
+# For reference:
+.url http://tools.ietf.org/html/rfc6265
+.url http://tools.ietf.org/html/rfc2965
+.url http://tools.ietf.org/html/rfc2109
+#COOKIE_VERSION:RFC-6265
+
 .h2 SET_COOKIES
 # If SET_COOKIES is set FALSE, Lynx will ignore Set-Cookie headers
 # in http server replies.  Note that if a COOKIE_FILE is in use (see
@@ -1337,7 +1344,7 @@ ALWAYS_TRUSTED_EXEC:none
 # The default is defined in userdefs.h, and can be overridden here,
 # and/or toggled via the -cookies command line switch.
 #
-SET_COOKIES:FALSE
+#SET_COOKIES:TRUE
 
 .h2 ACCEPT_ALL_COOKIES
 # If ACCEPT_ALL_COOKIES is set TRUE, Lynx will accept cookies from all
@@ -1349,7 +1356,7 @@ SET_COOKIES:FALSE
 # in the .lynxrc file via an o(ptions) screen setting.  It may also be
 # toggled via the -accept_all_cookies command line switch.
 #
-ACCEPT_ALL_COOKIES:FALSE
+#ACCEPT_ALL_COOKIES:FALSE
 
 .h2 COOKIE_ACCEPT_DOMAINS
 .h2 COOKIE_REJECT_DOMAINS
@@ -1412,7 +1419,7 @@ ACCEPT_ALL_COOKIES:FALSE
 # The default is FALSE, so that the feature needs to be enabled here
 # explicitly if you want it.
 #
-PERSISTENT_COOKIES:FALSE
+#PERSISTENT_COOKIES:FALSE
 
 .h2 COOKIE_FILE
 # COOKIE_FILE is the default file from which persistent cookies are read
@@ -1487,8 +1494,8 @@ PERSISTENT_COOKIES:FALSE
 # pipe.
 #
 # Please read sendmail.txt in the LYNX_W32.ZIP distribution
-.url	http://invisible-mirror.net/archives/lynx/tarballs/lynx2.8.1_w32.zip
-.url	ftp://ftp.invisible-island.net/lynx/tarballs/lynx2.8.1_w32.zip
+.url	https://invisible-island.net/archives/lynx/tarballs/lynx2.8.1_w32.zip
+.url	https://invisible-mirror.net/archives/lynx/tarballs/lynx2.8.1_w32.zip
 #
 # As an alternative, the newer "sendmail for windows" may be useful:
 .url	http://glob.com.au/sendmail/
@@ -1528,7 +1535,7 @@ PERSISTENT_COOKIES:FALSE
 .h2 EMACS_KEYS_ALWAYS_ON
 # Vi or Emacs movement keys, i.e. familiar hjkl or ^N^P^F^B .
 # These are defaults, which can be changed in the Options Menu or .lynxrc .
-VI_KEYS_ALWAYS_ON:TRUE
+#VI_KEYS_ALWAYS_ON:FALSE
 #EMACS_KEYS_ALWAYS_ON:FALSE
 
 .h2 DEFAULT_KEYPAD_MODE
@@ -1589,7 +1596,7 @@ VI_KEYS_ALWAYS_ON:TRUE
 # (see below), via the 'o'ptions menu, and can save those definitions
 # in the .lynxrc file.
 #
-DEFAULT_BOOKMARK_FILE:.lynx_bookmarks.html
+#DEFAULT_BOOKMARK_FILE:lynx_bookmarks.html
 
 .h2 MULTI_BOOKMARK_SUPPORT
 # If MULTI_BOOKMARK_SUPPORT is set TRUE, and BLOCK_MULTI_BOOKMARKS (see
@@ -1630,7 +1637,7 @@ DEFAULT_BOOKMARK_FILE:.lynx_bookmarks.html
 # INTERMEDIATE shows normal amount of help (one line).
 # ADVANCED help is replaced by the URL of the current link.
 #
-DEFAULT_USER_MODE:ADVANCED
+#DEFAULT_USER_MODE:NOVICE
 
 .h1 External Programs
 
@@ -1859,7 +1866,7 @@ DEFAULT_USER_MODE:ADVANCED
 # and not forced TRUE, the user can regulate it via the 'o'ptions menu (and
 # may save the preference in the RC file).
 #
-NO_DOT_FILES:FALSE
+#NO_DOT_FILES:TRUE
 
 .h1 Internal Behavior
 
@@ -1871,7 +1878,7 @@ NO_DOT_FILES:FALSE
 # run time via the -from switch.  Note that transmissions of From headers
 # have become widely considered to create an invasion of privacy risk.
 #
-NO_FROM_HEADER:TRUE
+#NO_FROM_HEADER:TRUE
 
 .h2 NO_REFERER_HEADER
 # If NO_REFERER_HEADER is TRUE, Referer headers never will be sent in
@@ -1882,7 +1889,7 @@ NO_FROM_HEADER:TRUE
 # If left FALSE here, it can be set TRUE at run time via the -noreferer
 # switch.
 #
-NO_REFERER_HEADER:FALSE
+#NO_REFERER_HEADER:FALSE
 
 .h1 Internal Behavior
 
@@ -1894,7 +1901,7 @@ NO_REFERER_HEADER:FALSE
 # NO_REFERER_HEADER is FALSE.  If set to FALSE here, it can still be
 # set TRUE at run time via the -nofilereferer switch.
 #
-NO_FILE_REFERER:TRUE
+#NO_FILE_REFERER:TRUE
 
 .h2 REFERER_WITH_QUERY
 # REFERER_WITH_QUERY controls what happens when the URL in a Referer
@@ -1917,7 +1924,7 @@ NO_FILE_REFERER:TRUE
 # unrecognized), the default, no Referer header is sent at all in this
 # situation.
 #
-REFERER_WITH_QUERY:DROP
+#REFERER_WITH_QUERY:DROP
 
 .h1 Appearance
 
@@ -1979,7 +1986,7 @@ REFERER_WITH_QUERY:DROP
 # prefer the more conservative action of requiring an explicit Y or y to
 # confirm.  The default defined here will override that in userdefs.h.
 #
-QUIT_DEFAULT_YES:TRUE
+#QUIT_DEFAULT_YES:TRUE
 
 .h1 HTML Parsing
 
@@ -2077,7 +2084,6 @@ MINIMAL_COMMENTS:TRUE
 # switch.
 #
 #SCAN_FOR_BURIED_NEWS_REFS:TRUE
-SCAN_FOR_BURIED_NEWS_REFS:FALSE
 
 .h2 PREPEND_BASE_TO_SOURCE
 # If PREPEND_BASE_TO_SOURCE is set to FALSE, Lynx will not prepend a
@@ -2359,7 +2365,8 @@ SCAN_FOR_BURIED_NEWS_REFS:FALSE
 # The global and personal MAILCAP files allow you to specify external
 # viewers to be spawned when Lynx encounters different MIME types, which
 # will override any of the suffix maps in this (lynx.cfg) configuration
-# file, or in src/HTInit.c.  See .url http://tools.ietf.org/html/rfc1524
+# file, or in src/HTInit.c.  See
+.url http://tools.ietf.org/html/rfc1524
 # and the example mailcap file in the samples subdirectory.
 #
 # Unix:
@@ -2399,6 +2406,7 @@ SCAN_FOR_BURIED_NEWS_REFS:FALSE
 #	GZIP		For gzip
 #	COMPRESS	For compress
 #	BZIP2		For bzip2
+#	BROTLI		For brotli
 #	ALL		All of the above.
 #PREFERRED_ENCODING:all
 
@@ -2497,8 +2505,8 @@ SCAN_FOR_BURIED_NEWS_REFS:FALSE
 #KEYMAP:^R:RELOAD		# Reload the current document and redisplay
 #KEYMAP:^U:NEXT_DOC		# Undo PREV_DOC)
 #KEYMAP:q:QUIT			# Ask the user to quit
-KEYMAP:q:ABORT			# Quit without verification
-KEYMAP:0x20:NEXT_PAGE		# Move down to next page
+#KEYMAP:Q:ABORT			# Quit without verification
+#KEYMAP:0x20:NEXT_PAGE		# Move down to next page
 #KEYMAP:-:PREV_PAGE		# Move up to previous page
 #KEYMAP:^P:UP_TWO		# Move display up two lines
 #KEYMAP:INSERT_KEY:UP_TWO	# Function key Insert - Move display up two lines
@@ -2507,10 +2515,10 @@ KEYMAP:0x20:NEXT_PAGE		# Move down to next page
 #KEYMAP:(:UP_HALF		# Move display up half a page
 #KEYMAP:):DOWN_HALF		# Move display down half a page
 #KEYMAP:^W:REFRESH		# Refresh the screen
-KEYMAP:0:HOME			# Go to top of current document
+#KEYMAP:^A:HOME			# Go to top of current document
 #KEYMAP:HOME:HOME		# Keypad Home - Go to top of current document
 #KEYMAP:FIND_KEY:HOME		# Function key Find - Go to top of current document
-KEYMAP:G:END			# Go to bottom of current document
+#KEYMAP:^E:END			# Go to bottom of current document
 #KEYMAP:END:END			# Keypad End - Go to bottom of current document
 #KEYMAP:SELECT_KEY:END		# Function key Select - Go to bottom of current document
 #KEYMAP:UPARROW:PREV_LINK	# Move to the previous link or page
@@ -2527,7 +2535,7 @@ KEYMAP:G:END			# Go to bottom of current document
 #KEYMAP:RTARROW:ACTIVATE	# Select the current link
 #KEYMAP:DO_KEY:ACTIVATE		# Function key Do - Select the current link
 #KEYMAP:g:GOTO			# Goto a random URL
-KEYMAP:u:ECGOTO		# Edit the current document's URL and go to it
+#KEYMAP:G:ECGOTO		# Edit the current document's URL and go to it
 #KEYMAP:H:HELP			# Show default help screen
 #KEYMAP:F1:DWIMHELP		# Function key Help - Show a help screen
 #KEYMAP:i:INDEX			# Show default index
@@ -2538,19 +2546,19 @@ KEYMAP:u:ECGOTO		# Edit the current document's URL and go to it
 #KEYMAP:m:MAIN_MENU		# Return to the main menu
 #KEYMAP:o:OPTIONS		# Show the options menu
 #KEYMAP:i:INDEX_SEARCH		# Search a server based index
-KEYMAP:/:WHEREIS		# Find a string within the current document
-KEYMAP:n:NEXT			# Find next occurrence of string within document
+#KEYMAP:/:WHEREIS		# Find a string within the current document
+#KEYMAP:n:NEXT			# Find next occurrence of string within document
 #KEYMAP:c:COMMENT		# Comment to the author of the current document
 #KEYMAP:C:CHDIR			# Change current directory
-KEYMAP:e:EDIT			# Edit current document or form's textarea (call: ^Ve)
+#KEYMAP:e:EDIT			# Edit current document or form's textarea (call: ^Ve)
 #KEYMAP:E:ELGOTO		# Edit the current link's URL or ACTION and go to it
-KEYMAP:i:INFO			# Show info about current document
+#KEYMAP:=:INFO			# Show info about current document
 #KEYMAP:p:PRINT			# Show print options
 #KEYMAP:a:ADD_BOOKMARK		# Add current document to bookmark list
 #KEYMAP:v:VIEW_BOOKMARK		# View the bookmark list
 #KEYMAP:V:VLINKS		# List links visited during the current Lynx session
 #KEYMAP:!:SHELL			# Spawn default shell
-KEYMAP:d:DOWNLOAD		# Download current link
+#KEYMAP:d:DOWNLOAD		# Download current link
 #KEYMAP:j:JUMP			# Jump to a predefined target
 #KEYMAP:k:KEYMAP		# Display the current key map
 #KEYMAP:l:LIST			# List the references (links) in the current document
@@ -2649,7 +2657,7 @@ KEYMAP:d:DOWNLOAD		# Download current link
 #  DELNW	# Delete next word
 #  DELPW	# Delete prev word
 #  DELBL	# Delete back to BOL
-#  DELEL	# Delete thru EOL
+#  DELEL	# Delete through EOL
 #  ERASE	# Erase the line
 #  LOWER	# Lower case the line
 #  UPPER	# Upper case the line
@@ -3029,7 +3037,13 @@ COLOR:6:brightred:black
 # It is enabled by default when the COLOR_STYLE configuration is used,
 # and false otherwise.
 #
-NESTED_TABLES: false
+#NESTED_TABLES: true
+
+.h2 NO_TABLE_CENTER
+# Normally table cells are centered on the table grid.
+# Set this option to true to disable centering.
+# The -center command-line option toggles this setting between true/false.
+#NO_TABLE_CENTER: false
 
 .h2 ASSUMED_COLOR
 # If built with a library that recognizes default colors (usually ncurses or
@@ -3120,21 +3134,6 @@ NESTED_TABLES: false
 # enabled), see the KEYMAP section above.
 #
 #EXTERNAL:ftp:wget %s &:TRUE
-#EXTERNAL:http:google-chrome %s &:TRUE
-#EXTERNAL:http:open %s &:TRUE
-#EXTERNAL:http:brave-browser %s &:TRUE
-
-# Brave
-EXTERNAL:http:/usr/bin/brave-browser %s &:TRUE
-
-# Zen
-EXTERNAL:http:flatpak run app.zen_browser.zen %s &> /dev/null &:TRUE
-
-# Firefox
-EXTERNAL:http:/usr/bin/firefox %s &:TRUE
-
-# Chrome
-EXTERNAL:http:/usr/bin/google-chrome %s &:TRUE
 
 .h2 EXTERNAL_MENU
 # Like EXTERNAL, but allows customizing the menu name.
@@ -3362,7 +3361,7 @@ EXTERNAL:http:/usr/bin/google-chrome %s &:TRUE
 # explicit activation can also be requested with the -tna command line
 # option.
 #
-TEXTFIELDS_NEED_ACTIVATION:TRUE
+#TEXTFIELDS_NEED_ACTIVATION:FALSE
 
 .h2 LEFTARROW_IN_TEXTFIELD_PROMPT
 # LEFTARROW_IN_TEXTFIELD_PROMPT
@@ -3433,6 +3432,7 @@ TEXTFIELDS_NEED_ACTIVATION:TRUE
 #ENABLE_LYNXRC:FTP_PASSIVE:OFF
 #ENABLE_LYNXRC:HTML5_CHARSETS:OFF
 #ENABLE_LYNXRC:HTTP_PROTOCOL:1.0
+#ENABLE_LYNXRC:IDNA_MODE:TR46
 #ENABLE_LYNXRC:KBLAYOUT:ON
 #ENABLE_LYNXRC:KEYPAD_MODE:ON
 #ENABLE_LYNXRC:LINEEDIT_MODE:ON
@@ -3454,9 +3454,7 @@ TEXTFIELDS_NEED_ACTIVATION:TRUE
 #ENABLE_LYNXRC:SEND_USERAGENT:OFF
 #ENABLE_LYNXRC:SESSION_FILE:OFF
 #ENABLE_LYNXRC:SET_COOKIES:OFF
-#ENABLE_LYNXRC:SHOW_COLOR:ON
 #ENABLE_LYNXRC:SHOW_CURSOR:ON
-#ENABLE_LYNXRC:SHOW_DOTFILES:ON
 #ENABLE_LYNXRC:SHOW_KB_RATE:OFF
 #ENABLE_LYNXRC:SUB_BOOKMARKS:ON
 #ENABLE_LYNXRC:TAGSOUP:OFF
@@ -3585,7 +3583,6 @@ TEXTFIELDS_NEED_ACTIVATION:TRUE
 # this choice on a case-by-case basis.
 #
 #FORCE_SSL_PROMPT:PROMPT
-FORCE_SSL_PROMPT:yes
 
 .h2 FORCE_COOKIE_PROMPT
 # If FORCE_COOKIE_PROMPT is set to "yes", then questionable conditions, such as
@@ -3594,14 +3591,13 @@ FORCE_SSL_PROMPT:yes
 # this choice on a case-by-case basis.
 #
 #FORCE_COOKIE_PROMPT:PROMPT
-FORCE_COOKIE_PROMPT:yes
 
 .h2 SSL_CERT_FILE
 # Set SSL_CERT_FILE to the file that contains all valid CA certificates lynx
 # should accept, in case the $SSL_CERT_FILE environment variable is not set,
 # e.g.,
 #
-SSL_CERT_FILE:/etc/ssl/certs/ca-certificates.crt
+#SSL_CERT_FILE:/etc/ssl/certs/ca-certificates.crt
 #SSL_CERT_FILE:NULL
 
 .h2 SSL_CLIENT_CERT_FILE
@@ -3637,11 +3633,18 @@ SSL_CERT_FILE:/etc/ssl/certs/ca-certificates.crt
 # This is the same as the command-line "-notitle" option.
 #NO_TITLE:FALSE
 
+.h2 UPDATE_TERM_TITLE
+# Enables updating the title in terminal emulators.
+# If your terminal emulator supports that escape code,
+# you can set this to TRUE.
+# This is the same as the command-line "-update_term_title" option.
+#UPDATE_TERM_TITLE:FALSE
+
 .h1 External Programs
 
 .h2 SYSLOG_REQUESTED_URLS
 # Log the requested URLs using the syslog interface.
-SYSLOG_REQUESTED_URLS:FALSE
+#SYSLOG_REQUESTED_URLS:TRUE
 
 .h2 SYSLOG_TEXT
 # Add the given text to calls made to syslog, to distinguish Lynx from other
@@ -3847,3 +3850,58 @@ SYSLOG_REQUESTED_URLS:FALSE
 # The default value FALSE disables this guess, telling Lynx to just assume that
 # "http:" was intended.
 #GUESS_SCHEME:FALSE
+
+.h2 REDIRECTION_LIMIT
+# HTTP 1.0 suggested a redirection-limit of 5; lynx doubled that.  Some users
+# believe they can improve their experience with a higher limit.
+#REDIRECTION_LIMIT:10
+
+.h1 Appearance
+.h2 LIST_DECODED
+# For -dump, show URL-encoded links decoded.
+#LIST_DECODED:TRUE
+## The following lines were saved from your previous configuration.
+
+STARTFILE:https://rwx.gg
+DEFAULT_INDEX_FILE:https://search.brave.com/
+CHARACTER_SET:iso-8859-1
+LOCALE_CHARSET:TRUE
+PREPEND_CHARSET_TO_SOURCE:FALSE
+PREFERRED_LANGUAGE:en
+NO_PAUSE:TRUE
+SHOW_CURSOR:TRUE
+TRUSTED_EXEC:none
+ALWAYS_TRUSTED_EXEC:none
+SET_COOKIES:FALSE
+ACCEPT_ALL_COOKIES:FALSE
+PERSISTENT_COOKIES:FALSE
+VI_KEYS_ALWAYS_ON:TRUE
+DEFAULT_BOOKMARK_FILE:.lynx_bookmarks.html
+DEFAULT_USER_MODE:ADVANCED
+NO_DOT_FILES:FALSE
+NO_FROM_HEADER:TRUE
+NO_REFERER_HEADER:FALSE
+NO_FILE_REFERER:TRUE
+REFERER_WITH_QUERY:DROP
+QUIT_DEFAULT_YES:TRUE
+SCAN_FOR_BURIED_NEWS_REFS:FALSE
+KEYMAP:q:ABORT			# Quit without verification
+KEYMAP:0x20:NEXT_PAGE		# Move down to next page
+KEYMAP:0:HOME			# Go to top of current document
+KEYMAP:G:END			# Go to bottom of current document
+KEYMAP:u:ECGOTO		# Edit the current document's URL and go to it
+KEYMAP:/:WHEREIS		# Find a string within the current document
+KEYMAP:n:NEXT			# Find next occurrence of string within document
+KEYMAP:e:EDIT			# Edit current document or form's textarea (call: ^Ve)
+KEYMAP:i:INFO			# Show info about current document
+KEYMAP:d:DOWNLOAD		# Download current link
+NESTED_TABLES: false
+EXTERNAL:http:/usr/bin/brave-browser %s &:TRUE
+EXTERNAL:http:flatpak run app.zen_browser.zen %s &> /dev/null &:TRUE
+EXTERNAL:http:/usr/bin/firefox %s &:TRUE
+EXTERNAL:http:/usr/bin/google-chrome %s &:TRUE
+TEXTFIELDS_NEED_ACTIVATION:TRUE
+FORCE_SSL_PROMPT:yes
+FORCE_COOKIE_PROMPT:yes
+SSL_CERT_FILE:/etc/ssl/certs/ca-certificates.crt
+SYSLOG_REQUESTED_URLS:FALSE
