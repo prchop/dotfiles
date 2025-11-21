@@ -354,6 +354,7 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
     Plug 'rwxrob/vim-pandoc-syntax-simple'
     Plug 'Furkanzmc/zettelkasten.nvim'
     Plug 'dense-analysis/ale'
+    Plug 'windwp/nvim-autopairs'
     "Plug 'habamax/vim-asciidoctor'
     "Plug 'kana/vim-textobj-user'
     "Plug 'mjakl/vim-asciidoc'

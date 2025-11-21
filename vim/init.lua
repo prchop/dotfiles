@@ -4,11 +4,19 @@ vim.opt.packpath = vim.opt.runtimepath:get()
 
 vim.cmd("source ~/.vimrc")
 
+local plugins = {
+  "treesitter",
+  "gitsigns",
+  "harpoon",
+  "zettelkasten",
+  "telescope",
+  "autopairs",
+}
+
 if vim.fn.has("nvim-0.10") == 1 then
-	require("plugins.gitsigns")
-	require("plugins.harpoon")
-	require("plugins.zettelkasten")
-	require("plugins.telescope")
+  for _, plugin in ipairs(plugins) do
+    require("plugins." .. plugin)
+  end
 end
 
 vim.cmd([[
@@ -62,14 +70,6 @@ if screenkey_available then
     ":Screenkey toggle_statusline_component<CR>",
       { noremap = true, silent = true })
 end
-
-require("nvim-treesitter.configs").setup({
-	ensure_installed = { "python", "lua", "bash", "vim", "c" },
-	highlight = {
-		enable = true,
-		additional_vim_regex_highlighting = false,
-	},
-})
 
 local opts = { noremap = true, silent = true }
 local keymap = vim.keymap.set
