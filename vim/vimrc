@@ -327,8 +327,8 @@ endif
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
 " enable omni-completion
-"set omnifunc=syntaxcomplete#Complete
-"set completeopt=menu,menuone,noselect
+set omnifunc=syntaxcomplete#Complete
+set completeopt=menu,menuone,popup
 "imap <tab><tab> <c-x><c-o>
 
 " Install vim-plug if not found
@@ -385,23 +385,28 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
 
 
   " lsp completion
-  let g:go_def_mapping_enabled = 0
-  nmap <silent> gd <Plug>(coc-definition)
-  nmap <silent> gy <Plug>(coc-type-definition)
-  nmap <silent> gi <Plug>(coc-implementation)
-  nmap <silent> gr <Plug>(coc-references)
+  let g:go_def_mapping_enabled = 1
+  "nmap <silent> gd <Plug>(coc-definition)
+  "nmap <silent> gy <Plug>(coc-type-definition)
+  "nmap <silent> gi <Plug>(coc-implementation)
+  "nmap <silent> gr <Plug>(coc-references)
 
-  inoremap <silent><expr> <TAB>
-        \ coc#pum#visible() && coc#pum#info()['index'] != -1
-        \ ? coc#pum#confirm()
-        \ : "\<C-g>u\<TAB>"
+  "inoremap <silent><expr> <TAB>
+  "      \ coc#pum#visible() && coc#pum#info()['index'] != -1
+  "      \ ? coc#pum#confirm()
+  "      \ : "\<C-g>u\<TAB>"
 
-  " use <tab> to trigger completion and navigate to the next complete item
-  "function! CheckBackspace() abort
-  "  let col = col('.') - 1
-  "  return !col || getline('.')[col - 1]  =~# '\s'
-  "endfunction
-  "
+  " use <tab> to trigger complete item
+  function! CheckBackspace() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+  endfunction
+
+  inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-y>" :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ "\<C-x>\<C-o>"
+
   "inoremap <silent><expr> <Tab>
   "      \ coc#pum#visible() ? coc#pum#next(1) :
   "      \ CheckBackspace() ? "\<Tab>" :
@@ -410,7 +415,7 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   "let g:vim_asciidoc_initial_foldlevel=1
 
   " disable ALE's LSP completion (use CoC instead)
-  let g:ale_completion_enabled = 0
+  let g:ale_completion_enabled = 1
 
   set signcolumn=yes
   let g:ale_set_signs = 1
@@ -423,9 +428,9 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   "   Perl::Tidy
   "   Perl::Critic
 
-  " gopls, gometalinter
+  " gopls, gometalinter, gobuild, gofmt
   let g:ale_linters = {
-        \'go': [],
+        \'go': ['gobuild', 'gofmt', 'gometalinter'],
         \'perl': ['perl', 'perlcritic'],
         \'python': [],
         \'typescript': [],
@@ -459,7 +464,7 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   "let g:go_fmt_options = '-s'
   let g:go_fmt_command = 'goimports'
   let g:go_fmt_autosave = 1
-  let g:go_gopls_enabled = 0
+  let g:go_gopls_enabled = 1
   let g:go_highlight_types = 1
   let g:go_highlight_fields = 1
   let g:go_highlight_functions = 1
@@ -472,7 +477,7 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   let g:go_highlight_build_constraints = 1
   let g:go_highlight_diagnostic_errors = 1
   let g:go_highlight_diagnostic_warnings = 1
-  let g:go_code_completion_enabled = 0
+  let g:go_code_completion_enabled = 1
   let g:go_auto_sameids = 0
   set updatetime=100
 
@@ -502,10 +507,10 @@ autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup='Visual', time
 autocmd QuickFixCmdPost *grep* cwindow
 
 " CoC Setup for Go
-augroup CocGo
-  autocmd!
-  autocmd FileType go nnoremap <buffer> <silent> K :call CocActionAsync('doHover')<CR>
-augroup END
+"augroup CocGo
+"  autocmd!
+"  autocmd FileType go nnoremap <buffer> <silent> K :call CocActionAsync('doHover')<CR>
+"augroup END
 
 " CoC Setup for JS/TS only
 augroup CocJSTS

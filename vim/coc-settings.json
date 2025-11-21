@@ -1,7 +1,7 @@
 {
   "languageserver": {
     "golang": {
-      //"enable": false,
+      "enable": false,
       "command": "gopls",
       "rootPatterns": ["go.mod", ".git/"],
       "filetypes": ["go"],
