@@ -329,7 +329,7 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 " enable omni-completion
 set omnifunc=syntaxcomplete#Complete
 set completeopt=menu,menuone,popup
-"imap <tab><tab> <c-x><c-o>
+"imap <tab> <c-x><c-o>
 
 " Install vim-plug if not found
 if has('nvim') || v:version >= 9.0
@@ -391,11 +391,6 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   "nmap <silent> gi <Plug>(coc-implementation)
   "nmap <silent> gr <Plug>(coc-references)
 
-  "inoremap <silent><expr> <TAB>
-  "      \ coc#pum#visible() && coc#pum#info()['index'] != -1
-  "      \ ? coc#pum#confirm()
-  "      \ : "\<C-g>u\<TAB>"
-
   " use <tab> to trigger complete item
   function! CheckBackspace() abort
     let col = col('.') - 1
@@ -406,6 +401,12 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
       \ pumvisible() ? "\<C-y>" :
       \ CheckBackspace() ? "\<Tab>" :
       \ "\<C-x>\<C-o>"
+
+  "inoremap <silent><expr> <TAB>
+  "      \ coc#pum#visible() && coc#pum#info()['index'] != -1
+  "      \ ? coc#pum#confirm()
+  "      \ : "\<C-g>u\<TAB>"
+
 
   "inoremap <silent><expr> <Tab>
   "      \ coc#pum#visible() ? coc#pum#next(1) :
